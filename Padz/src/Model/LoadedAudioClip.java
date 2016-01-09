@@ -47,6 +47,7 @@ public class LoadedAudioClip extends AudioClip  {
 	
 	public void play(){
 		
+		audioStream.resetReadHead();
 		isPlaying = true;
 		
 	}

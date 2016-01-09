@@ -55,8 +55,10 @@ public class ClipMixer extends StreamMixer {
 			
 			try {
 				if(clip.getAudioStream().available() <= 0){
+					
+					//Si le clip est terminé (fin du stream)
 					clip.isPlaying = false;
-					System.out.println("Unaivailable stream");
+					
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -65,10 +67,9 @@ public class ClipMixer extends StreamMixer {
 			
 			if(clip.getIsPlaying() == false){
 				
-				if(audioInputStreamList.contains(clip.getAudioStream())){
 					
 					audioInputStreamList.remove(clip.getAudioStream());
-				}
+				
 			}
 			else {
 				

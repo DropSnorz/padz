@@ -27,7 +27,7 @@ public class PadView extends JPanel {
 	 */
 	//temp
 	
-	private JButton BT_Play;
+	public JButton BT_Play;
 	private Graphics2D graph;
 	
 	private int padSize = 72;
@@ -69,10 +69,6 @@ public class PadView extends JPanel {
 		
 	}
 	
-	public void setActionListener(ActionListener listener){
-		
-		BT_Play.addActionListener(listener);
-	}
 	
 	public void paint(Graphics g){
 		super.paint(g);
