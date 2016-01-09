@@ -11,7 +11,7 @@ import javax.sound.sampled.AudioInputStream;
 public class ClipMixer extends StreamMixer {
 	
 	//StreamMixer streamMixer;
-	List<StreamedAudioClip> audioClipList;
+	List<AudioClip> audioClipList;
 	
 	
 	public ClipMixer(AudioFormat audioFormat){
@@ -21,12 +21,12 @@ public class ClipMixer extends StreamMixer {
 	}
 	
 	
-	public ClipMixer(AudioFormat audioFormat, List<StreamedAudioClip> audioClipList) {
+	public ClipMixer(AudioFormat audioFormat, List<AudioClip> audioClipList) {
 		super(audioFormat,new ArrayList());
 		//ArrayList<AudioInputStream> audioInputStreamList = new ArrayList<AudioInputStream>();
 		
 		this.audioClipList = audioClipList;
-		for (StreamedAudioClip clip : audioClipList){
+		for (AudioClip clip : audioClipList){
 			
 			audioInputStreamList.add(clip.getAudioStream());
 		}
@@ -51,11 +51,12 @@ public class ClipMixer extends StreamMixer {
 	
 	public void updateStreams(){
 		
-		for(StreamedAudioClip clip : audioClipList){
+		for(AudioClip clip : audioClipList){
 			
 			try {
 				if(clip.getAudioStream().available() <= 0){
 					clip.isPlaying = false;
+					System.out.println("Unaivailable stream");
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

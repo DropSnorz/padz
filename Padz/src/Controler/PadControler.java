@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import Model.AudioClip;
 import Model.StreamedAudioClip;
 import View.PadView;
 
@@ -12,9 +13,9 @@ public class PadControler implements MouseListener, ActionListener {
 
 	
 	private PadView vue;
-	private StreamedAudioClip clip;
+	private AudioClip clip;
 	
-	public PadControler(StreamedAudioClip clip){
+	public PadControler(AudioClip clip){
 		
 		this.clip = clip;
 		vue = new PadView();

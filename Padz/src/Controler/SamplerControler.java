@@ -12,6 +12,8 @@ import javax.sound.sampled.Mixer;
 import javax.sound.sampled.SourceDataLine;
 
 import Model.StreamedAudioClip;
+import Model.AudioClip;
+import Model.LoadedAudioClip;
 import Model.Set;
 import View.SamplerView;
 
@@ -33,9 +35,9 @@ public class SamplerControler {
 		 Mixer.Info[] mixerInfo = AudioSystem.getMixerInfo();
 		 Mixer globalMixer = AudioSystem.getMixer(mixerInfo[0]);
 		 
-		 ArrayList<StreamedAudioClip> clipList = new ArrayList<StreamedAudioClip>();
+		 ArrayList<AudioClip> clipList = new ArrayList<AudioClip>();
 		 setList = new ArrayList<Set>();
-		 StreamedAudioClip clip1 = new StreamedAudioClip("C:/Users/Arthur/Documents/Ableton/drum.wav");
+		 LoadedAudioClip clip1 = new LoadedAudioClip("C:/Users/Arthur/Documents/Ableton/drum.wav");
 		 StreamedAudioClip clip2 = new StreamedAudioClip("C:/Users/Arthur/Documents/Ableton/lead.wav");
 		 
 		 clipList.add(clip1);

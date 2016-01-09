@@ -7,13 +7,10 @@ import java.util.stream.Stream;
 
 import javax.sound.sampled.*;
 
-public class StreamedAudioClip {
-
+public class StreamedAudioClip extends AudioClip {
+	
+	
 	AudioInputStream audioStream;
-	boolean isPlaying;
-	String path;
-	
-	
 	
 	public StreamedAudioClip(String path){
 		
@@ -61,9 +58,6 @@ public class StreamedAudioClip {
 		}
 	}
 	
-	public boolean getIsPlaying(){
-		return isPlaying;
-	}
 
 	public AudioInputStream getAudioStream() {
 		return audioStream;
@@ -71,6 +65,12 @@ public class StreamedAudioClip {
 
 	public void setAudioStream(AudioInputStream audioStream) {
 		this.audioStream = audioStream;
+	}
+
+	@Override
+	public void stop() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

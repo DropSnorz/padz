@@ -10,13 +10,13 @@ public class Set {
 	
 	
 	String name;
-	List<StreamedAudioClip> audioClipList;
+	List<AudioClip> audioClipList;
 	Mixer globalMixer;
 	ClipMixer clipMixer;
 
 	
 	
-	public Set(List<StreamedAudioClip> audioClipList){
+	public Set(List<AudioClip> audioClipList){
 /*		
 
 		this.globalMixer = globalMixer;
@@ -39,7 +39,7 @@ public class Set {
 		this.name = name;
 	}
 	
-	public List<StreamedAudioClip> getAudioClipList(){
+	public List<AudioClip> getAudioClipList(){
 		return audioClipList;
 	}
 	

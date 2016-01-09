@@ -3,6 +3,7 @@ package Controler;
 import java.util.List;
 
 import Model.StreamedAudioClip;
+import Model.AudioClip;
 import Model.Set;
 import View.PadContainerView;
 import View.PadView;
@@ -27,7 +28,7 @@ public class PadContainerControler {
 		for(Set set : setList){
 			
 			int i = 0;
-			for(StreamedAudioClip clip : set.getAudioClipList() ){
+			for(AudioClip clip : set.getAudioClipList() ){
 				
 				PadControler controler = new PadControler(clip);
 				vue.addPadView(controler.getVue(), i, 0);
