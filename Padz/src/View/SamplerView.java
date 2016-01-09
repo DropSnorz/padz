@@ -11,6 +11,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class SamplerView extends JFrame {
 
@@ -22,6 +24,8 @@ public class SamplerView extends JFrame {
 	 * Create the frame.
 	 */
 	public SamplerView() {
+		
+		setLookAndFeel();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 653, 536);
 		
@@ -72,4 +76,25 @@ public class SamplerView extends JFrame {
 		scrollPane.setViewportView(comp);
 		
 	}
+	
+	public void setLookAndFeel(){
+		
+		 try {
+	        UIManager.setLookAndFeel(
+	            UIManager.getSystemLookAndFeelClassName());
+	    } 
+	    catch (UnsupportedLookAndFeelException e) {
+	       // handle exception
+	    }
+	    catch (ClassNotFoundException e) {
+	       // handle exception
+	    }
+	    catch (InstantiationException e) {
+	       // handle exception
+	    }
+	    catch (IllegalAccessException e) {
+	       // handle exception
+	    }
+	}
+	
 }
