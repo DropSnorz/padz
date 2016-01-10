@@ -16,15 +16,14 @@ public class AudioProcess extends Thread {
 
 	//temp
 
-	int bufferSize = 100;
+	int bufferSize = 128;
 
 	public Set set1;
 
 	public AudioProcess(SourceDataLine inputMixer,AudioFormat format,Set set1){
 
 		super("AudioProcess");
-
-
+		
 		this.inputMixer = inputMixer;
 		this.format = format;
 		this.set1 = set1;
@@ -43,14 +42,16 @@ public class AudioProcess extends Thread {
 		inputMixer.start();
 
 		int numBytesRead = 0;
-		int total = 0;
-		int totalToRead = 0;
+
 
 		byte myData[] = new byte[bufferSize];
 
 
 
 		while (!stopped){
+			
+			yield();
+		
 			try {
 				numBytesRead = set1.getStream().read(myData, 0, bufferSize);
 			} catch (IOException e) {
@@ -59,8 +60,8 @@ public class AudioProcess extends Thread {
 			}
 			//numBytesRead = clip1.getAudioStream().read(myData, 0, 100);
 			if (numBytesRead == -1) break;
-			total += numBytesRead; 
-			//System.out.println("WRITE");
+			//total += numBytesRead; 
+			//System.out.println(System.currentTimeMillis());
 			inputMixer.write(myData, 0, numBytesRead);
 
 		}

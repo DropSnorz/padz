@@ -35,14 +35,29 @@ public class LoadedAudioInputStream extends AudioInputStream {
 	
 	public void resetReadHead(){
 		
+		
 		readHead = 0;
+	}
+	
+	public int setHeadOnTimeMillis(long time){
+		
+		if(time > 0){
+			
+			this.getFrameLength(); 
+			int result = (int) (format.getFrameRate()/ 1000 * time);
+			
+			readHead = result;
+			return result;
+		}
+		
+		
+		return - 1;
 	}
 	
 	public int read(byte[] outputData,int offset, int length){
 		
 		int dataRead = 0;
 		boolean continuePlaying = true;
-		
 		
 		if(readHead > dataSize){
 			return - 1;

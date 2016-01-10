@@ -75,7 +75,8 @@ public class ClipMixer extends StreamMixer {
 				
 				if(!audioInputStreamList.contains(clip.getAudioStream())){
 					
-					System.out.println("ADD");
+					System.out.println("ADD -- ");
+					System.out.println(System.currentTimeMillis());
 
 					audioInputStreamList.add(clip.getAudioStream());
 				}
