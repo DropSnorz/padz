@@ -19,55 +19,58 @@ import View.SamplerView;
 
 public class SamplerControler {
 
-	
+
 	SamplerView vue;
 	ArrayList<Set> setList;
-	
+
 	PadContainerControler padContainerControler;
-	
-	
+	SetContainerControler setContainerControler;
+
+
 	public SamplerControler(){
-		
+
 		vue = new SamplerView();
 		vue.setVisible(true);
-		
-		
-		 Mixer.Info[] mixerInfo = AudioSystem.getMixerInfo();
-		 Mixer globalMixer = AudioSystem.getMixer(mixerInfo[0]);
-		 
-		 ArrayList<AudioClip> clipList = new ArrayList<AudioClip>();
-		 setList = new ArrayList<Set>();
-		 LoadedAudioClip clip1 = new LoadedAudioClip("C:/Users/Arthur/Documents/Ableton/drum.wav");
-		 StreamedAudioClip clip2 = new StreamedAudioClip("C:/Users/Arthur/Documents/Ableton/lead.wav");
-		 
-		 clipList.add(clip1);
-		 clipList.add(clip2);
-		 
-		 Set set1 = new Set(clipList);
-		 
-		 setList.add(set1);
-		 
-		padContainerControler = new PadContainerControler(setList);
 
-			
+
+		Mixer.Info[] mixerInfo = AudioSystem.getMixerInfo();
+		Mixer globalMixer = AudioSystem.getMixer(mixerInfo[0]);
+
+		ArrayList<AudioClip> clipList = new ArrayList<AudioClip>();
+		setList = new ArrayList<Set>();
+		LoadedAudioClip clip1 = new LoadedAudioClip("C:/Users/Arthur/Documents/Ableton/drum.wav");
+		StreamedAudioClip clip2 = new StreamedAudioClip("C:/Users/Arthur/Documents/Ableton/lead.wav");
+
+		clipList.add(clip1);
+		clipList.add(clip2);
+
+		Set set1 = new Set(clipList);
+
+		setList.add(set1);
+
+		padContainerControler = new PadContainerControler(setList);
 		vue.addToContentPane(padContainerControler.getVue(), BorderLayout.SOUTH);
-			
-		 
-		 Line.Info[] mLineInfo = globalMixer.getSourceLineInfo();
-		 
-		 DataLine.Info info = new DataLine.Info(SourceDataLine.class, 
-		 clip1.getAudioStream().getFormat());
 		
-		 try {
+		setContainerControler = new SetContainerControler();
+		vue.addToContentPaneEast(setContainerControler.getVue());
+
+
+
+		Line.Info[] mLineInfo = globalMixer.getSourceLineInfo();
+
+		DataLine.Info info = new DataLine.Info(SourceDataLine.class, 
+				clip1.getAudioStream().getFormat());
+
+		try {
 			SourceDataLine mInputMixer = (SourceDataLine) globalMixer.getLine(mLineInfo[0]);
 			AudioProcess audioProcess = new AudioProcess(mInputMixer,clip1.getAudioStream().getFormat(),set1);			
 			audioProcess.start();
-			
+
 		} catch (LineUnavailableException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		 
+
+
 	}
 }

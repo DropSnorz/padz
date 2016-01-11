@@ -67,6 +67,7 @@ public class SamplerView extends JFrame {
 		
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 		
+		
 		//bottomPane.add(new PadView(), BorderLayout.EAST);
 	}
 	
@@ -75,6 +76,10 @@ public class SamplerView extends JFrame {
 	public void addToContentPane(Component comp, Object constraint){
 		scrollPane.setViewportView(comp);
 		
+	}
+	
+	public void addToContentPaneEast(JPanel panel){
+		contentPane.add(panel, BorderLayout.EAST);
 	}
 	
 	public void setLookAndFeel(){
@@ -96,5 +101,4 @@ public class SamplerView extends JFrame {
 	       // handle exception
 	    }
 	}
-	
 }
