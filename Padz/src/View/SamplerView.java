@@ -27,7 +27,7 @@ public class SamplerView extends JFrame {
 		
 		setLookAndFeel();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 653, 536);
+		setBounds(100, 100, 904, 628);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);

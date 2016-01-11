@@ -33,6 +33,7 @@ import javax.swing.border.Border;
  */
 public class JAccordion extends JPanel implements ActionListener, MouseListener {
   private static final long serialVersionUID = -2760245005186933366L;
+  
   /**
    * The top panel: contains the buttons displayed on the top of the
    * JOutlookBar
@@ -79,8 +80,8 @@ public class JAccordion extends JPanel implements ActionListener, MouseListener 
    * @param componenet
    *            The component to add to the bar
    */
-  public void addBar(String name, JComponent component) {
-    BarInfo barInfo = new BarInfo(name, component);
+  public void addBar(String name, Color color, JComponent component) {
+    BarInfo barInfo = new BarInfo(name, color, component);
     barInfo.getButton().addActionListener(this);
     barInfo.getHeader().addMouseListener(this);
     this.bars.put(name, barInfo);
@@ -202,16 +203,6 @@ public class JAccordion extends JPanel implements ActionListener, MouseListener 
 	  
 	  
   }
-
-  /**
-   * Debug, dummy method
-   */
-  public static JPanel getDummyPanel(String name) {
-    JPanel panel = new JPanel(new BorderLayout());
-    panel.add(new JLabel(name, JLabel.CENTER));
-    return panel;
-  }
-
  
   /**
    * Internal class that maintains information about individual Outlook bars;
@@ -230,7 +221,7 @@ public class JAccordion extends JPanel implements ActionListener, MouseListener 
      * The JButton that implements the Outlook bar itself
      */
     private JButton button;
-    private JPanel buttonPane;
+    private JPanel headerPane;
 
     /**
      * The component that is the body of the Outlook bar
@@ -245,21 +236,21 @@ public class JAccordion extends JPanel implements ActionListener, MouseListener 
      * @param component
      *            The component that is the body of the Outlook Bar
      */
-    public BarInfo(String name, JComponent component) {
+    public BarInfo(String name, Color color, JComponent component) {
       this.name = name;
       this.component = component;
       
       
-      this.buttonPane = new JPanel();
-      buttonPane.setLayout(new FlowLayout());
-      buttonPane.setBorder(BorderFactory.createLineBorder(Color.gray));
-      
+      this.headerPane = new JPanel();
+      headerPane.setLayout(new BorderLayout());
+      headerPane.setBorder(BorderFactory.createLineBorder(Color.lightGray));
+      headerPane.setBackground(color);
       JLabel label = new JLabel(name);
-      buttonPane.add(label);
+      headerPane.add(label,BorderLayout.WEST);
       
-      this.button = new JButton("...");
+      this.button = new JButton("+");
       
-      buttonPane.add(button);
+      headerPane.add(button,BorderLayout.EAST);
       
     }
 
@@ -312,7 +303,7 @@ public class JAccordion extends JPanel implements ActionListener, MouseListener 
    
     public JPanel getHeader(){
     	
-    	return this.buttonPane;
+    	return this.headerPane;
     }
 
     /**

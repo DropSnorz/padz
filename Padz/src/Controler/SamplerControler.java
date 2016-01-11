@@ -44,14 +44,16 @@ public class SamplerControler {
 		clipList.add(clip1);
 		clipList.add(clip2);
 
-		Set set1 = new Set(clipList);
+		Set set1 = new Set("(default)",clipList);
 
 		setList.add(set1);
+		setList.add(new Set("Set 1",231, 76, 60));
+		setList.add(new Set("Set 2",41, 128, 185));
 
 		padContainerControler = new PadContainerControler(setList);
 		vue.addToContentPane(padContainerControler.getVue(), BorderLayout.SOUTH);
 		
-		setContainerControler = new SetContainerControler();
+		setContainerControler = new SetContainerControler(setList);
 		vue.addToContentPaneEast(setContainerControler.getVue());
 
 
