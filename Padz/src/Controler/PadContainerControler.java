@@ -28,11 +28,16 @@ public class PadContainerControler {
 		for(Set set : setList){
 			
 			int i = 0;
+			int j = 0;
 			for(AudioClip clip : set.getAudioClipList() ){
 				
 				PadControler controler = new PadControler(clip);
-				vue.addPadView(controler.getVue(), i, 0);
+				vue.addPadView(controler.getVue(), i, j);
 				i = i + 1;
+				if(i == 10){
+					i = 0;
+					j = j + 1;
+				}
 			}
 		}
 	}

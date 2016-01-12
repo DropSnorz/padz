@@ -77,17 +77,17 @@ public class StreamMixer
 {
 	private static final boolean	DEBUG = false;
 
-	protected List			audioInputStreamList;
+	protected ArrayList<AudioInputStream>			audioInputStreamList;
 
 	
 
-	public StreamMixer(AudioFormat audioFormat, Collection audioInputStreams)
+	public StreamMixer(AudioFormat audioFormat, ArrayList<AudioInputStream> audioInputStreams)
 	{
 		super(new ByteArrayInputStream(new byte[0]),
 		      audioFormat,
 		      AudioSystem.NOT_SPECIFIED);
 		if (DEBUG) { out("MixingAudioInputStream.<init>(): begin"); }
-		audioInputStreamList = new ArrayList(audioInputStreams);
+		audioInputStreamList = new ArrayList<AudioInputStream>(audioInputStreams);
 		if (DEBUG)
 		{
 			out("MixingAudioInputStream.<init>(): stream list:");
@@ -109,10 +109,10 @@ public class StreamMixer
 	public long getFrameLength()
 	{
 		long	lLengthInFrames = 0;
-		Iterator	streamIterator = audioInputStreamList.iterator();
+		Iterator<AudioInputStream>	streamIterator = audioInputStreamList.iterator();
 		while (streamIterator.hasNext())
 		{
-			AudioInputStream	stream = (AudioInputStream) streamIterator.next();
+			AudioInputStream	stream =  streamIterator.next();
 			long	lLength = stream.getFrameLength();
 			if (lLength == AudioSystem.NOT_SPECIFIED)
 			{
@@ -133,10 +133,10 @@ public class StreamMixer
 	{
 		if (DEBUG) { out("MixingAudioInputStream.read(): begin"); }
 		int	nSample = 0;
-		Iterator	streamIterator = audioInputStreamList.iterator();
+		Iterator<AudioInputStream>	streamIterator = audioInputStreamList.iterator();
 		while (streamIterator.hasNext())
 		{
-			AudioInputStream	stream = (AudioInputStream) streamIterator.next();
+			AudioInputStream	stream =  streamIterator.next();
 			int	nByte = stream.read();
 			if (nByte == -1)
 			{
@@ -195,10 +195,10 @@ public class StreamMixer
 			{
 				anMixedSamples[i] = 0;
 			}
-			Iterator	streamIterator = audioInputStreamList.iterator();
+			Iterator<AudioInputStream>	streamIterator = audioInputStreamList.iterator();
 			while (streamIterator.hasNext())
 			{
-				AudioInputStream	stream = (AudioInputStream) streamIterator.next();
+				AudioInputStream	stream = streamIterator.next();
 				if (DEBUG)
 				{
 					out("MixingAudioInputStream.read(byte[], int, int): AudioInputStream: " + stream);
@@ -251,7 +251,7 @@ public class StreamMixer
 					{
 						nSampleToAdd = TConversionTool.ulaw2linear(abBuffer[nBufferOffset]);
 					}
-					anMixedSamples[nChannel] += nSampleToAdd * 0.5;
+					anMixedSamples[nChannel] += nSampleToAdd * (1.0 /2.0);
 				} // loop over channels
 			} // loop over streams
 			if (DEBUG)
@@ -317,10 +317,10 @@ public class StreamMixer
 	public long skip(long lLength)
 		throws	IOException
 	{
-		Iterator	streamIterator = audioInputStreamList.iterator();
+		Iterator<AudioInputStream>	streamIterator = audioInputStreamList.iterator();
 		while (streamIterator.hasNext())
 		{
-			AudioInputStream	stream = (AudioInputStream) streamIterator.next();
+			AudioInputStream	stream = streamIterator.next();
 			stream.skip(lLength);
 		}
 		return lLength;
@@ -335,10 +335,10 @@ public class StreamMixer
 		throws	IOException
 	{
 		int	nAvailable = 0;
-		Iterator	streamIterator = audioInputStreamList.iterator();
+		Iterator<AudioInputStream>	streamIterator = audioInputStreamList.iterator();
 		while (streamIterator.hasNext())
 		{
-			AudioInputStream	stream = (AudioInputStream) streamIterator.next();
+			AudioInputStream	stream = streamIterator.next();
 			nAvailable = Math.min(nAvailable, stream.available());
 		}
 		return nAvailable;
@@ -359,10 +359,10 @@ public class StreamMixer
 	*/
 	public void mark(int nReadLimit)
 	{
-		Iterator	streamIterator = audioInputStreamList.iterator();
+		Iterator<AudioInputStream>	streamIterator = audioInputStreamList.iterator();
 		while (streamIterator.hasNext())
 		{
-			AudioInputStream	stream = (AudioInputStream) streamIterator.next();
+			AudioInputStream	stream =  streamIterator.next();
 			stream.mark(nReadLimit);
 		}
 	}
@@ -374,10 +374,10 @@ public class StreamMixer
 	public void reset()
 		throws	IOException
 	{
-		Iterator	streamIterator = audioInputStreamList.iterator();
+		Iterator<AudioInputStream>	streamIterator = audioInputStreamList.iterator();
 		while (streamIterator.hasNext())
 		{
-			AudioInputStream	stream = (AudioInputStream) streamIterator.next();
+			AudioInputStream	stream = streamIterator.next();
 			stream.reset();
 		}
 	}
@@ -389,10 +389,10 @@ public class StreamMixer
 	*/
 	public boolean markSupported()
 	{
-		Iterator	streamIterator = audioInputStreamList.iterator();
+		Iterator<AudioInputStream>	streamIterator = audioInputStreamList.iterator();
 		while (streamIterator.hasNext())
 		{
-			AudioInputStream	stream = (AudioInputStream) streamIterator.next();
+			AudioInputStream	stream = streamIterator.next();
 			if (! stream.markSupported())
 			{
 				return false;
@@ -401,7 +401,7 @@ public class StreamMixer
 		return true;
 	}
 	
-	public List getAudioInputStreamList(){
+	public ArrayList<AudioInputStream> getAudioInputStreamList(){
 		
 		return audioInputStreamList;
 	}

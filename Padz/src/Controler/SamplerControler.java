@@ -23,8 +23,8 @@ public class SamplerControler {
 	SamplerView vue;
 	ArrayList<Set> setList;
 
-	PadContainerControler padContainerControler;
-	SetContainerControler setContainerControler;
+	private PadContainerControler padContainerControler;
+	private SetContainerControler setContainerControler;
 
 
 	public SamplerControler(){
@@ -43,6 +43,10 @@ public class SamplerControler {
 
 		clipList.add(clip1);
 		clipList.add(clip2);
+		
+		for(int i = 0; i < 89; i++){
+		//clipList.add(new LoadedAudioClip());
+		}
 
 		Set set1 = new Set("(default)",clipList);
 
