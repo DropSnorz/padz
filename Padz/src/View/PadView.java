@@ -17,8 +17,11 @@ import Model.StreamedAudioClip;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
 
 public class PadView extends JPanel {
 
@@ -28,7 +31,8 @@ public class PadView extends JPanel {
 	//temp
 	
 	public JButton BT_Play;
-	private Graphics2D graph;
+	public JLabel LB_FileName;
+	private boolean tickEnabled = false;
 	
 	private int padSize = 72;
 	
@@ -40,6 +44,11 @@ public class PadView extends JPanel {
 		setLayout(null);
 
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
+		
+		LB_FileName = new JLabel("");
+		LB_FileName.setHorizontalAlignment(SwingConstants.CENTER);
+		LB_FileName.setBounds(5,20,60,15);
+		add(LB_FileName);
 		BT_Play = new JButton("Play");
 		BT_Play.setBounds(10, 37, 53, 23);
 		add(BT_Play);
@@ -67,13 +76,22 @@ public class PadView extends JPanel {
 		
 		
 		
+		
+		
 	}
 	
 	
 	public void paint(Graphics g){
-		super.paint(g);
-		drawSelectedCursor(g);
 		
+		super.paint(g);		
+		
+		if(tickEnabled){
+			drawSelectedCursor(g);
+		}
+	}
+	
+	public void setTickEnabled(boolean value){
+		tickEnabled = value;
 	}
 
 }

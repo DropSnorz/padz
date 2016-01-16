@@ -14,6 +14,7 @@ import javax.sound.sampled.SourceDataLine;
 import Model.StreamedAudioClip;
 import Model.AudioClip;
 import Model.LoadedAudioClip;
+import Model.PadGridModel;
 import Model.Set;
 import View.SamplerView;
 
@@ -41,12 +42,12 @@ public class SamplerControler {
 		LoadedAudioClip clip1 = new LoadedAudioClip("C:/Users/Arthur/Documents/Ableton/drum.wav");
 		StreamedAudioClip clip2 = new StreamedAudioClip("C:/Users/Arthur/Documents/Ableton/lead.wav");
 
-		clipList.add(clip1);
-		clipList.add(clip2);
 		
-		for(int i = 0; i < 89; i++){
-		//clipList.add(new LoadedAudioClip());
-		}
+		PadGridModel padGridModel = new PadGridModel(8,5);
+		clipList.add(clip1);
+		padGridModel.addAudioClip(clip1, 0, 0);
+		clipList.add(clip2);
+		padGridModel.addAudioClip(clip2, 1, 0);
 
 		Set set1 = new Set("(default)",clipList);
 
@@ -54,7 +55,7 @@ public class SamplerControler {
 		setList.add(new Set("Set 1",231, 76, 60));
 		setList.add(new Set("Set 2",41, 128, 185));
 
-		padContainerControler = new PadContainerControler(setList);
+		padContainerControler = new PadContainerControler(padGridModel,setList);
 		vue.addToContentPane(padContainerControler.getVue(), BorderLayout.SOUTH);
 		
 		setContainerControler = new SetContainerControler(setList);

@@ -15,16 +15,18 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public class LoadedAudioClip extends AudioClip  {
 
 	private LoadedAudioInputStream audioStream;
-	boolean ready = false;
 
 	public LoadedAudioClip(String path){
 		
+		super.path = path;
 		loadClip(path);
 
 	}
 	
 	public LoadedAudioClip(){
 		
+		super.path = "";
+		isLoaded = false;
 	}
 	
 	private void loadClip(String path){
@@ -40,7 +42,7 @@ public class LoadedAudioClip extends AudioClip  {
 			InputStream bufferedIn = new BufferedInputStream(audioStream);
 
 			this.audioStream = new LoadedAudioInputStream(bufferedIn,audioStream.getFormat(),audioStream.getFrameLength());
-			ready = true;
+			isLoaded = true;
 
 		} catch (UnsupportedAudioFileException e) {
 			// TODO Auto-generated catch block
@@ -53,7 +55,7 @@ public class LoadedAudioClip extends AudioClip  {
 	
 	public void play(){
 		
-		if(ready){
+		if(isLoaded){
 			audioStream.resetReadHead();
 			isPlaying = true;
 		}

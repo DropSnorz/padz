@@ -15,14 +15,31 @@ public class PadControler implements MouseListener, ActionListener {
 	private PadView vue;
 	private AudioClip clip;
 	
-	public PadControler(AudioClip clip){
+	private PadContainerControler padContainerControler;
+	
+	public PadControler(AudioClip clip, PadContainerControler padContainerControler){
 		
+		this.padContainerControler = padContainerControler;
 		this.clip = clip;
+		
 		vue = new PadView();
-		
-		
+		vue.LB_FileName.setText(clip.getFileName());
 		vue.addMouseListener(this);
 		vue.BT_Play.addMouseListener(this);
+	}
+	
+	public void select(){
+		
+		vue.drawSelectedCursor(vue.getGraphics());
+		vue.setTickEnabled(true);
+
+
+	}
+	
+	public void deselect(){
+		
+		vue.repaint();
+		vue.setTickEnabled(false);
 	}
 	
 	public PadView getVue(){
@@ -32,7 +49,12 @@ public class PadControler implements MouseListener, ActionListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-				
+		
+		if(e.getSource() == vue){
+			
+			padContainerControler.setSlectedPad(this);
+			
+		}
 	}
 
 	@Override
@@ -59,6 +81,7 @@ public class PadControler implements MouseListener, ActionListener {
 			clip.play();
 		
 		}
+		
 
 		
 	}
@@ -75,8 +98,7 @@ public class PadControler implements MouseListener, ActionListener {
 		
 		if(e.getSource() == vue.BT_Play){
 			
-			System.out.println("CLICK !");
-			clip.play();
+			System.out.println("CLICK Pressed/Released !");
 		
 		}
 		

@@ -39,6 +39,6 @@ public class PadContainerView extends JPanel {
 	
 	public void addPadView(PadView vue, int i, int j){
 		
-		panelHolder[i][j].add(vue);
+		panelHolder[j][i].add(vue);
 	}
 }
