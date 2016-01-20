@@ -80,6 +80,11 @@ public class PadView extends JPanel {
 		
 	}
 	
+	public void setSetColor(int r, int g, int b){
+		
+		this.setBackground(new Color(r,g,b));
+	}
+	
 	
 	public void paint(Graphics g){
 		

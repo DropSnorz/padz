@@ -5,24 +5,27 @@ public class PadGridModel {
 	
 	private int sizeX;
 	private int sizeY;
+	private Set defaultSet;
 	private AudioClip padGrid[][];
 	
 	
-	public PadGridModel(int x, int y){
+	public PadGridModel(int x, int y, Set defaultSet){
 		
 		sizeX = x;
 		sizeY = y;
 		padGrid = new AudioClip[sizeX][sizeY];
+		this.defaultSet = defaultSet;
 		initModel();
 	}
 	
+
 	private void initModel(){
 		
 		for(int i =0; i < sizeX; i++){
 			
 			for(int j = 0; j < sizeY;j++){
 				
-				padGrid[i][j] = new LoadedAudioClip();
+				padGrid[i][j] = new LoadedAudioClip(defaultSet);
 			}
 		}
 	}

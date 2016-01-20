@@ -23,9 +23,10 @@ public class LoadedAudioClip extends AudioClip  {
 
 	}
 	
-	public LoadedAudioClip(){
+	public LoadedAudioClip(Set set){
 		
 		super.path = "";
+		this.set = set;
 		isLoaded = false;
 	}
 	
@@ -58,6 +59,9 @@ public class LoadedAudioClip extends AudioClip  {
 		if(isLoaded){
 			audioStream.resetReadHead();
 			isPlaying = true;
+			
+			set.notifyClipPlay(this);
+			
 		}
 		
 	}

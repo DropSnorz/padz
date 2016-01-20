@@ -50,6 +50,16 @@ public class ClipMixer extends StreamMixer {
 		return 0;
 
 	}
+	
+	public void addAudioClip(AudioClip clip){
+		
+		
+		if(!audioInputStreamList.contains(clip.getAudioStream())){
+			
+			audioInputStreamList.add(clip.getAudioStream());
+		}
+		
+	}
 
 	public void updateStreams(){
 

@@ -43,13 +43,19 @@ public class SamplerControler {
 		StreamedAudioClip clip2 = new StreamedAudioClip("C:/Users/Arthur/Documents/Ableton/lead.wav");
 
 		
-		PadGridModel padGridModel = new PadGridModel(8,5);
+	
+
+		Set set1 = new Set("(default)",clip1.getAudioStream().getFormat());
+		
+		PadGridModel padGridModel = new PadGridModel(8,5,set1);
 		clipList.add(clip1);
 		padGridModel.addAudioClip(clip1, 0, 0);
 		clipList.add(clip2);
 		padGridModel.addAudioClip(clip2, 1, 0);
-
-		Set set1 = new Set("(default)",clipList);
+		
+		
+		clip1.setSet(set1);
+		clip2.setSet(set1);
 
 		setList.add(set1);
 		setList.add(new Set("Set 1",231, 76, 60));

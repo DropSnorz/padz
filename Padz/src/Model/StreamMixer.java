@@ -86,6 +86,7 @@ public class StreamMixer
 		super(new ByteArrayInputStream(new byte[0]),
 		      audioFormat,
 		      AudioSystem.NOT_SPECIFIED);
+		
 		if (DEBUG) { out("MixingAudioInputStream.<init>(): begin"); }
 		audioInputStreamList = new ArrayList<AudioInputStream>(audioInputStreams);
 		if (DEBUG)

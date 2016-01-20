@@ -26,6 +26,8 @@ public class PadControler implements MouseListener, ActionListener {
 		vue.LB_FileName.setText(clip.getFileName());
 		vue.addMouseListener(this);
 		vue.BT_Play.addMouseListener(this);
+		
+		vue.setSetColor(clip.getSet().getColor_r(), clip.getSet().getColor_g(), clip.getSet().getColor_b());
 	}
 	
 	public void select(){

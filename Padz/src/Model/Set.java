@@ -7,6 +7,9 @@ import java.util.List;
 import javax.sound.sampled.*;
 import javax.sound.sampled.Line.Info;
 
+import org.tritonus.share.sampled.AudioFormatSet;
+import org.tritonus.share.sampled.AudioFormats;
+
 import resources.AppResources;
 
 public class Set {
@@ -22,19 +25,22 @@ public class Set {
 
 	
 	
-	public Set(String name, List<AudioClip> audioClipList){
+	public Set(String name, AudioFormat format){
 		
-		this.audioClipList = audioClipList;
+		
+		this.audioClipList = new ArrayList<AudioClip>();
 		this.name = name;
-		clipMixer = new ClipMixer(audioClipList.get(0).getAudioStream().getFormat(),audioClipList);
+		clipMixer = new ClipMixer(format,audioClipList);
+		
+		updateClipSet();
 		
 		color_r = AppResources.UI_Background_Color.getRed();
 		color_g = AppResources.UI_Background_Color.getGreen();
 		color_b = AppResources.UI_Background_Color.getBlue();
 	}
 	
-	public Set(String name, List<AudioClip> audioClipList, int r, int g, int b){
-		this(name,audioClipList);
+	public Set(String name, AudioFormat format, int r, int g, int b){
+		this(name,format);
 		
 		color_r = r;
 		color_g = g;
@@ -60,6 +66,29 @@ public class Set {
 		color_r = r;
 		color_g = g;
 		color_b = b;
+		
+	}
+	
+	public void updateClipSet(){
+		
+		for(AudioClip clip : audioClipList){
+			
+			clip.setSet(this);
+		}
+	}
+	
+	public void addClip(AudioClip clip){
+		
+		audioClipList.add(clip);
+		
+		if(clip.set != this){
+			clip.setSet(this);
+		}
+	}
+	
+	public void notifyClipPlay(AudioClip clip){
+		
+		clipMixer.addAudioClip(clip);
 		
 	}
 
