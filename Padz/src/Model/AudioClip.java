@@ -30,10 +30,13 @@ public abstract class AudioClip implements IMixable {
 		return set;
 	}
 	
-	public void setSet(Set set){
+	public void setSet(Set newSet){
 		
-		set.removeClip(this);
-		this.set = set;
+		isPlaying = false;
+		if(set!= null){
+			this.set.removeClip(this);
+		}
+		this.set = newSet;
 		set.addClip(this);
 		
 	}

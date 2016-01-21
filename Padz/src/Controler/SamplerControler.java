@@ -1,8 +1,11 @@
 package Controler;
 
 import java.awt.BorderLayout;
+import java.awt.Cursor;
 import java.util.ArrayList;
 
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioFormat.Encoding;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Control;
 import javax.sound.sampled.DataLine;
@@ -46,9 +49,10 @@ public class SamplerControler {
 		StreamedAudioClip clip2 = new StreamedAudioClip("C:/Users/Arthur/Documents/Ableton/lead.wav");
 
 		
-	
+		AudioFormat format = new AudioFormat( 44100,16, 2,true,false);
+		System.out.println(format);
 
-		Set set1 = new Set("(default)",clip1.getAudioStream().getFormat());
+		Set set1 = new Set("(default)",format);
 		
 		PadGridModel padGridModel = new PadGridModel(8,5,set1);
 		clipList.add(clip1);
@@ -60,9 +64,13 @@ public class SamplerControler {
 		clip1.setSet(set1);
 		clip2.setSet(set1);
 
+		
+		//Encoding encoding = new Encoding();
+		
+
 		setList.add(set1);
-		setList.add(new Set("Set 1",231, 76, 60));
-		setList.add(new Set("Set 2",41, 128, 185));
+		setList.add(new Set("Set 1", format,231, 76, 60));
+		setList.add(new Set("Set 2", format,41, 128, 185));
 
 		padContainerControler = new PadContainerControler(padGridModel,setList);
 		vue.addToContentPane(padContainerControler.getVue(), BorderLayout.SOUTH);
@@ -74,12 +82,12 @@ public class SamplerControler {
 
 		Line.Info[] mLineInfo = globalMixer.getSourceLineInfo();
 
-		DataLine.Info info = new DataLine.Info(SourceDataLine.class, 
-				clip1.getAudioStream().getFormat());
+		//DataLine.Info info = new DataLine.Info(SourceDataLine.class, 
+		///		clip1.getAudioStream().getFormat());
 
 		try {
 			SourceDataLine mInputMixer = (SourceDataLine) globalMixer.getLine(mLineInfo[0]);
-			AudioProcess audioProcess = new AudioProcess(mInputMixer,clip1.getAudioStream().getFormat(),set1);			
+			AudioProcess audioProcess = new AudioProcess(mInputMixer,format,set1);			
 			audioProcess.start();
 
 		} catch (LineUnavailableException e1) {
@@ -98,12 +106,15 @@ public class SamplerControler {
 			//Start pad selectionMode
 			padContainerControler.startPadSelectionMode(set);
 			padSelectionMode = true;
+			vue.setCursor(Cursor.CROSSHAIR_CURSOR);
 		}
 		else{
 			
 			padContainerControler.stopPadSelectionMode();
 			padSelectionMode = false;
 			//disable pad selection mode
+			
+			vue.setCursor(Cursor.DEFAULT_CURSOR);
 		}
 		
 	}

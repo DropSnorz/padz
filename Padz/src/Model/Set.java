@@ -90,6 +90,8 @@ public class Set {
 	public void removeClip(AudioClip clip){
 		
 		audioClipList.remove(clip);
+		clipMixer.getAudioInputStreamList().remove(clip.getAudioStream());
+		
 	}
 	
 	public void notifyClipPlay(AudioClip clip){
