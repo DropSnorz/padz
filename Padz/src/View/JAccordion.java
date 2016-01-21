@@ -26,6 +26,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+import Controler.SetContainerControler;
+import Controler.SetControler;
+
 /**
  * A JOutlookBar provides a component that is similar to a JTabbedPane, but
  * instead of maintaining tabs, it uses Outlook-style bars to control the
@@ -34,7 +37,8 @@ import javax.swing.border.Border;
 public class JAccordion extends JPanel implements ActionListener, MouseListener {
   private static final long serialVersionUID = -2760245005186933366L;
   
-  /**
+  
+    /**
    * The top panel: contains the buttons displayed on the top of the
    * JOutlookBar
    */
@@ -70,7 +74,7 @@ public class JAccordion extends JPanel implements ActionListener, MouseListener 
     this.setLayout(new BorderLayout());
     this.add(topPanel, BorderLayout.NORTH);
     this.add(bottomPanel, BorderLayout.SOUTH);
-  }
+     }
 
   /**
    * Adds the specified component to the JOutlookBar and sets the bar's name
@@ -80,9 +84,9 @@ public class JAccordion extends JPanel implements ActionListener, MouseListener 
    * @param componenet
    *            The component to add to the bar
    */
-  public void addBar(String name, Color color, JComponent component) {
-    BarInfo barInfo = new BarInfo(name, color, component);
-    barInfo.getButton().addActionListener(this);
+  public void addBar(String name, Color color, JComponent component, SetControler setControler) {
+    BarInfo barInfo = new BarInfo(name, color, component,setControler);
+    //barInfo.getButton().addActionListener(this);
     barInfo.getHeader().addMouseListener(this);
     this.bars.put(name, barInfo);
     render();
@@ -201,7 +205,7 @@ public class JAccordion extends JPanel implements ActionListener, MouseListener 
   public void actionPerformed(ActionEvent e) {
     
 	  
-	  
+	  System.out.println("BT CLIck");
   }
  
   /**
@@ -211,7 +215,10 @@ public class JAccordion extends JPanel implements ActionListener, MouseListener 
    * name The name of the bar button The associated JButton for the bar
    * component The component maintained in the Outlook bar
    */
-  class BarInfo {
+  class BarInfo implements ActionListener {
+	  
+	  
+	  private SetControler setControler;
     /**
      * The name of this bar
      */
@@ -236,10 +243,11 @@ public class JAccordion extends JPanel implements ActionListener, MouseListener 
      * @param component
      *            The component that is the body of the Outlook Bar
      */
-    public BarInfo(String name, Color color, JComponent component) {
+    public BarInfo(String name, Color color, JComponent component, SetControler setControler) {
       this.name = name;
       this.component = component;
       
+      this.setControler = setControler;
       
       this.headerPane = new JPanel();
       headerPane.setLayout(new BorderLayout());
@@ -249,6 +257,7 @@ public class JAccordion extends JPanel implements ActionListener, MouseListener 
       headerPane.add(label,BorderLayout.WEST);
       
       this.button = new JButton("+");
+      this.button.addActionListener(this);
       
       headerPane.add(button,BorderLayout.EAST);
       
@@ -314,6 +323,15 @@ public class JAccordion extends JPanel implements ActionListener, MouseListener 
     public JComponent getComponent() {
       return this.component;
     }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == this.button){
+			
+			setControler.requestForHandle();
+		}
+		
+	}
   }
 
 @Override

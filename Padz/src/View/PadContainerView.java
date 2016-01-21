@@ -13,6 +13,8 @@ public class PadContainerView extends JPanel {
 	/**
 	 * Create the panel.
 	 */
+
+	
 	public JPanel[][] panelHolder;
 	
 	int x = 10;
@@ -20,7 +22,7 @@ public class PadContainerView extends JPanel {
 	
 	public PadContainerView() {
 		
-		this.setLayout(new GridLayout(x,y,10,10));
+		this.setLayout(new GridLayout(x,y,0,0));
 		panelHolder = new JPanel[x][y];
 		
 		

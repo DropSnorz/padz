@@ -60,6 +60,11 @@ public class ClipMixer extends StreamMixer {
 		}
 		
 	}
+	
+	public void removeAudioClip(AudioClip clip){
+		
+		audioClipList.remove(clip);
+	}
 
 	public void updateStreams(){
 
@@ -71,6 +76,7 @@ public class ClipMixer extends StreamMixer {
 
 						//Si le clip est terminé (fin du stream)
 						clip.isPlaying = false;
+						System.out.println("END OF STREAM");
 
 					}
 				} catch (IOException e) {

@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 
+import Controler.SetControler;
+
 public class SetContainerView extends JPanel {
 
 	/**
@@ -48,10 +50,10 @@ public class SetContainerView extends JPanel {
 
 	}
 	
-	public void addAccordionBar(String name, int r, int g, int b, JPanel panel){
+	public void addAccordionBar(String name, int r, int g, int b, JPanel panel, SetControler setControler){
 		
 		Color color = new Color(r,g,b);
-		accordion.addBar(name, color, panel);
+		accordion.addBar(name, color, panel,setControler);
 	}
 
 }

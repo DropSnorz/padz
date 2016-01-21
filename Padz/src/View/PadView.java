@@ -35,23 +35,31 @@ public class PadView extends JPanel {
 	private boolean tickEnabled = false;
 	
 	private int padSize = 72;
+	private int padMargin = 10;
 	
 	
 	public PadView() {
 		
-		this.setSize(new Dimension(padSize,padSize));
-		this.setPreferredSize(new Dimension(padSize, padSize));
+		this.setSize(new Dimension(padSize + 2*padMargin,padSize + 2*padMargin));
+		this.setPreferredSize(new Dimension(padSize + 2*padMargin, padSize + 2*padMargin));
 		setLayout(null);
+		
+		JPanel PadPanel = new JPanel();
+		PadPanel.setBounds(10, 10, 10, 10);
+		PadPanel.setSize(new Dimension(padSize,padSize));
+		PadPanel.setPreferredSize(new Dimension(padSize, padSize));
+		PadPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
-		this.setBorder(BorderFactory.createLineBorder(Color.black));
+		add(PadPanel);
+		PadPanel.setLayout(null);
 		
 		LB_FileName = new JLabel("");
+		LB_FileName.setBounds(9, 11, 54, 16);
+		PadPanel.add(LB_FileName);
 		LB_FileName.setHorizontalAlignment(SwingConstants.CENTER);
-		LB_FileName.setBounds(5,20,60,15);
-		add(LB_FileName);
 		BT_Play = new JButton("Play");
-		BT_Play.setBounds(10, 37, 53, 23);
-		add(BT_Play);
+		BT_Play.setBounds(10, 38, 53, 23);
+		PadPanel.add(BT_Play);
 		
 
 	}
@@ -60,18 +68,22 @@ public class PadView extends JPanel {
 		
 	    Graphics2D graph = (Graphics2D) g;
 		
-		graph.drawLine(5,5,5,10);
-		graph.drawLine(5, 5, 10 , 5);
+	    //Haut gauche
+		graph.drawLine(5 + padMargin,5+ padMargin,5+ padMargin,10+ padMargin);
+		graph.drawLine(5+ padMargin, 5+ padMargin, 10+ padMargin , 5+ padMargin);
 		
-		graph.drawLine(padSize - 5, 5, padSize - 10, 5);
-		graph.drawLine(padSize - 5, 5, padSize - 5,  10);
+		//Haut droit
+		graph.drawLine(padSize + padMargin - 5, 5+ padMargin, padSize + padMargin - 10, 5+ padMargin);
+		graph.drawLine(padSize + padMargin - 5, 5+ padMargin, padSize+ padMargin - 5,  10+ padMargin);
 
+		//Bas droit
+		graph.drawLine(padSize+ padMargin - 5, padSize+ padMargin - 5, padSize+ padMargin - 5, padSize+ padMargin - 10 );
+		graph.drawLine(padSize+ padMargin - 5, padSize+ padMargin - 5, padSize+ padMargin - 10, padSize+ padMargin - 5);
 		
-		graph.drawLine(padSize - 5, padSize - 5, padSize - 5, padSize - 10 );
-		graph.drawLine(padSize - 5, padSize - 5, padSize - 10, padSize - 5);
 		
-		graph.drawLine(5, padSize - 5, 10, padSize - 5);
-		graph.drawLine(5, padSize - 5, 5, padSize - 10);
+		//Bas Gauche
+		graph.drawLine(padMargin + 5, padSize+ padMargin - 5, padMargin + 10, padSize+ padMargin - 5);
+		graph.drawLine(padMargin + 5, padSize+ padMargin - 5, padMargin + 5, padSize+ padMargin - 10);
 		//graph.draw(new Line2D.Double(20,20,20,20));
 		
 		
@@ -98,5 +110,4 @@ public class PadView extends JPanel {
 	public void setTickEnabled(boolean value){
 		tickEnabled = value;
 	}
-
 }

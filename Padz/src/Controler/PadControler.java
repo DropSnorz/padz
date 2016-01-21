@@ -17,6 +17,8 @@ public class PadControler implements MouseListener, ActionListener {
 	
 	private PadContainerControler padContainerControler;
 	
+	public boolean handleSetChanges = false;
+	
 	public PadControler(AudioClip clip, PadContainerControler padContainerControler){
 		
 		this.padContainerControler = padContainerControler;
@@ -27,8 +29,8 @@ public class PadControler implements MouseListener, ActionListener {
 		vue.addMouseListener(this);
 		vue.BT_Play.addMouseListener(this);
 		
-		vue.setSetColor(clip.getSet().getColor_r(), clip.getSet().getColor_g(), clip.getSet().getColor_b());
-	}
+		updateUI();
+		}
 	
 	public void select(){
 		
@@ -44,6 +46,15 @@ public class PadControler implements MouseListener, ActionListener {
 		vue.setTickEnabled(false);
 	}
 	
+	public void updateUI(){
+		
+		vue.setSetColor(clip.getSet().getColor_r(), clip.getSet().getColor_g(), clip.getSet().getColor_b());
+
+	}
+	public void setHandleSetChanges(boolean value){
+		handleSetChanges = value;
+	}
+	
 	public PadView getVue(){
 		return vue;
 	}
@@ -54,7 +65,18 @@ public class PadControler implements MouseListener, ActionListener {
 		
 		if(e.getSource() == vue){
 			
-			padContainerControler.setSlectedPad(this);
+			if(handleSetChanges){
+				
+				System.out.println("Updating Pad...");
+				clip.setSet(padContainerControler.getSelectedSet());
+				
+				updateUI();
+			}
+			else{
+				
+				padContainerControler.setSlectedPad(this);
+
+			}
 			
 		}
 	}

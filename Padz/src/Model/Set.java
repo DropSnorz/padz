@@ -79,11 +79,17 @@ public class Set {
 	
 	public void addClip(AudioClip clip){
 		
+		//TODO fix concurrent access : Thread safe List
 		audioClipList.add(clip);
 		
 		if(clip.set != this){
 			clip.setSet(this);
 		}
+	}
+	
+	public void removeClip(AudioClip clip){
+		
+		audioClipList.remove(clip);
 	}
 	
 	public void notifyClipPlay(AudioClip clip){

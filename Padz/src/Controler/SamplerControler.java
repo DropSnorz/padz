@@ -26,6 +26,9 @@ public class SamplerControler {
 
 	private PadContainerControler padContainerControler;
 	private SetContainerControler setContainerControler;
+	
+	
+	public boolean padSelectionMode = false;
 
 
 	public SamplerControler(){
@@ -64,7 +67,7 @@ public class SamplerControler {
 		padContainerControler = new PadContainerControler(padGridModel,setList);
 		vue.addToContentPane(padContainerControler.getVue(), BorderLayout.SOUTH);
 		
-		setContainerControler = new SetContainerControler(setList);
+		setContainerControler = new SetContainerControler(setList,this);
 		vue.addToContentPaneEast(setContainerControler.getVue());
 
 
@@ -85,5 +88,23 @@ public class SamplerControler {
 		}
 
 
+	}
+	
+	public void updatePadSelectionMode(Set set){
+		
+		
+		if(padSelectionMode==false){
+			
+			//Start pad selectionMode
+			padContainerControler.startPadSelectionMode(set);
+			padSelectionMode = true;
+		}
+		else{
+			
+			padContainerControler.stopPadSelectionMode();
+			padSelectionMode = false;
+			//disable pad selection mode
+		}
+		
 	}
 }

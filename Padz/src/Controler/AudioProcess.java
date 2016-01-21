@@ -49,9 +49,7 @@ public class AudioProcess extends Thread {
 
 
 		while (!stopped){
-			
-			yield();
-		
+					
 			try {
 				numBytesRead = set1.getStream().read(myData, 0, bufferSize);
 			} catch (IOException e) {

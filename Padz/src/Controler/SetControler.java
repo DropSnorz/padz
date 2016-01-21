@@ -14,9 +14,12 @@ public class SetControler implements ActionListener {
 	private SetView vue;
 	private Set set;
 	
-	public SetControler(Set set){
+	private SetContainerControler setContainerControler;
+	
+	public SetControler(Set set, SetContainerControler setContainerControler){
 		
 		this.set = set;
+		this.setContainerControler = setContainerControler;
 		vue = new SetView();
 		vue.BT_ColorChooser.addActionListener(this);
 		
@@ -29,6 +32,12 @@ public class SetControler implements ActionListener {
 		Color newColor = JColorChooser.showDialog(vue, "Choose a new color",currentColor );
 		
 		//TODO update color (model and ui)
+	}
+	
+	public void requestForHandle(){
+		
+		setContainerControler.requestPadSelectionMode(set);
+		
 	}
 	
 	

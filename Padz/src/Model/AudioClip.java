@@ -32,8 +32,10 @@ public abstract class AudioClip implements IMixable {
 	
 	public void setSet(Set set){
 		
+		set.removeClip(this);
 		this.set = set;
 		set.addClip(this);
+		
 	}
 	
 	public String getFileName(){
