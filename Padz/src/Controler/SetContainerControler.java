@@ -28,9 +28,23 @@ public class SetContainerControler {
 		for(Set set : setList){
 			
 			SetControler setControler = new SetControler(set,this);
-			vue.addAccordionBar(set.getName(), set.getColor_r(),set.getColor_g(),set.getColor_b(), setControler.getVue(),setControler);
+			vue.addAccordionBar(set.getName(), setControler.getVue(),setControler);
+			
 			
 		}
+	}
+	
+	public void updateUI(){
+		
+		
+		vue.updateAccordionView();
+		//TODO refresh Bar colors
+	}
+	
+	public void setModelChanged(){
+		
+		updateUI();
+		samplerControler.updateUI();
 	}
 	
 	public void requestPadSelectionMode(Set set){

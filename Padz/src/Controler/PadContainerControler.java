@@ -48,6 +48,7 @@ public class PadContainerControler {
 
 			}
 		}
+		
 		/*
 		for(Set set : setList){
 
@@ -68,6 +69,16 @@ public class PadContainerControler {
 
 		 */
 	}
+	
+	public void updateUI()
+	{
+		
+		for(PadControler padControler : padControlerList){
+			
+			padControler.updateUI();
+		}
+	}
+	
 
 	public void setSlectedPad(PadControler padControler){
 

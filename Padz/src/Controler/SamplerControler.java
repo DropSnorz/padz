@@ -98,6 +98,11 @@ public class SamplerControler {
 
 	}
 	
+	public void updateUI(){
+		
+		padContainerControler.updateUI();
+	}
+	
 	public void updatePadSelectionMode(Set set){
 		
 		

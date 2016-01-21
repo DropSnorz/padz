@@ -50,10 +50,13 @@ public class SetContainerView extends JPanel {
 
 	}
 	
-	public void addAccordionBar(String name, int r, int g, int b, JPanel panel, SetControler setControler){
+	public void addAccordionBar(String name, JPanel panel, SetControler setControler){
 		
-		Color color = new Color(r,g,b);
-		accordion.addBar(name, color, panel,setControler);
+		accordion.addBar(name, panel,setControler);
+	}
+	
+	public void updateAccordionView(){
+		accordion.updateView();
 	}
 
 }

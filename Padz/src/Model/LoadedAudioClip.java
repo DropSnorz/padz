@@ -35,14 +35,10 @@ public class LoadedAudioClip extends AudioClip  {
 		File audioFile = new File(path);
 		isPlaying = false;
 		try {
-			InputStream audioSrc = getClass().getResourceAsStream(path);
-			//add buffer for mark/reset support
 
 			AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
 
-			InputStream bufferedIn = new BufferedInputStream(audioStream);
-
-			this.audioStream = new LoadedAudioInputStream(bufferedIn,audioStream.getFormat(),audioStream.getFrameLength());
+			this.audioStream = new LoadedAudioInputStream(audioStream,audioStream.getFormat(),audioStream.getFrameLength());
 			isLoaded = true;
 
 		} catch (UnsupportedAudioFileException e) {

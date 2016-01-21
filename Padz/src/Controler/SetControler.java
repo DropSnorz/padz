@@ -31,7 +31,13 @@ public class SetControler implements ActionListener {
 		
 		Color newColor = JColorChooser.showDialog(vue, "Choose a new color",currentColor );
 		
+		set.setColor_r(newColor.getRed());
+		set.setColor_g(newColor.getGreen());
+		set.setColor_b(newColor.getBlue());
+		
 		//TODO update color (model and ui)
+		
+		setContainerControler.setModelChanged();
 	}
 	
 	public void requestForHandle(){
@@ -40,6 +46,10 @@ public class SetControler implements ActionListener {
 		
 	}
 	
+	public Set getSet(){
+		
+		return set;
+	}
 	
 	public SetView getVue(){
 		

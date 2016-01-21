@@ -84,8 +84,8 @@ public class JAccordion extends JPanel implements ActionListener, MouseListener 
    * @param componenet
    *            The component to add to the bar
    */
-  public void addBar(String name, Color color, JComponent component, SetControler setControler) {
-    BarInfo barInfo = new BarInfo(name, color, component,setControler);
+  public void addBar(String name, JComponent component, SetControler setControler) {
+    BarInfo barInfo = new BarInfo(name, component,setControler);
     //barInfo.getButton().addActionListener(this);
     barInfo.getHeader().addMouseListener(this);
     this.bars.put(name, barInfo);
@@ -198,6 +198,16 @@ public class JAccordion extends JPanel implements ActionListener, MouseListener 
     // subcomponents
     validate();
   }
+  
+  
+  
+  public void updateView(){
+	  
+	  for(String key : this.bars.keySet()){
+		  
+		  this.bars.get(key).updateUI();
+	  }
+  }
 
   /**
    * Invoked when one of our bars is selected
@@ -243,7 +253,7 @@ public class JAccordion extends JPanel implements ActionListener, MouseListener 
      * @param component
      *            The component that is the body of the Outlook Bar
      */
-    public BarInfo(String name, Color color, JComponent component, SetControler setControler) {
+    public BarInfo(String name, JComponent component, SetControler setControler) {
       this.name = name;
       this.component = component;
       
@@ -252,7 +262,10 @@ public class JAccordion extends JPanel implements ActionListener, MouseListener 
       this.headerPane = new JPanel();
       headerPane.setLayout(new BorderLayout());
       headerPane.setBorder(BorderFactory.createLineBorder(Color.lightGray));
+      
+      Color color = new Color(setControler.getSet().getColor_r(),setControler.getSet().getColor_g(),setControler.getSet().getColor_b());
       headerPane.setBackground(color);
+      
       JLabel label = new JLabel(name);
       headerPane.add(label,BorderLayout.WEST);
       
@@ -320,6 +333,10 @@ public class JAccordion extends JPanel implements ActionListener, MouseListener 
      * 
      * @return The component that implements the body of this Outlook Bar
      */
+    public void updateUI(){
+    	Color color = new Color(setControler.getSet().getColor_r(),setControler.getSet().getColor_g(),setControler.getSet().getColor_b());
+        headerPane.setBackground(color);
+    }
     public JComponent getComponent() {
       return this.component;
     }
