@@ -38,7 +38,6 @@ public class SetContainerControler {
 		
 		
 		vue.updateAccordionView();
-		//TODO refresh Bar colors
 	}
 	
 	public void setModelChanged(){

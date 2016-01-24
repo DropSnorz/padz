@@ -29,7 +29,7 @@ public class ClipMixer extends StreamMixer {
 		for (AudioClip clip : audioClipList){
 
 			if(clip.isLoaded){
-				audioInputStreamList.add(clip.getAudioStream());
+				mixableEntityList.add(clip);
 			}
 		}
 
@@ -54,9 +54,9 @@ public class ClipMixer extends StreamMixer {
 	public void addAudioClip(AudioClip clip){
 		
 		
-		if(!audioInputStreamList.contains(clip.getAudioStream())){
+		if(!mixableEntityList.contains(clip)){
 			
-			audioInputStreamList.add(clip.getAudioStream());
+			mixableEntityList.add(clip);
 		}
 		
 	}
@@ -64,6 +64,7 @@ public class ClipMixer extends StreamMixer {
 	public void removeAudioClip(AudioClip clip){
 		
 		audioClipList.remove(clip);
+		mixableEntityList.remove(clip);
 	}
 
 	public void updateStreams(){
@@ -87,17 +88,17 @@ public class ClipMixer extends StreamMixer {
 				if(clip.getIsPlaying() == false){
 
 
-					audioInputStreamList.remove(clip.getAudioStream());
+					mixableEntityList.remove(clip);
 
 				}
 				else {
 
-					if(!audioInputStreamList.contains(clip.getAudioStream())){
+					if(!mixableEntityList.contains(clip)){
 
 						System.out.println("ADD -- ");
 						System.out.println(System.currentTimeMillis());
 
-						audioInputStreamList.add(clip.getAudioStream());
+						mixableEntityList.add(clip);
 					}
 				}
 

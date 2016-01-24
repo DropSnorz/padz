@@ -77,24 +77,24 @@ public class StreamMixer
 {
 	private static final boolean	DEBUG = false;
 
-	protected ArrayList<AudioInputStream>			audioInputStreamList;
+	protected ArrayList<IMixable>			mixableEntityList;
 
 	
 
-	public StreamMixer(AudioFormat audioFormat, ArrayList<AudioInputStream> audioInputStreams)
+	public StreamMixer(AudioFormat audioFormat, ArrayList<IMixable> audioInputStreams)
 	{
 		super(new ByteArrayInputStream(new byte[0]),
 		      audioFormat,
 		      AudioSystem.NOT_SPECIFIED);
 		
 		if (DEBUG) { out("MixingAudioInputStream.<init>(): begin"); }
-		audioInputStreamList = new ArrayList<AudioInputStream>(audioInputStreams);
+		mixableEntityList = new ArrayList<IMixable>(audioInputStreams);
 		if (DEBUG)
 		{
 			out("MixingAudioInputStream.<init>(): stream list:");
-			for (int i = 0; i < audioInputStreamList.size(); i++)
+			for (int i = 0; i < mixableEntityList.size(); i++)
 			{
-				out("  " + audioInputStreamList.get(i));
+				out("  " + mixableEntityList.get(i));
 			}
 		}
 		if (DEBUG) { out("MixingAudioInputStream.<init>(): end"); }
@@ -110,11 +110,11 @@ public class StreamMixer
 	public long getFrameLength()
 	{
 		long	lLengthInFrames = 0;
-		Iterator<AudioInputStream>	streamIterator = audioInputStreamList.iterator();
+		Iterator<IMixable>	streamIterator = mixableEntityList.iterator();
 		while (streamIterator.hasNext())
 		{
-			AudioInputStream	stream =  streamIterator.next();
-			long	lLength = stream.getFrameLength();
+			IMixable	audioEntity =  streamIterator.next();
+			long	lLength = audioEntity.getAudioStream().getFrameLength();
 			if (lLength == AudioSystem.NOT_SPECIFIED)
 			{
 				return AudioSystem.NOT_SPECIFIED;
@@ -134,10 +134,12 @@ public class StreamMixer
 	{
 		if (DEBUG) { out("MixingAudioInputStream.read(): begin"); }
 		int	nSample = 0;
-		Iterator<AudioInputStream>	streamIterator = audioInputStreamList.iterator();
-		while (streamIterator.hasNext())
+		Iterator<IMixable>	audioEntityIterator = mixableEntityList.iterator();
+		
+		while (audioEntityIterator.hasNext())
 		{
-			AudioInputStream	stream =  streamIterator.next();
+			IMixable audioEntity = audioEntityIterator.next();
+			AudioInputStream	stream =  audioEntity.getAudioStream();
 			int	nByte = stream.read();
 			if (nByte == -1)
 			{
@@ -145,7 +147,7 @@ public class StreamMixer
 				  The end of this stream has been signaled.
 				  We remove the stream from our list.
 				*/
-				streamIterator.remove();
+				audioEntityIterator.remove();
 				continue;
 			}
 			else
@@ -196,10 +198,11 @@ public class StreamMixer
 			{
 				anMixedSamples[i] = 0;
 			}
-			Iterator<AudioInputStream>	streamIterator = audioInputStreamList.iterator();
-			while (streamIterator.hasNext())
+			Iterator<IMixable>	audioEntityIterator = mixableEntityList.iterator();
+			while (audioEntityIterator.hasNext())
 			{
-				AudioInputStream	stream = streamIterator.next();
+				IMixable audioEntity = audioEntityIterator.next();
+				AudioInputStream	stream = audioEntity.getAudioStream();
 				if (DEBUG)
 				{
 					out("MixingAudioInputStream.read(byte[], int, int): AudioInputStream: " + stream);
@@ -218,7 +221,7 @@ public class StreamMixer
 					  The end of the current stream has been signaled.
 					  We remove it from the list of streams.
 					*/
-					streamIterator.remove();
+					audioEntityIterator.remove();
 					continue;
 				}
 				for (int nChannel = 0; nChannel < nChannels; nChannel++)
@@ -318,10 +321,10 @@ public class StreamMixer
 	public long skip(long lLength)
 		throws	IOException
 	{
-		Iterator<AudioInputStream>	streamIterator = audioInputStreamList.iterator();
-		while (streamIterator.hasNext())
+		Iterator<IMixable>	audioEntityIterator = mixableEntityList.iterator();
+		while (audioEntityIterator.hasNext())
 		{
-			AudioInputStream	stream = streamIterator.next();
+			AudioInputStream	stream = audioEntityIterator.next().getAudioStream();
 			stream.skip(lLength);
 		}
 		return lLength;
@@ -336,10 +339,10 @@ public class StreamMixer
 		throws	IOException
 	{
 		int	nAvailable = 0;
-		Iterator<AudioInputStream>	streamIterator = audioInputStreamList.iterator();
-		while (streamIterator.hasNext())
+		Iterator<IMixable>	audioEntityIterator = mixableEntityList.iterator();
+		while (audioEntityIterator.hasNext())
 		{
-			AudioInputStream	stream = streamIterator.next();
+			AudioInputStream	stream = audioEntityIterator.next().getAudioStream();
 			nAvailable = Math.min(nAvailable, stream.available());
 		}
 		return nAvailable;
@@ -360,10 +363,10 @@ public class StreamMixer
 	*/
 	public void mark(int nReadLimit)
 	{
-		Iterator<AudioInputStream>	streamIterator = audioInputStreamList.iterator();
-		while (streamIterator.hasNext())
+		Iterator<IMixable>	audioEntityIterator = mixableEntityList.iterator();
+		while (audioEntityIterator.hasNext())
 		{
-			AudioInputStream	stream =  streamIterator.next();
+			AudioInputStream	stream =  audioEntityIterator.next().getAudioStream();
 			stream.mark(nReadLimit);
 		}
 	}
@@ -375,10 +378,10 @@ public class StreamMixer
 	public void reset()
 		throws	IOException
 	{
-		Iterator<AudioInputStream>	streamIterator = audioInputStreamList.iterator();
-		while (streamIterator.hasNext())
+		Iterator<IMixable>	audioEntityIterator = mixableEntityList.iterator();
+		while (audioEntityIterator.hasNext())
 		{
-			AudioInputStream	stream = streamIterator.next();
+			AudioInputStream	stream = audioEntityIterator.next().getAudioStream();
 			stream.reset();
 		}
 	}
@@ -390,10 +393,10 @@ public class StreamMixer
 	*/
 	public boolean markSupported()
 	{
-		Iterator<AudioInputStream>	streamIterator = audioInputStreamList.iterator();
-		while (streamIterator.hasNext())
+		Iterator<IMixable>	audioEntityIterator = mixableEntityList.iterator();
+		while (audioEntityIterator.hasNext())
 		{
-			AudioInputStream	stream = streamIterator.next();
+			AudioInputStream	stream = audioEntityIterator.next().getAudioStream();
 			if (! stream.markSupported())
 			{
 				return false;
@@ -402,9 +405,9 @@ public class StreamMixer
 		return true;
 	}
 	
-	public ArrayList<AudioInputStream> getAudioInputStreamList(){
+	public ArrayList<IMixable> getAudioInputStreamList(){
 		
-		return audioInputStreamList;
+		return mixableEntityList;
 	}
 
 
