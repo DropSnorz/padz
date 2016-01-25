@@ -12,7 +12,7 @@ import org.tritonus.share.sampled.AudioFormats;
 
 import resources.AppResources;
 
-public class Set {
+public class Set implements IMixable {
 	
 	
 	String name;
@@ -136,7 +136,7 @@ public class Set {
 		return audioClipList;
 	}
 	
-	public AudioInputStream getStream(){
+	public AudioInputStream getAudioStream(){
 		
 		return clipMixer;
 	}

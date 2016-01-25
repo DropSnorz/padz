@@ -81,14 +81,14 @@ public class StreamMixer
 
 	
 
-	public StreamMixer(AudioFormat audioFormat, ArrayList<IMixable> audioInputStreams)
+	public StreamMixer(AudioFormat audioFormat)
 	{
 		super(new ByteArrayInputStream(new byte[0]),
 		      audioFormat,
 		      AudioSystem.NOT_SPECIFIED);
 		
 		if (DEBUG) { out("MixingAudioInputStream.<init>(): begin"); }
-		mixableEntityList = new ArrayList<IMixable>(audioInputStreams);
+		mixableEntityList = new ArrayList<IMixable>();
 		if (DEBUG)
 		{
 			out("MixingAudioInputStream.<init>(): stream list:");

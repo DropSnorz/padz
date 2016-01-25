@@ -15,14 +15,14 @@ public class ClipMixer extends StreamMixer {
 
 
 	public ClipMixer(AudioFormat audioFormat){
-		super(audioFormat, new ArrayList());
+		super(audioFormat);
 		//ClipMixer(audioFormat, new ArrayList<LoadedAudioClip>());
 
 	}
 
 
 	public ClipMixer(AudioFormat audioFormat, List<AudioClip> audioClipList) {
-		super(audioFormat,new ArrayList());
+		super(audioFormat);
 		//ArrayList<AudioInputStream> audioInputStreamList = new ArrayList<AudioInputStream>();
 
 		this.audioClipList = audioClipList;
@@ -95,8 +95,8 @@ public class ClipMixer extends StreamMixer {
 
 					if(!mixableEntityList.contains(clip)){
 
-						System.out.println("ADD -- ");
-						System.out.println(System.currentTimeMillis());
+						System.out.println("ADD ---- " + System.currentTimeMillis() );
+						
 
 						mixableEntityList.add(clip);
 					}
