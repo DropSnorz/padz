@@ -53,7 +53,6 @@ public class AudioProcess extends Thread {
 		byte myData[] = new byte[bufferSize];
 
 
-
 		while (!stopped){
 					
 			try {

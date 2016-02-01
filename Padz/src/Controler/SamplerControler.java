@@ -41,12 +41,16 @@ public class SamplerControler {
 
 
 		Mixer.Info[] mixerInfo = AudioSystem.getMixerInfo();
+		
+		for (Mixer.Info info : mixerInfo){
+			System.out.println(info);
+		}
 		Mixer globalMixer = AudioSystem.getMixer(mixerInfo[0]);
 
 		ArrayList<AudioClip> clipList = new ArrayList<AudioClip>();
 		setList = new ArrayList<Set>();
 		LoadedAudioClip clip1 = new LoadedAudioClip("C:/Users/Arthur/Documents/Ableton/drum.wav");
-		StreamedAudioClip clip2 = new StreamedAudioClip("C:/Users/Arthur/Documents/Ableton/lead.wav");
+		LoadedAudioClip clip2 = new LoadedAudioClip("C:/Users/Arthur/Documents/Ableton/lead.wav");
 
 		
 		AudioFormat format = new AudioFormat( 44100,16, 2,true,false);

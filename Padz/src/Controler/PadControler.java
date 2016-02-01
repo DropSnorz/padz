@@ -126,7 +126,6 @@ public class PadControler implements MouseListener, ActionListener {
 		
 		if(e.getSource() == vue.BT_Play){
 			
-			System.out.println("CLICK Pressed/Released !");
 		
 		}
 		

@@ -56,7 +56,7 @@ public class LoadedAudioClip extends AudioClip  {
 			audioStream.resetReadHead();
 			isPlaying = true;
 			
-			//set.notifyClipPlay(this);
+			set.notifyClipPlay(this);
 			
 		}
 		
