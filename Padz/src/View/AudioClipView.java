@@ -9,6 +9,8 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.TitledBorder;
 import java.awt.GridLayout;
+
+import javax.sound.sampled.FloatControl;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -18,7 +20,7 @@ public class AudioClipView extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public AudioClipView() {
+	public AudioClipView(double endSound){
 		setLayout(null);
 		
 		this.setBounds(0, 0, 800, 200);
@@ -39,8 +41,8 @@ public class AudioClipView extends JPanel {
 		JPanel audioPanel = new JPanel();		
 		double i = 0.0;
 		int min=0, max=100, init=50;
-		SpinnerNumberModel audioNumberStart = new SpinnerNumberModel(i,i,i+5,0.1);
-		SpinnerNumberModel audioNumberEnd = new SpinnerNumberModel(i,i,i+5,0.1);
+		SpinnerNumberModel audioNumberStart = new SpinnerNumberModel(i,i,i+endSound,0.1);
+		SpinnerNumberModel audioNumberEnd = new SpinnerNumberModel(i,i,i+endSound,0.1);
 		JSpinner start = new JSpinner(audioNumberStart);
 		JSpinner end = new JSpinner(audioNumberEnd);
 		String[] onOff = {"On","Off"};
@@ -50,6 +52,8 @@ public class AudioClipView extends JPanel {
 		gainGauge.setMinorTickSpacing(1);
 		gainGauge.setPaintTicks(true);
 		gainGauge.setPaintLabels(true);
+		
+		//FloatControl volume;
 		onOffSelect.setSelectedIndex(1);
 		audioPanel.setBounds(287, 11, 503, 178);
 		audioPanel.setBorder(new TitledBorder(null, "Audio", TitledBorder.LEADING, TitledBorder.TOP, null, null));

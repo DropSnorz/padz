@@ -16,7 +16,6 @@ public class StreamedAudioClip extends AudioClip {
 		
 		super.path = path;
 		loadClip(path);
-		
 	}
 	
 	public void play(){

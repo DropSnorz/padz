@@ -51,8 +51,7 @@ public class SetControler implements ActionListener {
 		return set;
 	}
 	
-	public SetView getVue(){
-		
+	public SetView getVue(){		
 		return vue;
 	}
 

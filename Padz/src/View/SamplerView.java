@@ -23,6 +23,7 @@ public class SamplerView extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	private JPanel bottomPane;
 	public SamplerView() {
 		
 		setLookAndFeel();
@@ -54,12 +55,9 @@ public class SamplerView extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		JPanel bottomPane = new JPanel();
+		bottomPane = new JPanel();
 		contentPane.add(bottomPane, BorderLayout.SOUTH);
 		bottomPane.setLayout(new BorderLayout(0, 0));
-		
-		audioClipViewPane = new AudioClipView();
-		bottomPane.add(audioClipViewPane,BorderLayout.CENTER);
 		
 		scrollPane = new JScrollPane();
 		
@@ -80,6 +78,10 @@ public class SamplerView extends JFrame {
 	
 	public void addToContentPaneEast(JPanel panel){
 		contentPane.add(panel, BorderLayout.EAST);
+	}
+	
+	public void addToBottomPane(JPanel pane){
+		bottomPane.add(pane,BorderLayout.CENTER);
 	}
 	
 	public void setLookAndFeel(){

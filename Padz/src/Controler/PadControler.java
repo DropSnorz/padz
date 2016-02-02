@@ -132,4 +132,8 @@ public class PadControler implements MouseListener, ActionListener {
 		
 	}
 
+	public AudioClip getClip() {
+		return clip;
+	}
+	
 }

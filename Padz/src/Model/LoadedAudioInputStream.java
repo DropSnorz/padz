@@ -83,6 +83,11 @@ public class LoadedAudioInputStream extends AudioInputStream {
 		return dataSize - readHead;
 	}
 	
+	public int getDataSize() {
+		return dataSize;
+	}
+	
+	
 	
 	
 	

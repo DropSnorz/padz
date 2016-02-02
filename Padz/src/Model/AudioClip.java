@@ -7,6 +7,7 @@ public abstract class AudioClip implements IMixable {
 	
 	boolean isPlaying;
 	boolean isLoaded;
+	float durationSeconds;
 	String path;
 	
 	Set set;
@@ -54,6 +55,10 @@ public abstract class AudioClip implements IMixable {
 		return path;
 	}
 			
+	public float getDurationSeconds() {
+		return durationSeconds;
+	}
+
 
 
 }

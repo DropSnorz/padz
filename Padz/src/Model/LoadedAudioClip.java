@@ -4,23 +4,30 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.*;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-public class LoadedAudioClip extends AudioClip  {
+import View.AudioClipView;
+public class LoadedAudioClip extends AudioClip {
 
 	private LoadedAudioInputStream audioStream;
-
-	public LoadedAudioClip(String path){
-		
+	
+	public LoadedAudioClip(String path){		
 		super.path = path;
 		loadClip(path);
-
+		int fileSize=audioStream.getDataSize();
+		int fileFrameSize=audioStream.getFormat().getFrameSize();
+		float fileFrameRate=audioStream.getFormat().getSampleRate(); 
+		durationSeconds=(fileSize/(fileFrameSize*fileFrameRate));
+		System.out.println("Duration : "+durationSeconds);
+		//audioClipView.
 	}
 	
 	public LoadedAudioClip(Set set){

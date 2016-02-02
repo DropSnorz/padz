@@ -31,7 +31,8 @@ public class PadContainerControler {
 		this.padGridModel = padGridModel;
 		padControlerList = new ArrayList<PadControler>();
 		selectedPad = null;
-		createContainer();
+		createContainer();		
+		
 
 	}
 
@@ -68,6 +69,8 @@ public class PadContainerControler {
 		}
 
 		 */
+		
+		
 	}
 	
 	public void updateUI()
@@ -79,6 +82,10 @@ public class PadContainerControler {
 		}
 	}
 	
+	public void selectFirstPad(){
+		
+		setSlectedPad(padControlerList.get(0));
+	}
 
 	public void setSlectedPad(PadControler padControler){
 
