@@ -23,7 +23,7 @@ public class Set implements IMixable {
 	Mixer globalMixer;
 	ClipMixer clipMixer;
 
-	
+	ArrayList<IEffect> effectRack;
 	
 	public Set(String name, AudioFormat format){
 		
@@ -139,6 +139,26 @@ public class Set implements IMixable {
 	public AudioInputStream getAudioStream(){
 		
 		return clipMixer;
+	}
+	
+	public void addEffect(IEffect effect){
+		effectRack.add(effect);
+	}
+	
+	public void addEffect(IEffect effect, int i) throws Exception{
+		
+		if(i<effectRack.size()){
+			effectRack.add(effect);
+		}
+		else{
+			throw new Exception("Impossible d'ajouter l'effet è l'index spécifié");
+		}
+	}
+
+	@Override
+	public ArrayList<IEffect> getEffectRack() {
+		// TODO Auto-generated method stub
+		return effectRack;
 	}
 
 	

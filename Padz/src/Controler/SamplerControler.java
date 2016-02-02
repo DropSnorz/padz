@@ -45,13 +45,19 @@ public class SamplerControler {
 
 
 		Mixer.Info[] mixerInfo = AudioSystem.getMixerInfo();
+		
+		for (Mixer.Info info : mixerInfo){
+			System.out.println(info);
+		}
 		Mixer globalMixer = AudioSystem.getMixer(mixerInfo[0]);
 
 		ArrayList<AudioClip> clipList = new ArrayList<AudioClip>();
 		setList = new ArrayList<Set>();
+		
 		String username = System.getProperty("user.name");
 		LoadedAudioClip clip1 = new LoadedAudioClip("C:/Users/"+username+"/SoundSample/drum.wav");
 		LoadedAudioClip clip2 = new LoadedAudioClip("C:/Users/"+username+"/SoundSample/lead.wav");
+
 		
 		AudioFormat format = new AudioFormat( 44100,16, 2,true,false);
 		System.out.println(format);

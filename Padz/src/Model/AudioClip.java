@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.ArrayList;
+
 import javax.sound.sampled.AudioInputStream;
 
 public abstract class AudioClip implements IMixable {
@@ -11,6 +13,8 @@ public abstract class AudioClip implements IMixable {
 	String path;
 	
 	Set set;
+	
+	ArrayList<IEffect> effectList = new ArrayList<IEffect>();
 	
 	public abstract void play();
 	public abstract void stop();
@@ -40,6 +44,24 @@ public abstract class AudioClip implements IMixable {
 		this.set = newSet;
 		set.addClip(this);
 		
+	}
+	
+	public void addEffect(IEffect effect){
+		effectList.add(effect);
+	}
+	
+	public void addEffect(IEffect effect, int i) throws Exception{
+		
+		if(i<effectList.size()){
+			effectList.add(effect);
+		}
+		else{
+			throw new Exception("Impossible d'ajouter l'effet è l'index spécifié");
+		}
+	}
+	
+	public ArrayList<IEffect> getEffectRack(){
+		return effectList;
 	}
 	
 	public String getFileName(){

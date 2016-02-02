@@ -56,6 +56,7 @@ public class ClipMixer extends StreamMixer {
 		
 		if(!mixableEntityList.contains(clip)){
 			
+			
 			mixableEntityList.add(clip);
 		}
 		
@@ -68,7 +69,7 @@ public class ClipMixer extends StreamMixer {
 	}
 
 	public void updateStreams(){
-
+		
 		for(AudioClip clip : audioClipList){
 
 			if(clip.isLoaded){
@@ -77,7 +78,6 @@ public class ClipMixer extends StreamMixer {
 
 						//Si le clip est terminé (fin du stream)
 						clip.isPlaying = false;
-						System.out.println("END OF STREAM");
 
 					}
 				} catch (IOException e) {
@@ -93,12 +93,12 @@ public class ClipMixer extends StreamMixer {
 				}
 				else {
 
-					if(!mixableEntityList.contains(clip)){
-
-						System.out.println("ADD ---- " + System.currentTimeMillis() );
-						
+					if(!mixableEntityList.contains(clip)){						
 
 						mixableEntityList.add(clip);
+						
+						System.out.println("ADD ---- " + System.currentTimeMillis() );
+
 					}
 				}
 

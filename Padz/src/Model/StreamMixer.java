@@ -208,6 +208,12 @@ public class StreamMixer
 					out("MixingAudioInputStream.read(byte[], int, int): AudioInputStream: " + stream);
 				}
 				int	nBytesRead = stream.read(abBuffer, 0, nFrameSize);
+				
+				//TODO Mix audio adBuffer.
+				
+				for(IEffect effect : audioEntity.getEffectRack()){
+					effect.ProcessDoubleReplacing(abBuffer, nFrameSize);
+				}
 				if (DEBUG)
 				{
 					out("MixingAudioInputStream.read(byte[], int, int): bytes read: " + nBytesRead);
