@@ -13,91 +13,142 @@ import org.tritonus.share.sampled.AudioFormats;
 import resources.AppResources;
 
 public class Set implements IMixable {
-	
-	
+
+
 	String name;
 	int color_r;
 	int color_g;
 	int color_b;
+
+	TriggerType triggerType;
+
 	List<AudioClip> audioClipList;
 	Mixer globalMixer;
 	ClipMixer clipMixer;
 
 	ArrayList<IEffect> effectRack;
-	
+
 	public Set(String name, AudioFormat format){
-		
-		
+
+
 		this.audioClipList = new ArrayList<AudioClip>();
 		this.name = name;
+
+		triggerType = TriggerType.DO_NOTHING_WHEN_CLIP_PLAYED;
+
 		clipMixer = new ClipMixer(format,audioClipList);
-		
+
 		updateClipSet();
-		
+
 		color_r = AppResources.UI_Background_Color.getRed();
 		color_g = AppResources.UI_Background_Color.getGreen();
 		color_b = AppResources.UI_Background_Color.getBlue();
 	}
-	
+
 	public Set(String name, AudioFormat format, int r, int g, int b){
 		this(name,format);
-		
+
 		color_r = r;
 		color_g = g;
 		color_b = b;
 	}
-	
+
 	public Set(String name){
 		audioClipList = new ArrayList<AudioClip>();
 		this.name = name;
-		
+
+		triggerType = TriggerType.DO_NOTHING_WHEN_CLIP_PLAYED;
+
+
 		color_r = AppResources.UI_Background_Color.getRed();
 		color_g = AppResources.UI_Background_Color.getGreen();
 		color_b = AppResources.UI_Background_Color.getBlue();
-	
-		
+
+
 		//TODO set clipMixer and AudioFormat
 		//clipMixer = new ClipMixer(null);
 	}
-	
+
 	public Set(String name, int r, int g, int b){
 		this(name);
-		
+
 		color_r = r;
 		color_g = g;
 		color_b = b;
-		
+
 	}
-	
+
 	public void updateClipSet(){
-		
+
 		for(AudioClip clip : audioClipList){
-			
+
 			clip.setSet(this);
 		}
 	}
-	
+
 	public void addClip(AudioClip clip){
-		
+
 		//TODO fix concurrent access : Thread safe List
 		audioClipList.add(clip);
-		
+
 		if(clip.set != this){
 			clip.setSet(this);
 		}
 	}
-	
+
 	public void removeClip(AudioClip clip){
-		
+
 		audioClipList.remove(clip);
 		clipMixer.getAudioInputStreamList().remove(clip);
-		
+
 	}
-	
+
 	public void notifyClipPlay(AudioClip clip){
-		
-		clipMixer.addAudioClip(clip);
-		
+
+		raiseTrigger(clip);
+		//clipMixer.addAudioClip(clip);
+
+	}
+
+	private void raiseTrigger(AudioClip source){
+
+		//Trigger dispatcher
+
+		if(triggerType == TriggerType.PLAY_ALL_WHEN_CLIP_PLAYED){
+			playAllClip();
+		}
+		else if(triggerType == TriggerType.STOP_ALL_WHEN_CLIP_PLAYED){
+			stopAllClipExcept(source);
+		}
+		else{
+			//Nothing to do
+		}
+
+	}
+
+	private void playAllClip(){
+
+		for(AudioClip clipToPlay : audioClipList){
+
+			clipToPlay.play();
+
+		}
+
+
+	}
+	private void stopAllClipExcept(AudioClip clip){
+
+		for(AudioClip clipToStop : audioClipList){
+
+			if(!clipToStop.equals(clip)){
+				clipToStop.stop();
+			}
+
+		}
+	}
+
+	private void stopAllClip(){
+
 	}
 
 	public String getName() {
@@ -107,7 +158,7 @@ public class Set implements IMixable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public int getColor_r() {
 		return color_r;
 	}
@@ -132,21 +183,31 @@ public class Set implements IMixable {
 		this.color_b = color_b;
 	}
 
+
+
+	public TriggerType getTriggerType() {
+		return triggerType;
+	}
+
+	public void setTriggerType(TriggerType triggerType) {
+		this.triggerType = triggerType;
+	}
+
 	public List<AudioClip> getAudioClipList(){
 		return audioClipList;
 	}
-	
+
 	public AudioInputStream getAudioStream(){
-		
+
 		return clipMixer;
 	}
-	
+
 	public void addEffect(IEffect effect){
 		effectRack.add(effect);
 	}
-	
+
 	public void addEffect(IEffect effect, int i) throws Exception{
-		
+
 		if(i<effectRack.size()){
 			effectRack.add(effect);
 		}
@@ -161,7 +222,7 @@ public class Set implements IMixable {
 		return effectRack;
 	}
 
-	
-	
-	
+
+
+
 }
