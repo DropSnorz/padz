@@ -21,24 +21,27 @@ public class AudioFeedbackDispatcher {
 	
 	public void DispatchMasterStereoAudioSource(byte[] data,int size){
 		
-		float[] samplesRight = new float[size];
-		float[] samplesLeft = new float[size];
+		float[] samplesRight = new float[size/2];
+		float[] samplesLeft = new float[size/2];
 		
 		for(int i = 0, s = 0,t=0; i < size;) {
 			
 			//Copy to left
 			int sample = 0;
 
-			sample |= data[i++] & 0xFF; // (reverse these two lines
 			sample |= data[i++] << 8;   //  if the format is big endian)
+
+			sample |= data[i++] & 0xFF; // (reverse these two lines
 
 			// normalize to range of +/-1.0f
 			samplesLeft[s++] = sample / 32768f;
 			
 			//Copy to right
 			sample = 0;
-			sample |= data[i++] & 0xFF; // (reverse these two lines
+			
 			sample |= data[i++] << 8;   //  if the format is big endian)
+
+			sample |= data[i++] & 0xFF; // (reverse these two lines
 
 			// normalize to range of +/-1.0f
 			samplesRight[t++] = sample / 32768f;
@@ -100,7 +103,7 @@ public class AudioFeedbackDispatcher {
 		
 		float rms = 0f;
 		for(float sample : samples) {
-
+			
 			rms += sample * sample;
 		}
 
@@ -116,7 +119,7 @@ public class AudioFeedbackDispatcher {
 			public void run() {
 
 				masterControler.setLeftMeterData(rmsLeft, peakLeft);
-				masterControler.setRightMeterData(rmsRight, rmsRight);
+				masterControler.setRightMeterData(rmsRight, peakRight);
 			}
 		});
 		

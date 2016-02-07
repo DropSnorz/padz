@@ -35,6 +35,7 @@ public class Set implements IMixable {
 		this.name = name;
 
 		triggerType = TriggerType.DO_NOTHING_WHEN_CLIP_PLAYED;
+		effectRack = new ArrayList<IEffect>();
 
 		clipMixer = new ClipMixer(format,audioClipList);
 
@@ -58,6 +59,8 @@ public class Set implements IMixable {
 		this.name = name;
 
 		triggerType = TriggerType.DO_NOTHING_WHEN_CLIP_PLAYED;
+		effectRack = new ArrayList<IEffect>();
+
 
 
 		color_r = AppResources.UI_Background_Color.getRed();

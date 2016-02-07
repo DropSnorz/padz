@@ -109,7 +109,7 @@ public class SamplerControler {
 
 		try {
 			SourceDataLine mInputMixer = (SourceDataLine) globalMixer.getLine(mLineInfo[0]);
-			AudioProcess audioProcess = new AudioProcess(mInputMixer,format,audioFeedbackDispatcher,set1);			
+			AudioProcess audioProcess = new AudioProcess(mInputMixer,format,audioFeedbackDispatcher,setList);			
 			audioProcess.start();
 
 		} catch (LineUnavailableException e1) {

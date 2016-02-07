@@ -1,6 +1,7 @@
 package Controler;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.LineUnavailableException;
@@ -22,17 +23,23 @@ public class AudioProcess extends Thread {
 
 	public Set set1;
 
-	public AudioProcess(SourceDataLine inputMixer,AudioFormat format, AudioFeedbackDispatcher afd,Set set1){
+	public AudioProcess(SourceDataLine inputMixer,AudioFormat format, AudioFeedbackDispatcher afd,List<Set> setList){
 
 		super("AudioProcess");
 		
 		this.inputMixer = inputMixer;
 		this.format = format;
 		this.audioFeedbackDispatcher = afd;
-		this.set1 = set1;
 		
 		
 		this.setMixer = new SetMixer(format);
+		
+		for(Set set: setList){
+			
+			setMixer.addSet(set);
+		}
+		
+		
 
 	}
 
@@ -51,14 +58,13 @@ public class AudioProcess extends Thread {
 
 		int numBytesRead = 0;
 
-
 		byte myData[] = new byte[bufferSize];
 
 
 		while (!stopped){
 					
 			try {
-				numBytesRead = set1.getAudioStream().read(myData, 0, bufferSize);
+				numBytesRead = setMixer.read(myData, 0, bufferSize);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
