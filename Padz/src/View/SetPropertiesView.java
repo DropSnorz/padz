@@ -25,6 +25,7 @@ public class SetPropertiesView extends JDialog {
 	 * Create the dialog.
 	 */
 	public SetPropertiesView() {
+		setModal(true);
 		setResizable(false);
 		setTitle("Set Properties");
 		setBounds(100, 100, 407, 250);

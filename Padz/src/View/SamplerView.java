@@ -11,6 +11,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
+import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -28,7 +29,7 @@ public class SamplerView extends JFrame {
 		
 		setLookAndFeel();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 904, 628);
+		setBounds(100, 100, 1043, 628);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -82,6 +83,10 @@ public class SamplerView extends JFrame {
 	
 	public void addToBottomPane(JPanel pane){
 		bottomPane.add(pane,BorderLayout.CENTER);
+	}
+	
+	public void addToBottomPaneRight(JPanel panel){
+		bottomPane.add(panel,BorderLayout.EAST);
 	}
 	
 	public void setLookAndFeel(){

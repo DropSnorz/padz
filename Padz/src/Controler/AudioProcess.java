@@ -13,6 +13,7 @@ public class AudioProcess extends Thread {
 
 	private AudioFormat format;
 	private SourceDataLine inputMixer;
+	private AudioFeedbackDispatcher audioFeedbackDispatcher;
 	private boolean stopped = false;
 	
 	private SetMixer setMixer;
@@ -21,12 +22,13 @@ public class AudioProcess extends Thread {
 
 	public Set set1;
 
-	public AudioProcess(SourceDataLine inputMixer,AudioFormat format,Set set1){
+	public AudioProcess(SourceDataLine inputMixer,AudioFormat format, AudioFeedbackDispatcher afd,Set set1){
 
 		super("AudioProcess");
 		
 		this.inputMixer = inputMixer;
 		this.format = format;
+		this.audioFeedbackDispatcher = afd;
 		this.set1 = set1;
 		
 		
@@ -66,6 +68,8 @@ public class AudioProcess extends Thread {
 			//total += numBytesRead; 
 			//System.out.println(System.currentTimeMillis());
 			inputMixer.write(myData, 0, numBytesRead);
+			audioFeedbackDispatcher.DispatchMasterStereoAudioSource(myData, numBytesRead);
+
 
 		}
 

@@ -46,6 +46,10 @@ public class SetContainerView extends JPanel {
 		scrollPane.setViewportBorder(null);
 		add(scrollPane, BorderLayout.CENTER);
 		
+		JPanel rigidPanel = new JPanel();
+		rigidPanel.setPreferredSize(new Dimension(5,0));
+		this.add(rigidPanel,BorderLayout.WEST);
+		
 		scrollPane.setViewportView(accordion);
 
 	}

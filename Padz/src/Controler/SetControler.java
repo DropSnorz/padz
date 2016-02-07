@@ -46,6 +46,9 @@ public class SetControler implements ActionListener {
 	public void openSetProperties(){
 
 		SetPropertiesControler controler = new SetPropertiesControler(set);
+		
+		setContainerControler.setModelChanged();
+		
 
 	}
 
