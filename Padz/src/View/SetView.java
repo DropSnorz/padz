@@ -11,6 +11,7 @@ import javax.swing.JButton;
 public class SetView extends JPanel {
 	
 	public JButton BT_ColorChooser;
+	public JButton BT_Options;
 
 	/**
 	 * Create the panel.
@@ -31,9 +32,9 @@ public class SetView extends JPanel {
 		lblGain.setBounds(23, 162, 30, 14);
 		add(lblGain);
 		
-		JButton btnOptions = new JButton("Options...");
-		btnOptions.setBounds(101, 147, 89, 23);
-		add(btnOptions);
+		BT_Options = new JButton("Options...");
+		BT_Options.setBounds(101, 147, 89, 23);
+		add(BT_Options);
 		
 		BT_ColorChooser = new JButton("Color...");
 		BT_ColorChooser.setBounds(101, 113, 89, 23);

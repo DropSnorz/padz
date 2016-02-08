@@ -57,21 +57,27 @@ public class LoadedAudioClip extends AudioClip {
 		}
 	}
 	
+	public void playFromUserInput(){
+		
+		play();
+		set.notifyClipPlay(this);
+
+	}
+	
 	public void play(){
 		
 		if(isLoaded){
 			audioStream.resetReadHead();
 			isPlaying = true;
 			
-			set.notifyClipPlay(this);
 			
 		}
-		
+	
 	}
 
 	@Override
 	public void stop() {
-		// TODO Auto-generated method stub
+		isPlaying = false;
 		
 	}
 

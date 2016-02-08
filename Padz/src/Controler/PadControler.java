@@ -102,7 +102,7 @@ public class PadControler implements MouseListener, ActionListener {
 			//System.out.println("Click !");
 			//System.out.println(System.currentTimeMillis());
 
-			clip.play();
+			clip.playFromUserInput();
 			
 			
 			System.out.println("  Fire : " + e.getWhen());

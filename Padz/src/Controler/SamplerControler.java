@@ -30,9 +30,12 @@ public class SamplerControler {
 
 	SamplerView vue;
 	ArrayList<Set> setList;
+	private MasterControler masterControler;
 	private AudioClipControler audioClipControler;
 	private PadContainerControler padContainerControler;
 	private SetContainerControler setContainerControler;
+	
+	AudioFeedbackDispatcher audioFeedbackDispatcher;
 	
 	
 	public boolean padSelectionMode = false;
@@ -59,7 +62,7 @@ public class SamplerControler {
 		LoadedAudioClip clip2 = new LoadedAudioClip("C:/Users/"+username+"/SoundSample/lead.wav");
 
 		
-		AudioFormat format = new AudioFormat( 44100,16, 2,true,false);
+		AudioFormat format = new AudioFormat(44100,16, 2,true,false);
 		System.out.println(format);
 
 		Set set1 = new Set("(default)",format);
@@ -89,8 +92,15 @@ public class SamplerControler {
 		
 		setContainerControler = new SetContainerControler(setList,this);
 		vue.addToContentPaneEast(setContainerControler.getVue());
+		
 		audioClipControler=new AudioClipControler(padContainerControler.getSelectedPad().getClip());
 		vue.addToBottomPane(audioClipControler.getView());
+		
+		masterControler = new MasterControler();
+		vue.addToBottomPaneRight(masterControler.getVue());
+		
+		
+		audioFeedbackDispatcher = new AudioFeedbackDispatcher(format,masterControler);
 
 		Line.Info[] mLineInfo = globalMixer.getSourceLineInfo();
 
@@ -99,7 +109,7 @@ public class SamplerControler {
 
 		try {
 			SourceDataLine mInputMixer = (SourceDataLine) globalMixer.getLine(mLineInfo[0]);
-			AudioProcess audioProcess = new AudioProcess(mInputMixer,format,set1);			
+			AudioProcess audioProcess = new AudioProcess(mInputMixer,format,audioFeedbackDispatcher,setList);			
 			audioProcess.start();
 
 		} catch (LineUnavailableException e1) {

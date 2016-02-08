@@ -4,15 +4,24 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.EventQueue;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import org.pushingpixels.substance.api.SubstanceLookAndFeel;
+import org.pushingpixels.substance.api.skin.SubstanceBusinessBlackSteelLookAndFeel;
+import org.pushingpixels.substance.api.skin.SubstanceBusinessLookAndFeel;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
+import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.JToolBar;
+import javax.swing.JLabel;
 
 public class SamplerView extends JFrame {
 
@@ -28,7 +37,7 @@ public class SamplerView extends JFrame {
 		
 		setLookAndFeel();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 904, 628);
+		setBounds(100, 100, 1043, 628);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -65,6 +74,13 @@ public class SamplerView extends JFrame {
 		
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 		
+		JPanel panel = new JPanel();
+		contentPane.add(panel, BorderLayout.NORTH);
+		panel.setLayout(new BorderLayout(0, 0));
+		
+		JLabel LB_logo = new JLabel("");
+		LB_logo.setIcon(new ImageIcon(getClass().getClassLoader().getResource("resources/img/logo.png")));
+		panel.add(LB_logo, BorderLayout.WEST);
 		
 		//bottomPane.add(new PadView(), BorderLayout.EAST);
 	}
@@ -84,22 +100,27 @@ public class SamplerView extends JFrame {
 		bottomPane.add(pane,BorderLayout.CENTER);
 	}
 	
+	public void addToBottomPaneRight(JPanel panel){
+		bottomPane.add(panel,BorderLayout.EAST);
+	}
+	
 	public void setLookAndFeel(){
 		
 		 try {
-	        UIManager.setLookAndFeel(
-	            UIManager.getSystemLookAndFeelClassName());
+	       // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+	           
+	            try {
+					UIManager.setLookAndFeel("org.pushingpixels.substance.api.skin.SubstanceGraphiteLookAndFeel");
+				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	            
+	            JFrame.setDefaultLookAndFeelDecorated(true);
+		        UIManager.put(SubstanceLookAndFeel.SHOW_EXTRA_WIDGETS, Boolean.TRUE);
+		           
 	    } 
 	    catch (UnsupportedLookAndFeelException e) {
-	       // handle exception
-	    }
-	    catch (ClassNotFoundException e) {
-	       // handle exception
-	    }
-	    catch (InstantiationException e) {
-	       // handle exception
-	    }
-	    catch (IllegalAccessException e) {
 	       // handle exception
 	    }
 	}

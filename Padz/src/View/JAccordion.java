@@ -74,6 +74,7 @@ public class JAccordion extends JPanel implements ActionListener, MouseListener 
     this.setLayout(new BorderLayout());
     this.add(topPanel, BorderLayout.NORTH);
     this.add(bottomPanel, BorderLayout.SOUTH);
+	
      }
 
   /**
@@ -239,6 +240,7 @@ public class JAccordion extends JPanel implements ActionListener, MouseListener 
      */
     private JButton button;
     private JPanel headerPane;
+    private JLabel label;
 
     /**
      * The component that is the body of the Outlook bar
@@ -266,7 +268,7 @@ public class JAccordion extends JPanel implements ActionListener, MouseListener 
       Color color = new Color(setControler.getSet().getColor_r(),setControler.getSet().getColor_g(),setControler.getSet().getColor_b());
       headerPane.setBackground(color);
       
-      JLabel label = new JLabel(name);
+      label = new JLabel(name);
       headerPane.add(label,BorderLayout.WEST);
       
       this.button = new JButton("+");
@@ -336,6 +338,9 @@ public class JAccordion extends JPanel implements ActionListener, MouseListener 
     public void updateUI(){
     	Color color = new Color(setControler.getSet().getColor_r(),setControler.getSet().getColor_g(),setControler.getSet().getColor_b());
         headerPane.setBackground(color);
+        String newName = setControler.getSet().getName();
+        label.setText(newName);
+        
     }
     public JComponent getComponent() {
       return this.component;

@@ -2,6 +2,15 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="C:/Users/Darkness-S/SoundSample/tritonus_share-0.3.6.jar"/>
+	<classpathentry kind="lib" path="lib/tritonus_share.jar"/>
+	<classpathentry kind="lib" path="lib/substance-7.3.jar"/>
+	<classpathentry kind="lib" path="lib/flamingo-7.3.jar"/>
+	<classpathentry kind="lib" path="lib/laf-plugin-7.3.jar"/>
+	<classpathentry kind="lib" path="lib/laf-widget-7.3.jar"/>
+	<classpathentry kind="lib" path="lib/trident-7.3.jar"/>
+	<classpathentry kind="lib" path="lib/substance-7.3-tools.jar"/>
+	<classpathentry kind="lib" path="lib/substance-flamingo-7.3.jar"/>
+	<classpathentry kind="lib" path="lib/trident-7.3-base.jar"/>
+	<classpathentry kind="lib" path="lib/trident-7.3-swing.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
