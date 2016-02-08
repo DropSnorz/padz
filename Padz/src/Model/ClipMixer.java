@@ -8,23 +8,29 @@ import java.util.List;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 
+import Controler.AudioFeedbackDispatcher;
+
 public class ClipMixer extends StreamMixer {
 
 	//StreamMixer streamMixer;
 	List<AudioClip> audioClipList;
+	private Set set;
+	private AudioFeedbackDispatcher audioFeedbackDispatcher;
 
 
-	public ClipMixer(AudioFormat audioFormat){
+	public ClipMixer(AudioFormat audioFormat,Set set){
 		super(audioFormat);
+		
+		this.set = set;
 		//ClipMixer(audioFormat, new ArrayList<LoadedAudioClip>());
 
 	}
 
 
-	public ClipMixer(AudioFormat audioFormat, List<AudioClip> audioClipList) {
+	public ClipMixer(AudioFormat audioFormat, List<AudioClip> audioClipList,Set set) {
 		super(audioFormat);
 		//ArrayList<AudioInputStream> audioInputStreamList = new ArrayList<AudioInputStream>();
-
+		this.set = set;
 		this.audioClipList = audioClipList;
 		for (AudioClip clip : audioClipList){
 
@@ -40,14 +46,20 @@ public class ClipMixer extends StreamMixer {
 
 		updateStreams();
 
+		int val = 0;
 		try {
-			return super.read(buffer, nOffset, length);
+			val =  super.read(buffer, nOffset, length);
+			
+			if(audioFeedbackDispatcher != null){
+				audioFeedbackDispatcher.DispatchSetStereoAudioSource(buffer, val, set);
+			}
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		return 0;
+		return val;
 
 	}
 	
@@ -66,6 +78,10 @@ public class ClipMixer extends StreamMixer {
 		
 		audioClipList.remove(clip);
 		mixableEntityList.remove(clip);
+	}
+	
+	public void setAudioFeedbackDispatcher(AudioFeedbackDispatcher afd){
+		this.audioFeedbackDispatcher = afd;
 	}
 
 	public void updateStreams(){

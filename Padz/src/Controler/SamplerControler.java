@@ -100,7 +100,11 @@ public class SamplerControler {
 		vue.addToBottomPaneRight(masterControler.getVue());
 		
 		
-		audioFeedbackDispatcher = new AudioFeedbackDispatcher(format,masterControler);
+		audioFeedbackDispatcher = new AudioFeedbackDispatcher(format,masterControler,setContainerControler);
+		
+		for(Set set : setList){
+			set.setAudioFeedbackDispatcher(audioFeedbackDispatcher);
+		}
 
 		Line.Info[] mLineInfo = globalMixer.getSourceLineInfo();
 

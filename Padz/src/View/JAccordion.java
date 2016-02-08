@@ -345,6 +345,10 @@ public class JAccordion extends JPanel implements ActionListener, MouseListener 
     public JComponent getComponent() {
       return this.component;
     }
+    
+    public void select(){
+    	setControler.requestSelected();
+    }
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -367,12 +371,13 @@ public void mouseClicked(MouseEvent e) {
 	      if (barInfo.getHeader() == e.getSource()) {
 	        // Found the selected button
 	        this.visibleBar = currentBar;
+	        barInfo.select();
 	        render();
 	        return;
 	      }
 	      currentBar++;
 	    }
-	
+	    	
 }
 
 @Override

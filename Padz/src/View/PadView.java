@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import Controler.PadContainerControler;
 import Controler.PadControler;
 import Model.StreamedAudioClip;
+import resources.AppResources;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -69,6 +70,7 @@ public class PadView extends JPanel {
 	    Graphics2D graph = (Graphics2D) g;
 		
 	    //Haut gauche
+	    graph.setColor(AppResources.SelectionCursor_Color);
 		graph.drawLine(5 + padMargin,5+ padMargin,5+ padMargin,10+ padMargin);
 		graph.drawLine(5+ padMargin, 5+ padMargin, 10+ padMargin , 5+ padMargin);
 		

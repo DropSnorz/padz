@@ -6,6 +6,8 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
+import javax.swing.JToggleButton;
+import javax.swing.JScrollBar;
 
 public class MasterView extends JPanel {
 
@@ -26,7 +28,8 @@ public class MasterView extends JPanel {
 		panel.setLayout(null);
 		
 		JSlider slider = new JSlider();
-		slider.setBounds(169, 11, 10, 156);
+		slider.setPaintTicks(true);
+		slider.setBounds(179, 11, 26, 156);
 		panel.add(slider);
 		slider.setOrientation(SwingConstants.VERTICAL);
 		

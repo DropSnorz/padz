@@ -10,6 +10,9 @@ public class SetContainerControler {
 	
 	private SetContainerView vue;
 	private ArrayList<Set> setList;
+	private ArrayList<SetControler> setControlerList;
+	
+	private SetControler selectedSetControler;
 	
 	private SamplerControler samplerControler;
 	
@@ -18,6 +21,7 @@ public class SetContainerControler {
 		
 		this.setList = setList;
 		this.samplerControler = samplerControler;
+		setControlerList = new ArrayList<SetControler>();
 		vue = new SetContainerView();
 		
 		populateSetAccordion();
@@ -28,10 +32,12 @@ public class SetContainerControler {
 		for(Set set : setList){
 			
 			SetControler setControler = new SetControler(set,this);
+			setControlerList.add(setControler);
 			vue.addAccordionBar(set.getName(), setControler.getVue(),setControler);
 			
-			
 		}
+		
+		selectedSetControler = setControlerList.get(0);
 	}
 	
 	public void updateUI(){
@@ -50,6 +56,14 @@ public class SetContainerControler {
 		
 		samplerControler.updatePadSelectionMode(set);
 		
+	}
+	
+	public void setSelectedSetControler(SetControler setControler){
+		this.selectedSetControler = setControler;
+	}
+	
+	public SetControler getSelectedSetControler(){
+		return selectedSetControler;
 	}
 	
 	public SetContainerView getVue(){
