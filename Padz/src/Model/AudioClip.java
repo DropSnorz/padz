@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import javax.sound.sampled.AudioInputStream;
 
 public abstract class AudioClip implements IMixable {
-	
+	//TODO methode setGain recup valeur du gain
+	//TODO attribut gainEffect
 	
 	boolean isPlaying;
 	boolean isLoaded;
@@ -56,7 +57,7 @@ public abstract class AudioClip implements IMixable {
 			effectList.add(effect);
 		}
 		else{
-			throw new Exception("Impossible d'ajouter l'effet è l'index spécifié");
+			throw new Exception("Impossible d'ajouter l'effet ï¿½ l'index spé¦—ifiï¿½");
 		}
 	}
 	
