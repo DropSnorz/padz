@@ -257,14 +257,13 @@ extends		AudioInputStream
 						nSampleToAdd = TConversionTool.ulaw2linear(abBuffer[nBufferOffset]);
 					}
 					
-					byte temp[] = new byte[1];
-					temp[0] = (byte) nSampleToAdd;
+					double temp[] = new double[1];
+					temp[0] = (double) nSampleToAdd;
 					for(IEffect effect : audioEntity.getEffectRack()){
-						//refacto : pass float values !
 						effect.ProcessDoubleReplacing(temp, 1);
 					}
 					
-					anMixedSamples[nChannel] += nSampleToAdd * (1.0 /2.0);
+					anMixedSamples[nChannel] += temp[0];
 				} // loop over channels
 			} // loop over streams
 			if (DEBUG)

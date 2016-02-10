@@ -3,5 +3,5 @@ package Model;
 public interface IEffect {
 
 	
-	public void ProcessDoubleReplacing(byte[] inputData, int nFrames);
+	public void ProcessDoubleReplacing(double[] inputData, int nFrames);
 }
