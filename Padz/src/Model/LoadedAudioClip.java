@@ -27,6 +27,8 @@ public class LoadedAudioClip extends AudioClip {
 		float fileFrameRate=audioStream.getFormat().getSampleRate(); 
 		durationSeconds=(fileSize/(fileFrameSize*fileFrameRate));
 		System.out.println("Duration : "+durationSeconds);
+		gEffect=new GainEffect();
+		effectList.add(gEffect);
 		//audioClipView.
 	}
 	

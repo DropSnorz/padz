@@ -5,14 +5,13 @@ import java.util.ArrayList;
 import javax.sound.sampled.AudioInputStream;
 
 public abstract class AudioClip implements IMixable {
-	//TODO methode setGain recup valeur du gain
-	//TODO attribut gainEffect
 	
 	boolean isPlaying;
 	boolean isLoaded;
 	float durationSeconds;
 	String path;
-	
+	double gainValue=0.5;
+	GainEffect gEffect;
 	Set set;
 	
 	ArrayList<IEffect> effectList = new ArrayList<IEffect>();
@@ -21,7 +20,6 @@ public abstract class AudioClip implements IMixable {
 	public abstract void play();
 	public abstract void stop();
 	public abstract AudioInputStream getAudioStream();
-
 	
 	public boolean getIsPlaying(){
 		
@@ -83,6 +81,9 @@ public abstract class AudioClip implements IMixable {
 		return durationSeconds;
 	}
 
-
+	public void setGain(double gainValue){
+		this.gainValue=gainValue;
+		gEffect.setGain(gainValue);
+	}
 
 }
