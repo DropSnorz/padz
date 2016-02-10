@@ -24,7 +24,6 @@ public class MasterControler {
 	}
 	
 	
-	
 	public MasterView getVue(){
 		
 		return vue;

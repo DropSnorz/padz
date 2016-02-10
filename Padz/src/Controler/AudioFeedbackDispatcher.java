@@ -14,7 +14,7 @@ public class AudioFeedbackDispatcher {
 	SetContainerControler setContainerControler;
 
 
-	ByteBuffer buffer = ByteBuffer.allocate(1024);;
+	ByteBuffer setAudioBuffer = ByteBuffer.allocate(1024);;
 	float lastPeakRight = 0f;
 	float lastPeakLeft = 0f;
 	
@@ -54,27 +54,25 @@ public class AudioFeedbackDispatcher {
 		if(setControler.getSet().equals(set)){
 			
 			for(byte atom : data){
-				buffer.put(atom);
+				setAudioBuffer.put(atom);
 			}
-			
-			//System.out.println("ind"+ buffer.position());
-			
-			if(buffer.position()<128){
+						
+			if(setAudioBuffer.position()<128){
 				
 			}
 			else{
 				
-			buffer.flip();
+			setAudioBuffer.flip();
 
 
-			byte finalData[] = new byte[buffer.limit() + 1];
-			int finalSize = buffer.limit();
+			byte finalData[] = new byte[setAudioBuffer.limit() + 1];
+			int finalSize = setAudioBuffer.limit();
 			int i = 0;
-			while (buffer.hasRemaining()) {
-				finalData[i] += buffer.get();
+			while (setAudioBuffer.hasRemaining()) {
+				finalData[i] += setAudioBuffer.get();
 				i = i + 1;
 				}
-			buffer.clear();
+			setAudioBuffer.clear();
 			
 
 			float[] samplesRight = new float[finalSize/2];

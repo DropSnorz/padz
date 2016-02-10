@@ -99,11 +99,8 @@ public class PadControler implements MouseListener, ActionListener {
 		
 		if(e.getSource() == vue.BT_Play){
 			
-			//System.out.println("Click !");
-			//System.out.println(System.currentTimeMillis());
 
 			clip.playFromUserInput();
-			
 			
 			System.out.println("  Fire : " + e.getWhen());
 			System.out.println("Handled: " + System.currentTimeMillis());

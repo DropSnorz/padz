@@ -23,11 +23,14 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.JToolBar;
 import javax.swing.JLabel;
 import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import javax.swing.BoxLayout;
+import java.awt.GridLayout;
 
 public class SamplerView extends JFrame {
 
 	private JPanel contentPane;
-	private JPanel audioClipViewPane;
 	private JScrollPane scrollPane;
 
 	/**
@@ -62,12 +65,20 @@ public class SamplerView extends JFrame {
 		panel.add(LB_logo, BorderLayout.WEST);
 		LB_logo.setIcon(new ImageIcon(getClass().getClassLoader().getResource("resources/img/logo.png")));
 		
-		JPanel panel_1 = new JPanel();
-		panel.add(panel_1, BorderLayout.CENTER);
-		panel_1.setLayout(new BorderLayout(0, 0));
+		JPanel MenuPanel = new JPanel();
+		panel.add(MenuPanel, BorderLayout.CENTER);
+		GridBagLayout gbl_MenuPanel = new GridBagLayout();
+		gbl_MenuPanel.columnWeights = new double[]{1.0};
+		gbl_MenuPanel.columnWidths = new int[]{0};
+		MenuPanel.setLayout(gbl_MenuPanel);
 		
 		JMenuBar menuBar = new JMenuBar();
-		panel_1.add(menuBar, BorderLayout.NORTH);
+		GridBagConstraints gbc_menuBar = new GridBagConstraints();
+		gbc_menuBar.fill = GridBagConstraints.HORIZONTAL;
+		gbc_menuBar.gridx = 0;
+		gbc_menuBar.gridy = 0;
+		gbc_menuBar.anchor = GridBagConstraints.NORTH;
+		MenuPanel.add(menuBar, gbc_menuBar);
 		
 		JMenu Menu_File = new JMenu("File");
 		menuBar.add(Menu_File);
@@ -86,6 +97,15 @@ public class SamplerView extends JFrame {
 		
 		JMenuItem mntmExit = new JMenuItem("Exit");
 		Menu_File.add(mntmExit);
+		
+		JMenu mnOptions = new JMenu("Options");
+		menuBar.add(mnOptions);
+		
+		JMenu mnHelp = new JMenu("Help");
+		menuBar.add(mnHelp);
+		
+		JMenuItem mntmAbout = new JMenuItem("About Padz...");
+		mnHelp.add(mntmAbout);
 		
 		//bottomPane.add(new PadView(), BorderLayout.EAST);
 	}
@@ -111,8 +131,7 @@ public class SamplerView extends JFrame {
 	
 	public void setLookAndFeel(){
 		
-		 try {
-	           
+		
 	            try {
 					UIManager.setLookAndFeel("org.pushingpixels.substance.api.skin.SubstanceGraphiteLookAndFeel");
 	            	
@@ -121,14 +140,13 @@ public class SamplerView extends JFrame {
 				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				} catch (UnsupportedLookAndFeelException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-	            
 	            JFrame.setDefaultLookAndFeelDecorated(true);
 		        UIManager.put(SubstanceLookAndFeel.SHOW_EXTRA_WIDGETS, Boolean.TRUE);
 		           
-	    } 
-	    catch (UnsupportedLookAndFeelException e) {
-	       // handle exception
-	    }
+	 
 	}
 }
