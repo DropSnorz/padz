@@ -62,13 +62,14 @@ public class AudioProcess extends Thread {
 
 
 		while (!stopped){
-					
+		
 			try {
 				numBytesRead = setMixer.read(myData, 0, bufferSize);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 			//numBytesRead = clip1.getAudioStream().read(myData, 0, 100);
 			if (numBytesRead == -1) break;
 			//total += numBytesRead; 

@@ -42,13 +42,23 @@ public class SetControler implements ActionListener {
 
 		setContainerControler.setModelChanged();
 	}
+	
+	public void setLeftMeterData(float rms, float peak){
+
+		vue.setLeftMeterData(rms, peak);
+
+	}
+
+	public void setRightMeterData(float rms, float peak){
+
+		vue.setRightMeterData(rms, peak);
+	}
 
 	public void openSetProperties(){
 
 		SetPropertiesControler controler = new SetPropertiesControler(set);
-		
 		setContainerControler.setModelChanged();
-		
+
 
 	}
 
@@ -56,6 +66,10 @@ public class SetControler implements ActionListener {
 
 		setContainerControler.requestPadSelectionMode(set);
 
+	}
+	public void requestSelected(){
+
+		setContainerControler.setSelectedSetControler(this);
 	}
 
 	public Set getSet(){

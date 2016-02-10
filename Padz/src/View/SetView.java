@@ -12,6 +12,8 @@ public class SetView extends JPanel {
 	
 	public JButton BT_ColorChooser;
 	public JButton BT_Options;
+	private LevelMeter rightMeter;
+	private LevelMeter leftMeter;
 
 	/**
 	 * Create the panel.
@@ -40,7 +42,27 @@ public class SetView extends JPanel {
 		BT_ColorChooser.setBounds(101, 113, 89, 23);
 		add(BT_ColorChooser);
 		
+		rightMeter = new LevelMeter();
+		rightMeter.setPreferredSize(new Dimension(9, 100));
+		rightMeter.setBounds(230, 43, 9, 133);
+		add(rightMeter);
+		
+		leftMeter = new LevelMeter();
+		leftMeter.setPreferredSize(new Dimension(9, 100));
+		leftMeter.setBounds(216, 43, 9, 133);
+		add(leftMeter);
+		
 		
 
 	}
+	
+	public void setLeftMeterData(float rms,float peak){
+		leftMeter.setAmplitude(rms);
+        leftMeter.setPeak(peak);
+	}
+	public void setRightMeterData(float rms,float peak){
+		rightMeter.setAmplitude(rms);
+		rightMeter.setPeak(peak);
+	}
+	
 }

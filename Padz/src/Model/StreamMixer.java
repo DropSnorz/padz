@@ -40,7 +40,7 @@ package Model;
 
 /*
 |<---            this code is formatted to fit into 80 columns             --->|
-*/
+ */
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -73,20 +73,20 @@ import org.tritonus.share.sampled.TConversionTool;
  * @author Matthias Pfisterer
  */
 public class StreamMixer
-	extends		AudioInputStream
+extends		AudioInputStream
 {
 	private static final boolean	DEBUG = false;
 
 	protected ArrayList<IMixable>			mixableEntityList;
 
-	
+
 
 	public StreamMixer(AudioFormat audioFormat)
 	{
 		super(new ByteArrayInputStream(new byte[0]),
-		      audioFormat,
-		      AudioSystem.NOT_SPECIFIED);
-		
+				audioFormat,
+				AudioSystem.NOT_SPECIFIED);
+
 		if (DEBUG) { out("MixingAudioInputStream.<init>(): begin"); }
 		mixableEntityList = new ArrayList<IMixable>();
 		if (DEBUG)
@@ -106,7 +106,7 @@ public class StreamMixer
 	   The maximum of the frame length of the input stream is calculated and returned.
 	   If at least one of the input streams has length
 	   <code>AudioInputStream.NOT_SPECIFIED</code>, this value is returned.
-	*/
+	 */
 	public long getFrameLength()
 	{
 		long	lLengthInFrames = 0;
@@ -130,12 +130,12 @@ public class StreamMixer
 
 
 	public int read()
-		throws	IOException
+			throws	IOException
 	{
 		if (DEBUG) { out("MixingAudioInputStream.read(): begin"); }
 		int	nSample = 0;
 		Iterator<IMixable>	audioEntityIterator = mixableEntityList.iterator();
-		
+
 		while (audioEntityIterator.hasNext())
 		{
 			IMixable audioEntity = audioEntityIterator.next();
@@ -146,7 +146,7 @@ public class StreamMixer
 				/*
 				  The end of this stream has been signaled.
 				  We remove the stream from our list.
-				*/
+				 */
 				audioEntityIterator.remove();
 				continue;
 			}
@@ -154,7 +154,7 @@ public class StreamMixer
 			{
 				/*
 				  what about signed/unsigned?
-				*/
+				 */
 				nSample += nByte;
 			}
 		}
@@ -165,7 +165,7 @@ public class StreamMixer
 
 
 	public int read(byte[] abData, int nOffset, int nLength)
-		throws	IOException
+			throws	IOException
 	{
 		if (DEBUG)
 		{
@@ -177,7 +177,7 @@ public class StreamMixer
 		/*
 		  This value is in bytes. Note that it is the storage size.
 		  It may be four bytes for 24 bit samples.
-		*/
+		 */
 		int	nSampleSize = nFrameSize / nChannels;
 		boolean	bBigEndian = getFormat().isBigEndian();
 		AudioFormat.Encoding	encoding = getFormat().getEncoding();
@@ -208,23 +208,20 @@ public class StreamMixer
 					out("MixingAudioInputStream.read(byte[], int, int): AudioInputStream: " + stream);
 				}
 				int	nBytesRead = stream.read(abBuffer, 0, nFrameSize);
-								
-				for(IEffect effect : audioEntity.getEffectRack()){
-					effect.ProcessDoubleReplacing(abBuffer, nFrameSize);
-				}
+
 				if (DEBUG)
 				{
 					out("MixingAudioInputStream.read(byte[], int, int): bytes read: " + nBytesRead);
 				}
 				/*
 				  TODO: we have to handle incomplete reads.
-				*/
+				 */
 				if (nBytesRead == -1)
 				{
 					/*
 					  The end of the current stream has been signaled.
 					  We remove it from the list of streams.
-					*/
+					 */
 					audioEntityIterator.remove();
 					continue;
 				}
@@ -259,6 +256,14 @@ public class StreamMixer
 					{
 						nSampleToAdd = TConversionTool.ulaw2linear(abBuffer[nBufferOffset]);
 					}
+					
+					byte temp[] = new byte[1];
+					temp[0] = (byte) nSampleToAdd;
+					for(IEffect effect : audioEntity.getEffectRack()){
+						//refacto : pass float values !
+						effect.ProcessDoubleReplacing(temp, 1);
+					}
+					
 					anMixedSamples[nChannel] += nSampleToAdd * (1.0 /2.0);
 				} // loop over channels
 			} // loop over streams
@@ -314,16 +319,15 @@ public class StreamMixer
 		return nLength;
 	}
 
-
-
+	
 	/**
 	   calls skip() on all input streams. There is no way to assure that the number of
 	   bytes really skipped is the same for all input streams. Due to that, this
 	   method always returns the passed value. In other words: the return value
 	   is useless (better ideas appreciated).
-	*/
+	 */
 	public long skip(long lLength)
-		throws	IOException
+			throws	IOException
 	{
 		Iterator<IMixable>	audioEntityIterator = mixableEntityList.iterator();
 		while (audioEntityIterator.hasNext())
@@ -338,9 +342,9 @@ public class StreamMixer
 
 	/**
 	   The minimum of available() of all input stream is calculated and returned.
-	*/
+	 */
 	public int available()
-		throws	IOException
+			throws	IOException
 	{
 		int	nAvailable = 0;
 		Iterator<IMixable>	audioEntityIterator = mixableEntityList.iterator();
@@ -355,7 +359,7 @@ public class StreamMixer
 
 
 	public void close()
-		throws	IOException
+			throws	IOException
 	{
 		// TODO: should we close all streams in the list?
 	}
@@ -364,7 +368,7 @@ public class StreamMixer
 
 	/**
 	   Calls mark() on all input streams.
-	*/
+	 */
 	public void mark(int nReadLimit)
 	{
 		Iterator<IMixable>	audioEntityIterator = mixableEntityList.iterator();
@@ -378,9 +382,9 @@ public class StreamMixer
 
 	/**
 	   Calls reset() on all input streams.
-	*/
+	 */
 	public void reset()
-		throws	IOException
+			throws	IOException
 	{
 		Iterator<IMixable>	audioEntityIterator = mixableEntityList.iterator();
 		while (audioEntityIterator.hasNext())
@@ -394,7 +398,7 @@ public class StreamMixer
 
 	/**
 	   returns true if all input stream return true for markSupported().
-	*/
+	 */
 	public boolean markSupported()
 	{
 		Iterator<IMixable>	audioEntityIterator = mixableEntityList.iterator();
@@ -408,9 +412,9 @@ public class StreamMixer
 		}
 		return true;
 	}
-	
+
 	public ArrayList<IMixable> getAudioInputStreamList(){
-		
+
 		return mixableEntityList;
 	}
 

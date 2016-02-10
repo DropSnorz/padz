@@ -22,6 +22,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.JToolBar;
 import javax.swing.JLabel;
+import java.awt.FlowLayout;
 
 public class SamplerView extends JFrame {
 
@@ -38,27 +39,6 @@ public class SamplerView extends JFrame {
 		setLookAndFeel();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1043, 628);
-		
-		JMenuBar menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
-		
-		JMenu Menu_File = new JMenu("File");
-		menuBar.add(Menu_File);
-		
-		JMenuItem MItem_New = new JMenuItem("New project");
-		Menu_File.add(MItem_New);
-		
-		JMenuItem mntmOpenProject = new JMenuItem("Open project...");
-		Menu_File.add(mntmOpenProject);
-		
-		JMenuItem mntmSave = new JMenuItem("Save");
-		Menu_File.add(mntmSave);
-		
-		JMenuItem mntmSaveAs = new JMenuItem("Save As...");
-		Menu_File.add(mntmSaveAs);
-		
-		JMenuItem mntmExit = new JMenuItem("Exit");
-		Menu_File.add(mntmExit);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -79,8 +59,33 @@ public class SamplerView extends JFrame {
 		panel.setLayout(new BorderLayout(0, 0));
 		
 		JLabel LB_logo = new JLabel("");
-		LB_logo.setIcon(new ImageIcon(getClass().getClassLoader().getResource("resources/img/logo.png")));
 		panel.add(LB_logo, BorderLayout.WEST);
+		LB_logo.setIcon(new ImageIcon(getClass().getClassLoader().getResource("resources/img/logo.png")));
+		
+		JPanel panel_1 = new JPanel();
+		panel.add(panel_1, BorderLayout.CENTER);
+		panel_1.setLayout(new BorderLayout(0, 0));
+		
+		JMenuBar menuBar = new JMenuBar();
+		panel_1.add(menuBar, BorderLayout.NORTH);
+		
+		JMenu Menu_File = new JMenu("File");
+		menuBar.add(Menu_File);
+		
+		JMenuItem MItem_New = new JMenuItem("New project");
+		Menu_File.add(MItem_New);
+		
+		JMenuItem mntmOpenProject = new JMenuItem("Open project...");
+		Menu_File.add(mntmOpenProject);
+		
+		JMenuItem mntmSave = new JMenuItem("Save");
+		Menu_File.add(mntmSave);
+		
+		JMenuItem mntmSaveAs = new JMenuItem("Save As...");
+		Menu_File.add(mntmSaveAs);
+		
+		JMenuItem mntmExit = new JMenuItem("Exit");
+		Menu_File.add(mntmExit);
 		
 		//bottomPane.add(new PadView(), BorderLayout.EAST);
 	}
@@ -107,10 +112,12 @@ public class SamplerView extends JFrame {
 	public void setLookAndFeel(){
 		
 		 try {
-	       // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 	           
 	            try {
 					UIManager.setLookAndFeel("org.pushingpixels.substance.api.skin.SubstanceGraphiteLookAndFeel");
+	            	
+	    	       // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+
 				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

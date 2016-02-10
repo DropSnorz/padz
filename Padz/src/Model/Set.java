@@ -10,6 +10,7 @@ import javax.sound.sampled.Line.Info;
 import org.tritonus.share.sampled.AudioFormatSet;
 import org.tritonus.share.sampled.AudioFormats;
 
+import Controler.AudioFeedbackDispatcher;
 import resources.AppResources;
 
 public class Set implements IMixable {
@@ -37,13 +38,13 @@ public class Set implements IMixable {
 		triggerType = TriggerType.DO_NOTHING_WHEN_CLIP_PLAYED;
 		effectRack = new ArrayList<IEffect>();
 
-		clipMixer = new ClipMixer(format,audioClipList);
+		clipMixer = new ClipMixer(format,audioClipList,this);
 
 		updateClipSet();
 
-		color_r = AppResources.UI_Background_Color.getRed();
-		color_g = AppResources.UI_Background_Color.getGreen();
-		color_b = AppResources.UI_Background_Color.getBlue();
+		color_r = AppResources.Default_Set_Color.getRed();
+		color_g = AppResources.Default_Set_Color.getGreen();
+		color_b = AppResources.Default_Set_Color.getBlue();
 	}
 
 	public Set(String name, AudioFormat format, int r, int g, int b){
@@ -63,9 +64,9 @@ public class Set implements IMixable {
 
 
 
-		color_r = AppResources.UI_Background_Color.getRed();
-		color_g = AppResources.UI_Background_Color.getGreen();
-		color_b = AppResources.UI_Background_Color.getBlue();
+		color_r = AppResources.Default_Set_Color.getRed();
+		color_g = AppResources.Default_Set_Color.getGreen();
+		color_b = AppResources.Default_Set_Color.getBlue();
 
 
 		//TODO set clipMixer and AudioFormat
@@ -152,6 +153,7 @@ public class Set implements IMixable {
 
 	private void stopAllClip(){
 
+		//TODO: impplémenter méthode
 	}
 
 	public String getName() {
@@ -217,6 +219,10 @@ public class Set implements IMixable {
 		else{
 			throw new Exception("Impossible d'ajouter l'effet è l'index spécifié");
 		}
+	}
+	
+	public void setAudioFeedbackDispatcher(AudioFeedbackDispatcher afd){
+		clipMixer.setAudioFeedbackDispatcher(afd);
 	}
 
 	@Override

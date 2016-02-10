@@ -6,6 +6,8 @@ import java.awt.Graphics;
 
 import javax.swing.JComponent;
 
+import resources.AppResources;
+
 public class LevelMeter extends JComponent {
     private int meterWidth = 10;
 
@@ -33,10 +35,10 @@ public class LevelMeter extends JComponent {
         int x = getWidth() / 2 - w / 2;
         int y = 0;
 
-        g.setColor(Color.LIGHT_GRAY);
+        g.setColor(AppResources.UI_Background_Color);
         g.fillRect(x, y, w, h);
 
-        g.setColor(Color.BLACK);
+        g.setColor(AppResources.UI_PlainBorder_Color);
         g.drawRect(x, y, w - 1, h - 1);
 
         int a = Math.round(amp * (h - 2));
