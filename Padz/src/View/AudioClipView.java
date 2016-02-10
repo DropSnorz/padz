@@ -8,15 +8,20 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.GridLayout;
 
 import javax.sound.sampled.FloatControl;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.SwingConstants;
+import javax.swing.JLabel;
 
-public class AudioClipView extends JPanel {
-
+public class AudioClipView extends JPanel /*implements ChangeListener*/ {
+	public JSlider gainGauge;
+	public double gainValue=0.5;
 	/**
 	 * Create the panel.
 	 */
@@ -33,7 +38,6 @@ public class AudioClipView extends JPanel {
 		filePanel.setBounds(10, 11, 267, 178);
 		filePanel.setBorder(new TitledBorder(null, "File", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		add(filePanel);
-		//filePanel.setLayout(new BoxLayout(filePanel, BoxLayout.X_AXIS));
 		filePanel.add(fileBox);
 		filePanel.add(fileChoice);
 		
@@ -44,23 +48,45 @@ public class AudioClipView extends JPanel {
 		SpinnerNumberModel audioNumberStart = new SpinnerNumberModel(i,i,i+endSound,0.1);
 		SpinnerNumberModel audioNumberEnd = new SpinnerNumberModel(i,i,i+endSound,0.1);
 		JSpinner start = new JSpinner(audioNumberStart);
+		start.setBounds(67, 39, 51, 20);
 		JSpinner end = new JSpinner(audioNumberEnd);
+		end.setBounds(128, 39, 39, 20);
 		String[] onOff = {"On","Off"};
 		JList onOffSelect = new JList(onOff);
-		JSlider gainGauge=new JSlider(JSlider.VERTICAL, min, max, init);
+		onOffSelect.setBounds(193, 41, 31, 38);
+		gainGauge=new JSlider(SwingConstants.HORIZONTAL, min, max, init);
+		gainGauge.setBounds(55, 103, 336, 45);
 		gainGauge.setMajorTickSpacing(25);
 		gainGauge.setMinorTickSpacing(1);
 		gainGauge.setPaintTicks(true);
 		gainGauge.setPaintLabels(true);
-		
-		//FloatControl volume;
 		onOffSelect.setSelectedIndex(1);
-		audioPanel.setBounds(287, 11, 503, 178);
+		audioPanel.setBounds(238, 11, 503, 178);
 		audioPanel.setBorder(new TitledBorder(null, "Audio", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		add(audioPanel);
+		audioPanel.setLayout(null);
 		audioPanel.add(start);
 		audioPanel.add(end);
-		audioPanel.add("Loop",onOffSelect);
-		audioPanel.add("gain",gainGauge);
+		audioPanel.add(onOffSelect);
+		audioPanel.add(gainGauge);
+		
+		JLabel lblStart = new JLabel("Start");
+		lblStart.setBounds(73, 14, 46, 14);
+		audioPanel.add(lblStart);
+		
+		JLabel lblEnd = new JLabel("End");
+		lblEnd.setBounds(128, 14, 31, 14);
+		audioPanel.add(lblEnd);
+		
+		JLabel lblLoop = new JLabel("Loop");
+		lblLoop.setBounds(190, 14, 46, 14);
+		audioPanel.add(lblLoop);
+		
+		JLabel lblGain = new JLabel("Gain");
+		lblGain.setBounds(205, 152, 46, 14);
+		audioPanel.add(lblGain);
+		System.out.println(gainValue);
 	}
 }
+
+
