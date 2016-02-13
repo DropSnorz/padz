@@ -56,6 +56,9 @@ public class LoadedAudioInputStream extends AudioInputStream {
 	
 	public int read(byte[] outputData,int offset, int length){
 		
+		if(readHead == 0){
+			System.out.println(System.currentTimeMillis());
+		}
 		int dataRead = 0;
 		boolean continuePlaying = true;
 		

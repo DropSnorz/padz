@@ -10,7 +10,7 @@ import javax.swing.event.ChangeListener;
 import Model.AudioClip;
 import View.AudioClipView;
 
-public class AudioClipControler implements ChangeListener{
+public class AudioClipControler implements ChangeListener, ActionListener{
 	AudioClipView audioView;
 	AudioClip clip;
 	AudioClipControler(AudioClip clip){
@@ -23,20 +23,20 @@ public class AudioClipControler implements ChangeListener{
 	public AudioClipView getView() {
 		return audioView;
 	}
-	//TODO récupéré gain et autre valeur
-	//double gain=1;
-	//@Override
-	/*public void actionPerformed(ActionEvent arg0) {
+	
+	
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
-		gain=audioView.gainValue;		
-	}*/
+	}
+	
 
 	@Override
+	//TODO refacto : GainValue uniquement sur le controleur
 	 public void stateChanged(ChangeEvent e) {
        JSlider source = (JSlider)e.getSource();
        if (source.getValueIsAdjusting()) {
            audioView.gainValue = source.getValue()*0.01;
-       	System.out.println(audioView.gainValue);
        	clip.setGain(audioView.gainValue);
        }
        

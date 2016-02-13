@@ -110,7 +110,7 @@ public class Set implements IMixable {
 	public void notifyClipPlay(AudioClip clip){
 
 		raiseTrigger(clip);
-		//clipMixer.addAudioClip(clip);
+		clipMixer.addAudioClip(clip);
 
 	}
 

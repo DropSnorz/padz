@@ -35,8 +35,7 @@ public class SamplerControler {
 	private PadContainerControler padContainerControler;
 	private SetContainerControler setContainerControler;
 	
-	AudioFeedbackDispatcher audioFeedbackDispatcher;
-	
+	AudioFeedbackDispatcher audioFeedbackDispatcher;	
 	
 	public boolean padSelectionMode = false;
 
@@ -76,22 +75,20 @@ public class SamplerControler {
 		
 		clip1.setSet(set1);
 		clip2.setSet(set1);
-
-		
-		//Encoding encoding = new Encoding();
 		
 
 		setList.add(set1);
 		setList.add(new Set("Set 1", format,231, 76, 60));
 		setList.add(new Set("Set 2", format,41, 128, 185));
 
-		padContainerControler = new PadContainerControler(padGridModel,setList);
+		padContainerControler = new PadContainerControler(padGridModel,setList,this);
 		vue.addToContentPane(padContainerControler.getVue(), BorderLayout.SOUTH);
 		
 		padContainerControler.selectFirstPad();
 		
 		setContainerControler = new SetContainerControler(setList,this);
 		vue.addToContentPaneEast(setContainerControler.getVue());
+		
 		
 		audioClipControler=new AudioClipControler(padContainerControler.getSelectedPad().getClip());
 		vue.addToBottomPane(audioClipControler.getView());
@@ -122,6 +119,14 @@ public class SamplerControler {
 		}
 
 
+	}
+	
+	public void notifySelectedPadChanges(){
+		
+		System.out.println("Called on Selected Pad changes");
+		
+		//TODO call samplerControler.getSelectedPad.getClip()
+		//TODO call AudioClipControler.setModel(clip)  -> Update view
 	}
 	
 	public void updateUI(){

@@ -5,6 +5,8 @@ import java.nio.ByteBuffer;
 import javax.sound.sampled.AudioFormat;
 import javax.swing.SwingUtilities;
 
+import org.tritonus.share.sampled.TConversionTool;
+
 import Model.Set;
 
 public class AudioFeedbackDispatcher {
@@ -40,7 +42,6 @@ public class AudioFeedbackDispatcher {
 		float rmsRight = getRms(samplesRight);
 
 		setMasterDataOnEDT(rmsLeft,peakLeft,rmsRight,peakRight);
-
 
 	}
 	
@@ -99,19 +100,21 @@ public class AudioFeedbackDispatcher {
 			//Copy to left
 			int sample = 0;
 
+		
 			sample |= data[i++] << 8;   //  if the format is big endian)
-
 			sample |= data[i++] & 0xFF; // (reverse these two lines
+
 
 			// normalize to range of +/-1.0f
 			left[s++] = sample / 32768f;
 
 			//Copy to right
 			sample = 0;
-
+			
+			
 			sample |= data[i++] << 8;   //  if the format is big endian)
-
 			sample |= data[i++] & 0xFF; // (reverse these two lines
+
 
 			// normalize to range of +/-1.0f
 			right[t++] = sample / 32768f;
@@ -174,6 +177,7 @@ public class AudioFeedbackDispatcher {
 		}
 
 		rms = (float)Math.sqrt(rms / samples.length);
+		
 
 		return rms;
 	}

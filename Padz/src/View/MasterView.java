@@ -6,8 +6,13 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
+
+import org.pushingpixels.trident.Timeline;
+
 import javax.swing.JToggleButton;
 import javax.swing.JScrollBar;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class MasterView extends JPanel {
 
@@ -16,6 +21,7 @@ public class MasterView extends JPanel {
 	 */
 	private LevelMeter leftMeter;
 	private LevelMeter rightMeter;
+	private JPanel demoPad;
 	
 	public MasterView() {
 		setLayout(null);
@@ -42,12 +48,28 @@ public class MasterView extends JPanel {
 		rightMeter.setPreferredSize(new Dimension(9, 100));
 		rightMeter.setBounds(219, 22, 9, 133);
 		panel.add(rightMeter);
+		
+		demoPad = new PulseSquare(40,40,Color.white);
+		demoPad.setBounds(40, 40, 73, 73);
+		//panel.add(demoPad);
 
 	}
 	
 	public void setLeftMeterData(float rms,float peak){
 		leftMeter.setAmplitude(rms);
         leftMeter.setPeak(peak);
+        
+        if(rms > 0.5){
+        	final Timeline rolloverTimeLine = new Timeline(demoPad);
+        	
+        	rolloverTimeLine.addPropertyToInterpolate("rootColor", Color.lightGray, new Color(0,0,0,0));
+        	rolloverTimeLine.setDuration(300);
+        	
+        	rolloverTimeLine.play();
+        }
+        
+        
+        
 	}
 	public void setRightMeterData(float rms,float peak){
 		rightMeter.setAmplitude(rms);

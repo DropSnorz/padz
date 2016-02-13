@@ -13,22 +13,22 @@ import View.PadView;
 public class PadContainerControler {
 
 	private PadContainerView vue;
-	private List<Set> setList;
+	//private List<Set> setList;
 	private PadGridModel padGridModel;
 	private ArrayList<PadControler> padControlerList;
-
+	private SamplerControler samplerControler;
 	private PadControler selectedPad;
-
 	private  Set selectedSet;
 	
 
 
 
-	public PadContainerControler(PadGridModel padGridModel,List<Set> setList){
+	public PadContainerControler(PadGridModel padGridModel,List<Set> setList, SamplerControler samplerControler){
 
 		vue = new PadContainerView();
-		this.setList = setList;
+		//this.setList = setList;
 		this.padGridModel = padGridModel;
+		this.samplerControler = samplerControler;
 		padControlerList = new ArrayList<PadControler>();
 		selectedPad = null;
 		createContainer();		
@@ -100,6 +100,8 @@ public class PadContainerControler {
 				controler.deselect();
 			}
 		}
+		
+		samplerControler.notifySelectedPadChanges();
 
 	}
 

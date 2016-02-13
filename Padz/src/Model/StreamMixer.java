@@ -70,7 +70,7 @@ import org.tritonus.share.sampled.TConversionTool;
  * subclass of AudioInputStream itself, reading from instances of this class
  * behaves as if the mixdown result of the input streams is read.
  * 
- * @author Matthias Pfisterer
+ * @author Matthias Pfisterer, Arthur POIRET
  */
 public class StreamMixer
 extends		AudioInputStream

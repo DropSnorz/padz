@@ -38,12 +38,7 @@ public class AudioProcess extends Thread {
 			
 			setMixer.addSet(set);
 		}
-		
-		
-
 	}
-
-
 	public void run(){
 
 		
