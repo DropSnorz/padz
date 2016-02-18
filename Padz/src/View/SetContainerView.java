@@ -10,6 +10,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 
 import Controler.SetControler;
+import javax.swing.ImageIcon;
 
 public class SetContainerView extends JPanel {
 
@@ -37,9 +38,12 @@ public class SetContainerView extends JPanel {
 		buttonsPanel.setLayout(new FlowLayout());
 		
 		BT_NewSet = new JButton("New Set");
+		BT_NewSet.setIcon(new ImageIcon(SetContainerView.class.getResource("/resources/img/icon-add.png")));
+		
 		buttonsPanel.add(BT_NewSet);
 		
 		BT_RemoveSet = new JButton("Remove Set");
+		BT_RemoveSet.setIcon(new ImageIcon(SetContainerView.class.getResource("/resources/img/icon-remove.png")));
 		buttonsPanel.add(BT_RemoveSet);
 		
 		scrollPane = new JScrollPane();

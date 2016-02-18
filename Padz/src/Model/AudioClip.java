@@ -74,6 +74,13 @@ public abstract class AudioClip implements IMixable {
 			return str.substring(1); // remove "/"
 
 		}
+		else if(path.contains("\\") && isLoaded){
+			
+			
+			String str =  path.substring(path.lastIndexOf("\\")); 
+			return str.substring(1); // remove "/"
+
+		}
 		else{
 			
 			return "";

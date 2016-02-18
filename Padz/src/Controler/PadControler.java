@@ -4,11 +4,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 
 import javax.swing.JComponent;
 import javax.swing.TransferHandler;
 
 import Model.AudioClip;
+import Model.LoadedAudioClip;
+import Model.Set;
 import Model.StreamedAudioClip;
 import View.PadView;
 
@@ -27,8 +30,7 @@ public class PadControler implements MouseListener, ActionListener {
 		this.padContainerControler = padContainerControler;
 		this.clip = clip;
 		
-		vue = new PadView();
-		vue.LB_FileName.setText(clip.getFileName());
+		vue = new PadView(this);
 		vue.addMouseListener(this);
 		vue.BT_Play.addMouseListener(this);
 		
@@ -49,9 +51,25 @@ public class PadControler implements MouseListener, ActionListener {
 		vue.setTickEnabled(false);
 	}
 	
+	public void loadFileFromDrop(File file){
+		
+		
+		Set previousSet = clip.getSet();
+		LoadedAudioClip audioClip = new LoadedAudioClip(file.getAbsolutePath());
+		System.out.println(file.getAbsolutePath());
+		audioClip.setSet(previousSet);
+		this.clip = audioClip;
+		
+		updateUI();
+		
+		
+	}
 	public void updateUI(){
 		
+		vue.LB_FileName.setText(clip.getFileName());
 		vue.setSetColor(clip.getSet().getColor_r(), clip.getSet().getColor_g(), clip.getSet().getColor_b());
+		
+		vue.repaint();
 
 	}
 	public void setHandleSetChanges(boolean value){
@@ -108,12 +126,6 @@ public class PadControler implements MouseListener, ActionListener {
 			System.out.println("  Fire : " + e.getWhen());
 			System.out.println("Handled: " + System.currentTimeMillis());
 		
-		}
-		
-		if(e.getSource() == vue){
-			
-			
-	       
 		}
 		
 

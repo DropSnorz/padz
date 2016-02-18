@@ -4,9 +4,17 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.datatransfer.Transferable;
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DropTarget;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Line2D;
+import java.io.File;
+import java.util.List;
+import java.util.TooManyListenersException;
 
 import javax.swing.JPanel;
 
@@ -29,17 +37,30 @@ public class PadView extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	//temp
+	
+
+	
+	PadControler padControler;
+	
 	
 	public JButton BT_Play;
 	public JLabel LB_FileName;
 	private boolean tickEnabled = false;
 	
+	DropTarget dropTarget;
+	AudioClipDropTargetListener dropTargetListener;
+	
+	Point dragPoint;
+	boolean dragOver;
+	
+	
 	private int padSize = 72;
 	private int padMargin = 10;
 	
 	
-	public PadView() {
+	public PadView(PadControler padControler) {
+		
+		this.padControler = padControler;
 		
 		this.setSize(new Dimension(padSize + 2*padMargin,padSize + 2*padMargin));
 		this.setPreferredSize(new Dimension(padSize + 2*padMargin, padSize + 2*padMargin));
@@ -63,11 +84,18 @@ public class PadView extends JPanel {
 		PadPanel.add(BT_Play);
 		
 		
+		dropTarget = new DropTarget(this,DnDConstants.ACTION_COPY,null);
+		dragOver = false;
 		
+		dropTargetListener = new AudioClipDropTargetListener(this);
+		
+
 
 	}
 	
 	public void drawSelectedCursor(Graphics g){
+
+		
 		
 	    Graphics2D graph = (Graphics2D) g;
 		
@@ -91,16 +119,23 @@ public class PadView extends JPanel {
 		//graph.draw(new Line2D.Double(20,20,20,20));
 		
 		
+	}
+	
+	public void drawDragAndDropArea(Graphics g){
 		
-		
-		
+	    Graphics2D graph = (Graphics2D) g;
+	    
+	    graph.setColor(new Color (0,255,0,30));
+	    
+	    graph.fill(new Rectangle(this.getWidth(),this.getHeight()));
+
+	    
 	}
 	
 	public void setSetColor(int r, int g, int b){
 		
 		this.setBackground(new Color(r,g,b));
 	}
-	
 	
 	public void paint(Graphics g){
 		
@@ -109,9 +144,65 @@ public class PadView extends JPanel {
 		if(tickEnabled){
 			drawSelectedCursor(g);
 		}
+		
+		if(dragOver && dragPoint != null){
+			
+			drawDragAndDropArea(g);
+		}
 	}
 	
 	public void setTickEnabled(boolean value){
 		tickEnabled = value;
 	}
+	
+	
+	// DRAG AND DROP
+	
+	
+	@Override
+	public void addNotify(){
+		super.addNotify();
+		
+		try {
+			this.getDropTarget().addDropTargetListener(dropTargetListener);
+		} catch (TooManyListenersException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void removeNotify(){
+		super.removeNotify();
+		
+		this.getDropTarget().removeDropTargetListener(dropTargetListener);
+		
+	}
+	
+	public DropTarget getDropTarget(){
+		
+		return dropTarget;
+		
+		
+	}
+	
+	public void updateDragAndDropFeedback(boolean isDragOver, Point dragPoint){
+		
+		this.dragOver = isDragOver;
+		this.dragPoint = dragPoint;
+		
+		repaint();
+		
+		
+	}
+	
+	public void getDropContent(List<File> data){
+		
+		
+		padControler.loadFileFromDrop(data.get(0));
+		
+	}
+	
+	
+	
 }
