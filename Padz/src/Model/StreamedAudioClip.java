@@ -42,48 +42,57 @@ public class StreamedAudioClip extends AudioClip {
 
 		File audioFile = new File(path);
 		isPlaying = false;
-		try {
-			InputStream audioSrc = getClass().getResourceAsStream(path);
-			//add buffer for mark/reset support
 
-			audioStream = AudioSystem.getAudioInputStream(audioFile);
+		if(audioFile.exists()){
 
 
-			InputStream bufferedIn = new BufferedInputStream(audioStream);
+			try {
+				InputStream audioSrc = getClass().getResourceAsStream(path);
 
-			audioStream = new AudioInputStream(bufferedIn,audioStream.getFormat(),audioStream.getFrameLength());
-			DataLine.Info clipInfo = new DataLine.Info(Clip.class,audioStream.getFormat());         
-
-			audioStream.mark(10000000);     
-
-			isLoaded = true;
+				audioStream = AudioSystem.getAudioInputStream(audioFile);
 
 
+				InputStream bufferedIn = new BufferedInputStream(audioStream);
+				audioStream = new AudioInputStream(bufferedIn,audioStream.getFormat(),audioStream.getFrameLength());
+				DataLine.Info clipInfo = new DataLine.Info(Clip.class,audioStream.getFormat());         
 
-		} catch (UnsupportedAudioFileException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+				//TODO remove mark by using LoadedAudioClip
+				audioStream.mark(10000000);     
+
+				isLoaded = true;
+
+
+
+			} catch (UnsupportedAudioFileException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		else{
+			
+			isLoaded = false;
+		}
+			
+		}
+
+
+		public AudioInputStream getAudioStream() {
+			return audioStream;
+		}
+
+		public void setAudioStream(AudioInputStream audioStream) {
+			this.audioStream = audioStream;
+		}
+
+		@Override
+		public void stop() {
+			// TODO Auto-generated method stub
+
+		}
+
+
+
 	}
-
-
-	public AudioInputStream getAudioStream() {
-		return audioStream;
-	}
-
-	public void setAudioStream(AudioInputStream audioStream) {
-		this.audioStream = audioStream;
-	}
-
-	@Override
-	public void stop() {
-		// TODO Auto-generated method stub
-
-	}
-
-
-
-}

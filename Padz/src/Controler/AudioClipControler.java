@@ -36,8 +36,8 @@ public class AudioClipControler implements ChangeListener, ActionListener{
 	 public void stateChanged(ChangeEvent e) {
        JSlider source = (JSlider)e.getSource();
        if (source.getValueIsAdjusting()) {
-           audioView.gainValue = source.getValue()*0.01;
-       	clip.setGain(audioView.gainValue);
+           double gain =  source.getValue()*0.01;
+       	clip.setGain(gain);
        }
        
    }

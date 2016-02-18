@@ -82,6 +82,7 @@ public class ClipMixer extends StreamMixer {
 	
 	public void setAudioFeedbackDispatcher(AudioFeedbackDispatcher afd){
 		this.audioFeedbackDispatcher = afd;
+		
 	}
 
 	public void updateStreams(){

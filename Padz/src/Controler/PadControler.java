@@ -5,6 +5,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JComponent;
+import javax.swing.TransferHandler;
+
 import Model.AudioClip;
 import Model.StreamedAudioClip;
 import View.PadView;
@@ -105,6 +108,12 @@ public class PadControler implements MouseListener, ActionListener {
 			System.out.println("  Fire : " + e.getWhen());
 			System.out.println("Handled: " + System.currentTimeMillis());
 		
+		}
+		
+		if(e.getSource() == vue){
+			
+			
+	       
 		}
 		
 

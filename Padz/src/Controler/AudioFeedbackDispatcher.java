@@ -7,6 +7,7 @@ import javax.swing.SwingUtilities;
 
 import org.tritonus.share.sampled.TConversionTool;
 
+import Model.IMixable;
 import Model.Set;
 
 public class AudioFeedbackDispatcher {
@@ -45,6 +46,23 @@ public class AudioFeedbackDispatcher {
 
 	}
 	
+	
+	public void DispatchStereoAduioSource(byte[] data, int Size, IMixable target){
+		
+		
+		if(target.getClass().getName().equals("set")){
+			
+			DispatchSetStereoAudioSource(data,Size,(Set)target);
+		}
+		
+		else{
+			
+			//process clip
+			
+			
+		}
+		
+	}
 
 	public void DispatchSetStereoAudioSource(byte[] data, int size, Set set){
 

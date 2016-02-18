@@ -21,7 +21,7 @@ import javax.swing.JLabel;
 
 public class AudioClipView extends JPanel /*implements ChangeListener*/ {
 	public JSlider gainGauge;
-	public double gainValue=0.5;
+	//public double gainValue=0.5;
 	/**
 	 * Create the panel.
 	 */
@@ -85,7 +85,6 @@ public class AudioClipView extends JPanel /*implements ChangeListener*/ {
 		JLabel lblGain = new JLabel("Gain");
 		lblGain.setBounds(205, 152, 46, 14);
 		audioPanel.add(lblGain);
-		System.out.println(gainValue);
 	}
 }
 

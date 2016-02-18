@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
@@ -20,8 +21,8 @@ public class AudioProcess extends Thread {
 	private SetMixer setMixer;
 	
 	int bufferSize = 128;
+	
 
-	public Set set1;
 
 	public AudioProcess(SourceDataLine inputMixer,AudioFormat format, AudioFeedbackDispatcher afd,List<Set> setList){
 
@@ -38,6 +39,14 @@ public class AudioProcess extends Thread {
 			
 			setMixer.addSet(set);
 		}
+	}
+	
+	public void setGain(float gain){
+		
+		FloatControl volume = (FloatControl) inputMixer.getControl(FloatControl.Type.MASTER_GAIN);
+        volume.setValue(gain);
+
+		
 	}
 	public void run(){
 
@@ -69,6 +78,8 @@ public class AudioProcess extends Thread {
 			if (numBytesRead == -1) break;
 			//total += numBytesRead; 
 			//System.out.println(System.currentTimeMillis());
+			
+			
 			inputMixer.write(myData, 0, numBytesRead);
 			audioFeedbackDispatcher.DispatchMasterStereoAudioSource(myData, numBytesRead);
 

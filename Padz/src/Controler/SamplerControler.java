@@ -50,6 +50,7 @@ public class SamplerControler {
 		
 		for (Mixer.Info info : mixerInfo){
 			System.out.println(info);
+			
 		}
 		Mixer globalMixer = AudioSystem.getMixer(mixerInfo[0]);
 
@@ -93,8 +94,13 @@ public class SamplerControler {
 		audioClipControler=new AudioClipControler(padContainerControler.getSelectedPad().getClip());
 		vue.addToBottomPane(audioClipControler.getView());
 		
+	
+		
 		masterControler = new MasterControler();
 		vue.addToBottomPaneRight(masterControler.getVue());
+		
+		
+		
 		
 		
 		audioFeedbackDispatcher = new AudioFeedbackDispatcher(format,masterControler,setContainerControler);
@@ -102,21 +108,41 @@ public class SamplerControler {
 		for(Set set : setList){
 			set.setAudioFeedbackDispatcher(audioFeedbackDispatcher);
 		}
-
+		
+		
 		Line.Info[] mLineInfo = globalMixer.getSourceLineInfo();
 
 		//DataLine.Info info = new DataLine.Info(SourceDataLine.class, 
 		///		clip1.getAudioStream().getFormat());
+		
+		
+		
 
 		try {
 			SourceDataLine mInputMixer = (SourceDataLine) globalMixer.getLine(mLineInfo[0]);
 			AudioProcess audioProcess = new AudioProcess(mInputMixer,format,audioFeedbackDispatcher,setList);			
+			
+					
 			audioProcess.start();
+			
+			masterControler.setAudioProcess(audioProcess);
+
+			
 
 		} catch (LineUnavailableException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
+		
+		
+		
+	
+		
+		
+		
+
+		
 
 
 	}

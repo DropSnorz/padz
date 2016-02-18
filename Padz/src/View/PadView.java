@@ -62,6 +62,8 @@ public class PadView extends JPanel {
 		BT_Play.setBounds(10, 38, 53, 23);
 		PadPanel.add(BT_Play);
 		
+		
+		
 
 	}
 	

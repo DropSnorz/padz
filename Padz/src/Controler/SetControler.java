@@ -5,11 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JColorChooser;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import Model.Set;
 import View.SetView;
 
-public class SetControler implements ActionListener {
+public class SetControler implements ChangeListener, ActionListener {
 
 	private SetView vue;
 	private Set set;
@@ -23,6 +25,7 @@ public class SetControler implements ActionListener {
 		vue = new SetView();
 		vue.BT_ColorChooser.addActionListener(this);
 		vue.BT_Options.addActionListener(this);
+		vue.SL_Gain.addChangeListener(this);
 
 	}
 
@@ -94,5 +97,25 @@ public class SetControler implements ActionListener {
 			openSetProperties();
 		}
 
+	}
+
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		
+		if(e.getSource() == vue.SL_Gain){
+			
+			
+			if (vue.SL_Gain.getValueIsAdjusting()) {
+		        
+				double gain = vue.SL_Gain.getValue()*0.01;
+		       	set.setGain(gain);
+		       	
+		       	
+				
+				
+			}
+		       	
+		}
+		
 	}
 }

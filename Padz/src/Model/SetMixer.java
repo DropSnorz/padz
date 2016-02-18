@@ -10,11 +10,15 @@ import Controler.AudioFeedbackDispatcher;
 public class SetMixer extends StreamMixer {
 		
 	
+
+	
 	public SetMixer(AudioFormat format){
 		super(format);
+		
 
 		
 	}
+	
 	
 	public void addSet(Set set){
 		

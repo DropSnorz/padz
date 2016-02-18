@@ -1,6 +1,7 @@
 package Model;
 
 import java.io.BufferedInputStream;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,72 +16,93 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import View.AudioClipView;
+
 public class LoadedAudioClip extends AudioClip {
 
 	private LoadedAudioInputStream audioStream;
-	
+
 	public LoadedAudioClip(String path){		
 		super.path = path;
-		loadClip(path);
-		int fileSize=audioStream.getDataSize();
-		int fileFrameSize=audioStream.getFormat().getFrameSize();
-		float fileFrameRate=audioStream.getFormat().getSampleRate(); 
-		durationSeconds=(fileSize/(fileFrameSize*fileFrameRate));
-		System.out.println("Duration : "+durationSeconds);
-		gEffect=new GainEffect();
-		effectList.add(gEffect);
-		//audioClipView.
-	}
-	
-	public LoadedAudioClip(Set set){
 		
+		loadClip(path);
+		
+	
+	}
+
+	public LoadedAudioClip(Set set){
+
 		super.path = "";
 		this.set = set;
 		isLoaded = false;
 	}
-	
-	private void loadClip(String path){
+
+	private boolean loadClip(String path){
 
 		File audioFile = new File(path);
 		isPlaying = false;
-		try {
+		
+		
 
-			AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+		if(audioFile.exists()){
+			try {
 
-			this.audioStream = new LoadedAudioInputStream(audioStream,audioStream.getFormat(),audioStream.getFrameLength());
-			isLoaded = true;
+				AudioInputStream audioStreamSeq = AudioSystem.getAudioInputStream(audioFile);
 
-		} catch (UnsupportedAudioFileException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+				this.audioStream = new LoadedAudioInputStream(audioStreamSeq,audioStreamSeq.getFormat(),audioStreamSeq.getFrameLength());
+				
+				int fileSize=this.audioStream.getDataSize();
+				int fileFrameSize=this.audioStream.getFormat().getFrameSize();
+				float fileFrameRate=this.audioStream.getFormat().getSampleRate(); 
+				durationSeconds=(fileSize/(fileFrameSize*fileFrameRate));
+				gEffect=new GainEffect();
+				effectList.add(gEffect);
+				
+				
+				isLoaded = true;
+
+			} catch (UnsupportedAudioFileException e) {
+				
+				return false;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				return false;
+			}
+			
+			return true;
+		}
+		else{
+			
+			isLoaded = false;
+			
+			return false;
 		}
 	}
-	
-	public void playFromUserInput(){
-		
-		play();
-		set.notifyClipPlay(this);
 
-	}
-	
-	public void play(){
+	public void playFromUserInput(){
+
 		
+		if(isLoaded){
+			play();
+			set.notifyClipPlay(this);
+			
+		}
+	
+	}
+
+	public void play(){
+
 		if(isLoaded){
 			audioStream.resetReadHead();
 			isPlaying = true;
-			
-			
+
 		}
-	
+
 	}
 
 	@Override
 	public void stop() {
 		isPlaying = false;
-		
+
 	}
 
 	@Override

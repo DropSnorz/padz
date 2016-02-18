@@ -62,6 +62,8 @@ import javax.sound.sampled.AudioSystem;
  */
 import org.tritonus.share.sampled.TConversionTool;
 
+import Controler.AudioFeedbackDispatcher;
+
 
 
 /**
@@ -78,6 +80,8 @@ extends		AudioInputStream
 	private static final boolean	DEBUG = false;
 
 	protected ArrayList<IMixable>			mixableEntityList;
+	protected IMixable owner;
+	protected AudioFeedbackDispatcher audioFeedBackDispatcher;
 
 
 
@@ -238,6 +242,7 @@ extends		AudioInputStream
 							break;
 						case 2:
 							nSampleToAdd = TConversionTool.bytesToInt16(abBuffer, nBufferOffset, bBigEndian);
+							
 							break;
 						case 3:
 							nSampleToAdd = TConversionTool.bytesToInt24(abBuffer, nBufferOffset, bBigEndian);
@@ -262,6 +267,7 @@ extends		AudioInputStream
 					for(IEffect effect : audioEntity.getEffectRack()){
 						effect.ProcessDoubleReplacing(temp, 1);
 					}
+					
 					
 					anMixedSamples[nChannel] += temp[0];
 				} // loop over channels
@@ -314,7 +320,7 @@ extends		AudioInputStream
 		{
 			out("MixingAudioInputStream.read(byte[], int, int): end");
 		}
-		// TODO: return a useful value
+		
 		return nLength;
 	}
 
@@ -422,6 +428,11 @@ extends		AudioInputStream
 	private static void out(String strMessage)
 	{
 		System.out.println(strMessage);
+	}
+	
+	private void setAudioFeedbackDispatcher(AudioFeedbackDispatcher afd){
+		
+		this.audioFeedBackDispatcher = afd;
 	}
 }
 

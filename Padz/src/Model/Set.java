@@ -26,8 +26,10 @@ public class Set implements IMixable {
 	List<AudioClip> audioClipList;
 	Mixer globalMixer;
 	ClipMixer clipMixer;
+	
+	GainEffect gainEffect;
 
-	ArrayList<IEffect> effectRack;
+	ArrayList<IEffect> effectList;
 
 	public Set(String name, AudioFormat format){
 
@@ -36,7 +38,7 @@ public class Set implements IMixable {
 		this.name = name;
 
 		triggerType = TriggerType.DO_NOTHING_WHEN_CLIP_PLAYED;
-		effectRack = new ArrayList<IEffect>();
+		effectList = new ArrayList<IEffect>();
 
 		clipMixer = new ClipMixer(format,audioClipList,this);
 
@@ -45,6 +47,9 @@ public class Set implements IMixable {
 		color_r = AppResources.Default_Set_Color.getRed();
 		color_g = AppResources.Default_Set_Color.getGreen();
 		color_b = AppResources.Default_Set_Color.getBlue();
+		
+		gainEffect = new GainEffect();
+		effectList.add(gainEffect);
 	}
 
 	public Set(String name, AudioFormat format, int r, int g, int b){
@@ -60,7 +65,7 @@ public class Set implements IMixable {
 		this.name = name;
 
 		triggerType = TriggerType.DO_NOTHING_WHEN_CLIP_PLAYED;
-		effectRack = new ArrayList<IEffect>();
+		effectList = new ArrayList<IEffect>();
 
 
 
@@ -153,7 +158,7 @@ public class Set implements IMixable {
 
 	private void stopAllClip(){
 
-		//TODO: impplémenter méthode
+		//TODO: implement
 	}
 
 	public String getName() {
@@ -208,17 +213,23 @@ public class Set implements IMixable {
 	}
 
 	public void addEffect(IEffect effect){
-		effectRack.add(effect);
+		effectList.add(effect);
 	}
 
 	public void addEffect(IEffect effect, int i) throws Exception{
 
-		if(i<effectRack.size()){
-			effectRack.add(effect);
+		if(i<effectList.size()){
+			effectList.add(effect);
 		}
 		else{
 			throw new Exception("Impossible d'ajouter l'effet è l'index spécifié");
 		}
+	}
+	
+	public void setGain(double gain){
+		
+		gainEffect.setGain(gain);
+		
 	}
 	
 	public void setAudioFeedbackDispatcher(AudioFeedbackDispatcher afd){
@@ -228,7 +239,7 @@ public class Set implements IMixable {
 	@Override
 	public ArrayList<IEffect> getEffectRack() {
 		// TODO Auto-generated method stub
-		return effectRack;
+		return effectList;
 	}
 
 

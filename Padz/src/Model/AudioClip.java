@@ -67,14 +67,18 @@ public abstract class AudioClip implements IMixable {
 	public String getFileName(){
 		
 		
-		if(path.contains("/")){
+		if(path.contains("/") && isLoaded){
 			
 			
 			String str =  path.substring(path.lastIndexOf("/")); 
 			return str.substring(1); // remove "/"
 
 		}
-		return path;
+		else{
+			
+			return "";
+		}
+		
 	}
 			
 	public float getDurationSeconds() {

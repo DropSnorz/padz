@@ -22,6 +22,7 @@ public class MasterView extends JPanel {
 	private LevelMeter leftMeter;
 	private LevelMeter rightMeter;
 	private JPanel demoPad;
+	public JSlider SL_Gain;
 	
 	public MasterView() {
 		setLayout(null);
@@ -33,11 +34,12 @@ public class MasterView extends JPanel {
 		add(panel);
 		panel.setLayout(null);
 		
-		JSlider slider = new JSlider();
-		slider.setPaintTicks(true);
-		slider.setBounds(179, 11, 26, 156);
-		panel.add(slider);
-		slider.setOrientation(SwingConstants.VERTICAL);
+		SL_Gain = new JSlider();
+		SL_Gain.setMinimum(1);
+		SL_Gain.setPaintTicks(true);
+		SL_Gain.setBounds(179, 11, 26, 156);
+		panel.add(SL_Gain);
+		SL_Gain.setOrientation(SwingConstants.VERTICAL);
 		
 		leftMeter = new LevelMeter();
 		leftMeter.setPreferredSize(new Dimension(9, 100));

@@ -14,6 +14,7 @@ public class SetView extends JPanel {
 	public JButton BT_Options;
 	private LevelMeter rightMeter;
 	private LevelMeter leftMeter;
+	public JSlider SL_Gain;
 
 	/**
 	 * Create the panel.
@@ -23,10 +24,11 @@ public class SetView extends JPanel {
 		setLayout(null);
 		setPreferredSize(new Dimension(260, 200));
 		
-		JSlider SL_Gain = new JSlider();
+		SL_Gain = new JSlider();
+		SL_Gain.setPaintTicks(true);
 		SL_Gain.setValue(100);
 		SL_Gain.setOrientation(SwingConstants.VERTICAL);
-		SL_Gain.setBounds(23, 22, 30, 140);
+		SL_Gain.setBounds(10, 11, 50, 140);
 		add(SL_Gain);
 		
 		JLabel lblGain = new JLabel("Gain");
