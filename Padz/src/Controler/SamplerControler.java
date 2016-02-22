@@ -151,8 +151,9 @@ public class SamplerControler {
 		
 		System.out.println("Called on Selected Pad changes");
 		
-		//TODO call samplerControler.getSelectedPad.getClip()
-		//TODO call AudioClipControler.setModel(clip)  -> Update view
+		 padContainerControler.getSelectedPad().getClip();
+		 
+		//TODO call audioClipControler.setModel(clip)  -> Update view
 	}
 	
 	public void updateUI(){

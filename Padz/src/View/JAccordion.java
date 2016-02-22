@@ -19,6 +19,7 @@ import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -271,7 +272,8 @@ public class JAccordion extends JPanel implements ActionListener, MouseListener 
       label = new JLabel(name);
       headerPane.add(label,BorderLayout.WEST);
       
-      this.button = new JButton("+");
+      this.button = new JButton("    ");
+      this.button.setIcon(new ImageIcon(getClass().getClassLoader().getResource("resources/img/icon-select.png")));
       this.button.addActionListener(this);
       
       headerPane.add(button,BorderLayout.EAST);

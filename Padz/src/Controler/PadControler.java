@@ -172,10 +172,9 @@ public class PadControler implements MouseListener, ActionListener, DragGestureL
 		// TODO Auto-generated method stub
 
 		if(e.getSource() == vue.BT_Play){
-
-
+			
+			
 		}
-
 	}
 
 	public AudioClip getClip() {
