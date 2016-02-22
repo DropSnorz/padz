@@ -10,7 +10,10 @@ public abstract class AudioClip implements IMixable {
 	boolean isLoaded;
 	float durationSeconds;
 	String path;
-	double gainValue=0.5;
+	double gainValue=1;
+	protected double start;
+	protected double end;
+	protected int loop;
 	GainEffect gEffect;
 	Set set;
 	
@@ -63,7 +66,12 @@ public abstract class AudioClip implements IMixable {
 	public ArrayList<IEffect> getEffectRack(){
 		return effectList;
 	}
-	
+	public String getPath(){
+		return path;
+	}
+	public void setPath(String path){
+		this.path=path;
+	}
 	public String getFileName(){
 		
 		
@@ -95,6 +103,27 @@ public abstract class AudioClip implements IMixable {
 	public void setGain(double gainValue){
 		this.gainValue=gainValue;
 		gEffect.setGain(gainValue);
+	}
+	public int getGain(){
+		return (int)(gainValue*100);
+	}
+	public double getStart() {
+		return start;
+	}
+	public void setStart(double start) {
+		this.start = start;
+	}
+	public double getEnd() {
+		return end;
+	}
+	public void setEnd(double end) {
+		this.end = end;
+	}
+	public int getLoop() {
+		return loop;
+	}
+	public void setLoop(int loop) {
+		this.loop = loop;
 	}
 
 }

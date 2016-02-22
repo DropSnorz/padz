@@ -15,6 +15,9 @@ public class StreamedAudioClip extends AudioClip {
 	public StreamedAudioClip(String path){
 
 		super.path = path;
+		super.start=0;
+		super.end=super.getDurationSeconds();
+		super.loop=0;
 		loadClip(path);
 	}
 
