@@ -23,7 +23,9 @@ public class LoadedAudioClip extends AudioClip {
 
 	public LoadedAudioClip(String path){		
 		super.path = path;
-		
+		super.start=0;
+		super.end=super.getDurationSeconds();
+		super.loop=0;
 		loadClip(path);
 		
 	
