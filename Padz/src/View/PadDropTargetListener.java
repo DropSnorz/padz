@@ -11,14 +11,16 @@ import java.awt.dnd.DropTargetListener;
 import java.io.IOException;
 import java.util.List;
 
-public class AudioClipDropTargetListener implements DropTargetListener{
+import Model.AudioClip;
+
+public class PadDropTargetListener implements DropTargetListener{
 
 	
 	PadView target;
 	
-	public AudioClipDropTargetListener(PadView source){
+	public PadDropTargetListener(PadView target){
 		
-		this.target = source;
+		this.target = target;
 	}
 	
 	@Override
@@ -48,6 +50,8 @@ public class AudioClipDropTargetListener implements DropTargetListener{
 	@Override
 	public void drop(DropTargetDropEvent dtde) {
 		
+		System.out.println("Drop! ");
+
 		target.updateDragAndDropFeedback(false, dtde.getLocation());
 		
 		Transferable transferable = dtde.getTransferable();
@@ -63,8 +67,30 @@ public class AudioClipDropTargetListener implements DropTargetListener{
 				if(data != null && data.size() > 0){
 					
 					target.getDropContent(data);
-					System.out.println("Drop envent feedback");
+					
+				    dtde.dropComplete(true);
+						
 				}
+				
+			} catch (UnsupportedFlavorException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		else if (dtde.isDataFlavorSupported(TransferableAudioClip.audioClipFlavor)){
+			
+			System.out.println("AudioClip data detected ");
+			
+			dtde.acceptDrop(DnDConstants.ACTION_COPY);
+			
+			try {
+				Object data = transferable.getTransferData(TransferableAudioClip.audioClipFlavor);
+				
+				target.getAudioClip((AudioClip) data);
+			     dtde.dropComplete(true);
+			     
+			     
 				
 			} catch (UnsupportedFlavorException | IOException e) {
 				// TODO Auto-generated catch block
@@ -85,6 +111,10 @@ public class AudioClipDropTargetListener implements DropTargetListener{
 	public void doDrag(DropTargetDragEvent dtde){
 		
 		if(dtde.isDataFlavorSupported(DataFlavor.javaFileListFlavor)){
+			
+			dtde.acceptDrag(DnDConstants.ACTION_COPY);
+		}
+		else if (dtde.isDataFlavorSupported(TransferableAudioClip.audioClipFlavor)){
 			
 			dtde.acceptDrag(DnDConstants.ACTION_COPY);
 		}

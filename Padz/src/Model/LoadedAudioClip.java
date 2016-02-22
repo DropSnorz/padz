@@ -34,7 +34,7 @@ public class LoadedAudioClip extends AudioClip {
 	public LoadedAudioClip(Set set){
 
 		super.path = "";
-		this.set = set;
+		this.setSet(set);
 		isLoaded = false;
 	}
 
