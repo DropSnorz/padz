@@ -13,6 +13,7 @@ import java.awt.dnd.DragGestureListener;
 import java.awt.dnd.DragSource;
 import java.awt.dnd.DragSourceListener;
 import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Line2D;
@@ -36,6 +37,7 @@ import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
 
 public class PadView extends JPanel {
 
@@ -49,6 +51,8 @@ public class PadView extends JPanel {
 	public JButton BT_Play;
 	public JLabel LB_FileName;
 	private boolean tickEnabled = false;
+	ImageIcon playingIcon;
+	ImageIcon stopIcon;
 
 
 	DragSource source;
@@ -56,7 +60,7 @@ public class PadView extends JPanel {
 
 
 	DropTarget dropTarget;
-	PadDropTargetListener dropTargetListener;
+	DropTargetListener dropTargetListener;
 
 
 
@@ -89,19 +93,33 @@ public class PadView extends JPanel {
 		LB_FileName.setBounds(9, 11, 54, 16);
 		PadPanel.add(LB_FileName);
 		LB_FileName.setHorizontalAlignment(SwingConstants.CENTER);
-		BT_Play = new JButton("Play");
+		
+		playingIcon = new ImageIcon(getClass().getClassLoader().getResource("resources/img/icon-play-green.png"));
+		stopIcon = new ImageIcon(getClass().getClassLoader().getResource("resources/img/icon-play.png"));
+		
+		BT_Play = new JButton("");
+		BT_Play.setIcon(stopIcon);
 		BT_Play.setBounds(10, 38, 53, 23);
 		PadPanel.add(BT_Play);
 
 
 		source= new DragSource();
-		dragSourceListener = new PadDragSourceListener(this);
-
+		
 		dropTarget = new DropTarget(this,DnDConstants.ACTION_COPY,null);
 		dragOver = false;
-		dropTargetListener = new PadDropTargetListener(this);
+		
 
 
+	}
+	
+	public void setPlayingIcon(){
+		
+		BT_Play.setIcon(playingIcon);
+
+	}
+	public void setStopIcon(){
+		
+		BT_Play.setIcon(stopIcon);
 
 	}
 
@@ -173,6 +191,17 @@ public class PadView extends JPanel {
 
 
 	}
+	
+	public void  setDragSourceListener(DragSourceListener dragSourceListener){
+		
+		this.dragSourceListener = dragSourceListener;
+		
+	}
+	
+	public void setDropTargetListener(DropTargetListener dropTargetListener){
+		
+		this.dropTargetListener = dropTargetListener;
+	}
 
 
 	// DRAG AND DROP
@@ -221,28 +250,6 @@ public class PadView extends JPanel {
 
 
 	}
-
-	public void getDropContent(List<File> data){
-
-		padControler.loadFileFromDrop(data.get(0));
-
-	}
-
-	public void getAudioClip(AudioClip clip){
-
-		padControler.loadClipFormDrop(clip);
-
-	}
-
-	public void getAudioDropped(boolean isSuccess){
-
-		if(isSuccess){
-
-			padControler.resetClipFromDrag();
-		}
-
-	}
-
 
 
 }

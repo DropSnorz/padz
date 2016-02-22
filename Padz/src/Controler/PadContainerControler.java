@@ -121,6 +121,19 @@ public class PadContainerControler {
 			controler.setHandleSetChanges(false);
 		}
 	}
+	
+	public void updatePadFromClip(AudioClip clip){
+		
+		for(PadControler controler : padControlerList){
+			
+			if(controler.getClip() == clip){
+				
+				controler.updateUI();
+			}
+			
+		}
+		
+	}
 
 
 	public Set getSelectedSet(){

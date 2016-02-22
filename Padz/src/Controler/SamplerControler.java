@@ -103,7 +103,7 @@ public class SamplerControler {
 		
 		
 		
-		audioFeedbackDispatcher = new AudioFeedbackDispatcher(format,masterControler,setContainerControler);
+		audioFeedbackDispatcher = new AudioFeedbackDispatcher(format,masterControler,setContainerControler, padContainerControler);
 		
 		for(Set set : setList){
 			set.setAudioFeedbackDispatcher(audioFeedbackDispatcher);
