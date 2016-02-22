@@ -3,6 +3,8 @@ package Controler;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JList;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
@@ -22,12 +24,14 @@ public class AudioClipControler implements ChangeListener, ActionListener, ListS
 	double start;
 	double end;
 	int onOff;
+	String path;
 	AudioClipControler(AudioClip clip){
 		audioView=new AudioClipView(clip.getDurationSeconds());
 		audioView.gainGauge.addChangeListener(this);
 		audioView.start.addChangeListener(this);
 		audioView.end.addChangeListener(this);
 		audioView.onOffSelect.addListSelectionListener(this);
+		audioView.fileChoice.addActionListener(this);
 		this.start=clip.getStart();
 		this.end=clip.getEnd();
 		this.clip=clip;
@@ -42,10 +46,15 @@ public class AudioClipControler implements ChangeListener, ActionListener, ListS
 	
 	//}
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
+	public void actionPerformed(ActionEvent e){
+		JButton source = (JButton)e.getSource();
+		int returnVal = audioView.newFile.showOpenDialog(source);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+	            path=audioView.newFile.getSelectedFile().getAbsolutePath();
+		}
+		System.out.println(path);
+		clip.setPath(path);
 	}
-	
 
 	@Override
 	//TODO refacto : GainValue uniquement sur le controleur
@@ -58,9 +67,7 @@ public class AudioClipControler implements ChangeListener, ActionListener, ListS
 	       }
        }else if(e.getSource()==audioView.start){
     	   JSpinner source = (JSpinner)e.getSource();
-	       //if (source.getValueIsAdjusting()) {
 	           this.start =  (double)source.getValue();
-	           //this.gainInt = source.getValue();
 	           clip.setStart(start);
 	           System.out.println(clip.getStart());
 	       //}
@@ -87,14 +94,16 @@ public class AudioClipControler implements ChangeListener, ActionListener, ListS
 	public void setModel(AudioClip clip){
 		this.clip=clip;
 		audioView.fileBox.setText(clip.getPath());
-		updateView(clip.getStart(), clip.getEnd(), clip.getGain(), clip.getLoop());
+		updateView(clip.getStart(), clip.getEnd(), clip.getGain(), clip.getLoop(), clip.getPath());
+		audioView.fileBox.setText(clip.getPath());
 		audioView.repaint();
 	}
-	public void updateView(double start, double end, int gain, int loop){
+	public void updateView(double start, double end, int gain, int loop, String path){
 		audioView.start.setValue(start);
 		audioView.end.setValue(end);
 		audioView.gainGauge.setValue(gain);		
 		audioView.onOffSelect.setSelectedIndex(loop);
+		audioView.fileBox.setText(clip.getPath());
 	}
 
 	
