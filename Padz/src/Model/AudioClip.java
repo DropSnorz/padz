@@ -6,6 +6,7 @@ import javax.sound.sampled.AudioInputStream;
 
 public abstract class AudioClip implements IMixable {
 	
+	
 	boolean isPlaying;
 	boolean isLoaded;
 	float durationSeconds;
@@ -95,7 +96,14 @@ public abstract class AudioClip implements IMixable {
 		}
 		
 	}
+	
 			
+	public void setPlaying(boolean isPlaying) {
+		this.isPlaying = isPlaying;
+	}
+	public void setLoaded(boolean isLoaded) {
+		this.isLoaded = isLoaded;
+	}
 	public float getDurationSeconds() {
 		return durationSeconds;
 	}

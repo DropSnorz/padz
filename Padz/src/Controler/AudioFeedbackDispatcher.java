@@ -7,6 +7,7 @@ import javax.swing.SwingUtilities;
 
 import org.tritonus.share.sampled.TConversionTool;
 
+import Model.AudioClip;
 import Model.IMixable;
 import Model.Set;
 
@@ -15,6 +16,7 @@ public class AudioFeedbackDispatcher {
 	AudioFormat format;
 	MasterControler masterControler;
 	SetContainerControler setContainerControler;
+	PadContainerControler padContainerControler;
 
 
 	ByteBuffer setAudioBuffer = ByteBuffer.allocate(1024);;
@@ -22,11 +24,12 @@ public class AudioFeedbackDispatcher {
 	float lastPeakLeft = 0f;
 	
 
-	public AudioFeedbackDispatcher(AudioFormat format,MasterControler masterControler, SetContainerControler setContainerControler){
+	public AudioFeedbackDispatcher(AudioFormat format,MasterControler masterControler, SetContainerControler setContainerControler, PadContainerControler padContainerControler){
 
 		this.format = format;
 		this.masterControler = masterControler;
 		this.setContainerControler = setContainerControler;
+		this.padContainerControler = padContainerControler;
 	}
 
 	public void DispatchMasterStereoAudioSource(byte[] data,int size){
@@ -47,7 +50,7 @@ public class AudioFeedbackDispatcher {
 	}
 	
 	
-	public void DispatchStereoAduioSource(byte[] data, int Size, IMixable target){
+	public void DispatchStereoAudioSource(byte[] data, int Size, IMixable target){
 		
 		
 		if(target.getClass().getName().equals("set")){
@@ -57,10 +60,22 @@ public class AudioFeedbackDispatcher {
 		
 		else{
 			
-			//process clip
+			//process clip 
 			
 			
 		}
+		
+	}
+	
+	public void notifyClipModelChanges(AudioClip clip){
+		
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+
+				padContainerControler.updatePadFromClip(clip);
+
+			}
+		});
 		
 	}
 

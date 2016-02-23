@@ -91,10 +91,12 @@ public class ClipMixer extends StreamMixer {
 
 			if(clip.isLoaded){
 				try {
-					if(clip.getAudioStream().available() <= 0){
+					if(clip.getAudioStream().available() <= 0 && clip.getIsPlaying()){
 
 						//Si le clip est terminé (fin du stream)
-						clip.isPlaying = false;
+						clip.setPlaying(false); 
+						audioFeedbackDispatcher.notifyClipModelChanges(clip);						
+						
 
 					}
 				} catch (IOException e) {

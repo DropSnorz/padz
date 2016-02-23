@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.TransferHandler;
@@ -20,6 +21,8 @@ import Model.AudioClip;
 import Model.LoadedAudioClip;
 import Model.Set;
 import Model.StreamedAudioClip;
+import View.PadDragSourceListener;
+import View.PadDropTargetListener;
 import View.PadView;
 import View.TransferableAudioClip;
 
@@ -28,6 +31,10 @@ public class PadControler implements MouseListener, ActionListener, DragGestureL
 
 	private PadView vue;
 	private AudioClip clip;
+	
+	private PadDragSourceListener dragSourceListener;
+	private PadDropTargetListener dropTargetListener;
+	
 
 	private PadContainerControler padContainerControler;
 
@@ -43,7 +50,13 @@ public class PadControler implements MouseListener, ActionListener, DragGestureL
 		vue.BT_Play.addMouseListener(this);
 
 		vue.setDragGestureListener(this);
-
+		
+		dragSourceListener = new PadDragSourceListener(this, this.getVue());
+		dropTargetListener = new PadDropTargetListener(this, this.getVue());
+		
+		vue.setDragSourceListener(dragSourceListener);
+		vue.setDropTargetListener(dropTargetListener);
+		
 
 		updateUI();
 	}
@@ -53,7 +66,6 @@ public class PadControler implements MouseListener, ActionListener, DragGestureL
 		vue.drawSelectedCursor(vue.getGraphics());
 		vue.setTickEnabled(true);
 
-
 	}
 
 	public void deselect(){
@@ -62,6 +74,13 @@ public class PadControler implements MouseListener, ActionListener, DragGestureL
 		vue.setTickEnabled(false);
 	}
 
+	
+	public void getDropContent(List<File> data){
+
+		loadFileFromDrop(data.get(0));
+
+	}
+	
 	public void loadFileFromDrop(File file){
 
 
@@ -97,6 +116,13 @@ public class PadControler implements MouseListener, ActionListener, DragGestureL
 
 		vue.LB_FileName.setText(clip.getFileName());
 		vue.setSetColor(clip.getSet().getColor_r(), clip.getSet().getColor_g(), clip.getSet().getColor_b());
+		
+		if(clip.getIsPlaying()){
+			vue.setPlayingIcon();
+		}
+		else{
+			vue.setStopIcon();
+		}
 
 		vue.repaint();
 
@@ -151,6 +177,7 @@ public class PadControler implements MouseListener, ActionListener, DragGestureL
 
 
 			clip.playFromUserInput();
+			updateUI();
 
 			System.out.println("  Fire : " + e.getWhen());
 			System.out.println("Handled: " + System.currentTimeMillis());
@@ -172,10 +199,9 @@ public class PadControler implements MouseListener, ActionListener, DragGestureL
 		// TODO Auto-generated method stub
 
 		if(e.getSource() == vue.BT_Play){
-
-
+			
+			
 		}
-
 	}
 
 	public AudioClip getClip() {

@@ -5,12 +5,17 @@ import java.awt.dnd.DragSourceDropEvent;
 import java.awt.dnd.DragSourceEvent;
 import java.awt.dnd.DragSourceListener;
 
+import Controler.PadControler;
+
 public class PadDragSourceListener implements DragSourceListener {
 
 	
+	PadControler sourceControler;
 	PadView source;
-	public PadDragSourceListener(PadView source){
+	
+	public PadDragSourceListener(PadControler controler,PadView source){
 		
+		this.sourceControler = controler;
 		this.source = source;
 	}
 	
@@ -20,13 +25,14 @@ public class PadDragSourceListener implements DragSourceListener {
 		System.out.println("src= " + dsde.getSource().getClass().getName());
 		if(dsde.getDropSuccess()){
 			
-			source.getAudioDropped(true);
+			
+			sourceControler.resetClipFromDrag();
+			
 			
 		}
 		else{
 			
-			source.getAudioDropped(false);
-
+			//Drag and drop fail callback
 			
 		}
 		

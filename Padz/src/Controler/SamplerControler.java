@@ -103,7 +103,7 @@ public class SamplerControler {
 		
 		
 		
-		audioFeedbackDispatcher = new AudioFeedbackDispatcher(format,masterControler,setContainerControler);
+		audioFeedbackDispatcher = new AudioFeedbackDispatcher(format,masterControler,setContainerControler, padContainerControler);
 		
 		for(Set set : setList){
 			set.setAudioFeedbackDispatcher(audioFeedbackDispatcher);
@@ -151,6 +151,7 @@ public class SamplerControler {
 		
 		System.out.println("Called on Selected Pad changes");
 		
+
 		if (audioClipControler!=null){
 		/*	if((audioClipControler.newPath!=null)&&(audioClipControler.clip.getPath()!=audioClipControler.newPath)){
 				LoadedAudioClip clip= new LoadedAudioClip(audioClipControler.newPath);
