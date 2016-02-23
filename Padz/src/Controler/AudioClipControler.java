@@ -15,6 +15,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import Model.AudioClip;
+import Model.LoadedAudioClip;
 import View.AudioClipView;
 
 public class AudioClipControler implements ChangeListener, ActionListener, ListSelectionListener{
@@ -25,6 +26,7 @@ public class AudioClipControler implements ChangeListener, ActionListener, ListS
 	double end;
 	int onOff;
 	String path;
+	String newPath;
 	AudioClipControler(AudioClip clip){
 		audioView=new AudioClipView(clip.getDurationSeconds());
 		audioView.gainGauge.addChangeListener(this);
@@ -35,6 +37,7 @@ public class AudioClipControler implements ChangeListener, ActionListener, ListS
 		this.start=clip.getStart();
 		this.end=clip.getEnd();
 		this.clip=clip;
+		this.path=clip.getPath();
 		clip.setGain(1);
 	}
 	
@@ -50,10 +53,11 @@ public class AudioClipControler implements ChangeListener, ActionListener, ListS
 		JButton source = (JButton)e.getSource();
 		int returnVal = audioView.newFile.showOpenDialog(source);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
-	            path=audioView.newFile.getSelectedFile().getAbsolutePath();
+	            newPath=audioView.newFile.getSelectedFile().getAbsolutePath();
 		}
-		System.out.println(path);
-		clip.setPath(path);
+		//LoadedAudioClip newClip = new LoadedAudioClip(newPath);
+		System.out.println(newPath);
+		clip.setPath(newPath);
 	}
 
 	@Override

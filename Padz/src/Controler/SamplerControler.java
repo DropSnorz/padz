@@ -30,11 +30,11 @@ public class SamplerControler {
 
 	SamplerView vue;
 	ArrayList<Set> setList;
+	ArrayList<AudioClip> clipList;
 	private MasterControler masterControler;
 	private AudioClipControler audioClipControler;
 	private PadContainerControler padContainerControler;
 	private SetContainerControler setContainerControler;
-	
 	AudioFeedbackDispatcher audioFeedbackDispatcher;	
 	
 	public boolean padSelectionMode = false;
@@ -54,7 +54,7 @@ public class SamplerControler {
 		}
 		Mixer globalMixer = AudioSystem.getMixer(mixerInfo[0]);
 
-		ArrayList<AudioClip> clipList = new ArrayList<AudioClip>();
+		clipList = new ArrayList<AudioClip>();
 		setList = new ArrayList<Set>();
 		
 		String username = System.getProperty("user.name");
@@ -152,11 +152,13 @@ public class SamplerControler {
 		System.out.println("Called on Selected Pad changes");
 		
 		if (audioClipControler!=null){
+		/*	if((audioClipControler.newPath!=null)&&(audioClipControler.clip.getPath()!=audioClipControler.newPath)){
+				LoadedAudioClip clip= new LoadedAudioClip(audioClipControler.newPath);
+				clipList.add(clip);
+			}*/
 			audioClipControler.setModel(padContainerControler.getSelectedPad().getClip());
+			
 		}
-			//AudioClipControler.getView().getPanel();
-		//TODO call samplerControler.getSelectedPad.getClip()
-		//TODO call AudioClipControler.setModel(clip)  -> Update view
 	}
 	
 	public void updateUI(){
