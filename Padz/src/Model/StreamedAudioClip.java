@@ -22,10 +22,17 @@ public class StreamedAudioClip extends AudioClip {
 	}
 
 	public void playFromUserInput(){
-
+		
 		play();
 		set.notifyClipPlay(this);
-
+		isPlaying = false;
+		while(this.loop==1){
+			if(isPlaying==false){
+					play();
+					set.notifyClipPlay(this);
+					isPlaying = false;
+			}
+		}
 	}
 
 	public void play(){

@@ -11,16 +11,19 @@ public class LoadedAudioInputStream extends AudioInputStream {
 	
 	byte[] data;
 	int readHead;
-	int dataSize;
-	
+	public int dataSize;
+	public int dataSizeAltEnd;
 	public int startTime;
 	public int endTime;
+	public LoadedAudioClip clip;
 
-	public LoadedAudioInputStream(InputStream stream, AudioFormat format, long arg2) {
+	public LoadedAudioInputStream(InputStream stream, AudioFormat format, long arg2, LoadedAudioClip clip) {
 		super(stream, format, arg2);
 		
 		DataInputStream dis = new DataInputStream(stream);
 		dataSize = (int) (this.getFrameLength() * format.getFrameSize());
+		dataSizeAltEnd = this.dataSize;
+		this.clip=clip;
 		    data = new byte[dataSize];
 		    try {
 				dis.readFully(data);
@@ -45,8 +48,9 @@ public class LoadedAudioInputStream extends AudioInputStream {
 			
 			this.getFrameLength(); 
 			int result = (int) (format.getFrameRate()/ 1000 * time);
-			
+			System.out.println(result);
 			readHead = result;
+
 			return result;
 		}
 		
@@ -66,13 +70,20 @@ public class LoadedAudioInputStream extends AudioInputStream {
 			return - 1;
 		}
 		
-		while(continuePlaying && readHead < dataSize && dataRead < length){
+		while(continuePlaying && readHead < dataSizeAltEnd && dataRead < length){
 			
 			outputData[dataRead + offset] = data[readHead];
 			
 			
 			readHead = readHead + 1;
 			dataRead = dataRead + 1;
+			
+				if ((this.clip.getLoop()==1)&&(readHead==dataSizeAltEnd)){
+					dataSizeAltEnd=clip.configNewEnd();
+					readHead=clip.configNewStart();
+					dataRead=0;
+				}
+			
 			
 		}
 		
@@ -83,17 +94,22 @@ public class LoadedAudioInputStream extends AudioInputStream {
 	
 	public int available(){
 		
-		return dataSize - readHead;
+		return dataSizeAltEnd - readHead;
 	}
 	
 	public int getDataSize() {
 		return dataSize;
 	}
-	
-	
-	
-	
-	
+
+
+	public int getDataSizeAltEnd() {
+		return dataSizeAltEnd;
+	}
+
+
+	public void setDataSizeAltEnd(int dataSizeAltEnd) {
+		this.dataSizeAltEnd = dataSizeAltEnd;
+	}
 	
 
 }

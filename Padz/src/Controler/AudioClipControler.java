@@ -16,6 +16,8 @@ import javax.swing.event.ListSelectionListener;
 
 import Model.AudioClip;
 import Model.LoadedAudioClip;
+import Model.Set;
+import Model.StreamedAudioClip;
 import View.AudioClipView;
 
 public class AudioClipControler implements ChangeListener, ActionListener, ListSelectionListener{
@@ -27,6 +29,7 @@ public class AudioClipControler implements ChangeListener, ActionListener, ListS
 	int onOff;
 	String path;
 	String newPath;
+	//SamplerControler sampler;
 	AudioClipControler(AudioClip clip){
 		audioView=new AudioClipView(clip.getDurationSeconds());
 		audioView.gainGauge.addChangeListener(this);
@@ -34,6 +37,7 @@ public class AudioClipControler implements ChangeListener, ActionListener, ListS
 		audioView.end.addChangeListener(this);
 		audioView.onOffSelect.addListSelectionListener(this);
 		audioView.fileChoice.addActionListener(this);
+	//	sampler=new SamplerControler();
 		this.start=clip.getStart();
 		this.end=clip.getEnd();
 		this.clip=clip;
@@ -55,9 +59,14 @@ public class AudioClipControler implements ChangeListener, ActionListener, ListS
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 	            newPath=audioView.newFile.getSelectedFile().getAbsolutePath();
 		}
-		//LoadedAudioClip newClip = new LoadedAudioClip(newPath);
+		//Set previousSet= clip.getSet();
+		StreamedAudioClip newClip = new StreamedAudioClip(newPath);
 		System.out.println(newPath);
+		//newClip.setSet(previousSet);
+		this.clip=newClip;
 		clip.setPath(newPath);
+		//sampler.clipList.add(newClip);
+		//updateView(0,clip.getDurationSeconds(),50,0,newPath);
 	}
 
 	@Override
@@ -98,7 +107,14 @@ public class AudioClipControler implements ChangeListener, ActionListener, ListS
 	public void setModel(AudioClip clip){
 		this.clip=clip;
 		audioView.fileBox.setText(clip.getPath());
-		updateView(clip.getStart(), clip.getEnd(), clip.getGain(), clip.getLoop(), clip.getPath());
+		if (clip.getEnd()==0){
+			updateView(clip.getStart(),(Math.round(clip.getDurationSeconds()/0.1)*0.1)-0.1, clip.getGain(), clip.getLoop(), clip.getPath());
+		}else{
+			if(clip.getStart()>clip.getEnd()){
+				clip.setStart(clip.getEnd());
+			}
+			updateView(clip.getStart(), clip.getEnd(), clip.getGain(), clip.getLoop(), clip.getPath());
+		}
 		audioView.fileBox.setText(clip.getPath());
 		audioView.repaint();
 	}

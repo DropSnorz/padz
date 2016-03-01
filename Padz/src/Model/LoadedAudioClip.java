@@ -20,13 +20,14 @@ import View.AudioClipView;
 public class LoadedAudioClip extends AudioClip {
 
 	private LoadedAudioInputStream audioStream;
-
+	private double adjust;
 	public LoadedAudioClip(String path){		
 		super.path = path;
 		super.start=0;
 		super.end=super.getDurationSeconds();
 		super.loop=0;
 		loadClip(path);
+		adjust=0;
 		
 	
 	}
@@ -50,7 +51,7 @@ public class LoadedAudioClip extends AudioClip {
 
 				AudioInputStream audioStreamSeq = AudioSystem.getAudioInputStream(audioFile);
 
-				this.audioStream = new LoadedAudioInputStream(audioStreamSeq,audioStreamSeq.getFormat(),audioStreamSeq.getFrameLength());
+				this.audioStream = new LoadedAudioInputStream(audioStreamSeq,audioStreamSeq.getFormat(),audioStreamSeq.getFrameLength(), this);
 				
 				int fileSize=this.audioStream.getDataSize();
 				int fileFrameSize=this.audioStream.getFormat().getFrameSize();
@@ -86,21 +87,52 @@ public class LoadedAudioClip extends AudioClip {
 		if(isLoaded){
 			play();
 			set.notifyClipPlay(this);
-			
 		}
-	
 	}
 
 	public void play(){
-
+		int frameSize=audioStream.getFormat().getFrameSize();
 		if(isLoaded){
-			audioStream.resetReadHead();
-			isPlaying = true;
-
+			System.out.println(audioStream.dataSize);
+			if((this.start==0)){
+				configNewEnd();
+				audioStream.resetReadHead();
+				isPlaying = true;
+			}else{
+				configNewStart();
+				configNewEnd();
+				audioStream.readHead =(int)((audioStream.dataSize/this.getDurationSeconds())*(this.adjust));
+				System.out.println((int)(((audioStream.dataSize/this.getDurationSeconds())*this.adjust))%frameSize);
+				adjust=0;
+				isPlaying=true;
+				
+			}
 		}
-
 	}
 
+	public int configNewEnd(){
+		int newEnd;
+		if (this.end==(this.getDurationSeconds())){
+			audioStream.setDataSizeAltEnd(audioStream.getDataSize());
+			newEnd=audioStream.getDataSize();
+		}else {
+			audioStream.setDataSizeAltEnd((int)((audioStream.dataSize/this.getDurationSeconds())*(this.end)));
+			newEnd=(int)((audioStream.dataSize/this.getDurationSeconds()*(this.end)));
+		}
+		return newEnd;
+	}
+	
+	public int configNewStart(){
+		int frameSize=audioStream.getFormat().getFrameSize();
+		System.out.println(frameSize);
+		this.adjust=this.start;
+		while ((int)((audioStream.dataSize/this.getDurationSeconds())*this.adjust)%frameSize!=0){
+			System.out.println("Asjust init : "+this.adjust);
+			this.adjust=(Math.round(this.adjust*10d)/10d)-0.05;
+			System.out.println("Adjust :"+this.adjust);
+		}
+		return (int)((audioStream.dataSize/this.getDurationSeconds())*(this.adjust));
+	}
 	@Override
 	public void stop() {
 		isPlaying = false;
@@ -112,6 +144,5 @@ public class LoadedAudioClip extends AudioClip {
 		return audioStream;
 	}
 
-
-
+	
 }
