@@ -29,7 +29,7 @@ public class AudioClipControler implements ChangeListener, ActionListener, ListS
 	int onOff;
 	String path;
 	String newPath;
-	//SamplerControler sampler;
+
 	AudioClipControler(AudioClip clip){
 		audioView=new AudioClipView(clip.getDurationSeconds());
 		audioView.gainGauge.addChangeListener(this);
@@ -37,7 +37,6 @@ public class AudioClipControler implements ChangeListener, ActionListener, ListS
 		audioView.end.addChangeListener(this);
 		audioView.onOffSelect.addListSelectionListener(this);
 		audioView.fileChoice.addActionListener(this);
-	//	sampler=new SamplerControler();
 		this.start=clip.getStart();
 		this.end=clip.getEnd();
 		this.clip=clip;
@@ -108,12 +107,12 @@ public class AudioClipControler implements ChangeListener, ActionListener, ListS
 		this.clip=clip;
 		audioView.fileBox.setText(clip.getPath());
 		if (clip.getEnd()==0){
-			updateView(clip.getStart(),(Math.round(clip.getDurationSeconds()/0.1)*0.1)-0.1, clip.getGain(), clip.getLoop(), clip.getPath());
+			updateView(clip.getStart(),(Math.round(clip.getDurationSeconds()/0.1)*0.1)-0.1,(int)(clip.getGain()*100), clip.getLoop(), clip.getPath());
 		}else{
 			if(clip.getStart()>clip.getEnd()){
 				clip.setStart(clip.getEnd());
 			}
-			updateView(clip.getStart(), clip.getEnd(), clip.getGain(), clip.getLoop(), clip.getPath());
+			updateView(clip.getStart(), clip.getEnd(), (int)(clip.getGain()*100), clip.getLoop(), clip.getPath());
 		}
 		audioView.fileBox.setText(clip.getPath());
 		audioView.repaint();

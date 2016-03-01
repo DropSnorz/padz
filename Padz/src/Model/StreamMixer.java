@@ -241,8 +241,7 @@ extends		AudioInputStream
 							nSampleToAdd = abBuffer[nBufferOffset];
 							break;
 						case 2:
-							nSampleToAdd = TConversionTool.bytesToInt16(abBuffer, nBufferOffset, bBigEndian);
-							
+							nSampleToAdd = TConversionTool.bytesToInt16(abBuffer, nBufferOffset, bBigEndian);							
 							break;
 						case 3:
 							nSampleToAdd = TConversionTool.bytesToInt24(abBuffer, nBufferOffset, bBigEndian);
@@ -262,6 +261,9 @@ extends		AudioInputStream
 						nSampleToAdd = TConversionTool.ulaw2linear(abBuffer[nBufferOffset]);
 					}
 					
+					
+					//TODO : refacto TConversiontool.ToDouble()
+					//TODO : process frames-block
 					double temp[] = new double[1];
 					temp[0] = (double) nSampleToAdd;
 					for(IEffect effect : audioEntity.getEffectRack()){
@@ -270,6 +272,7 @@ extends		AudioInputStream
 					
 					
 					anMixedSamples[nChannel] += temp[0];
+					
 				} // loop over channels
 			} // loop over streams
 			if (DEBUG)

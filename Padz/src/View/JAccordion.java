@@ -272,10 +272,10 @@ public class JAccordion extends JPanel implements ActionListener, MouseListener 
       label = new JLabel(name);
       headerPane.add(label,BorderLayout.WEST);
       
-      this.button = new JButton("    ");
+      this.button = new JButton("");
       this.button.setIcon(new ImageIcon(getClass().getClassLoader().getResource("resources/img/icon-select.png")));
       this.button.addActionListener(this);
-      
+      this.button.setPreferredSize(new Dimension(75,20));
       headerPane.add(button,BorderLayout.EAST);
       
     }

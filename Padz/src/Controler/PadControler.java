@@ -213,7 +213,6 @@ public class PadControler implements MouseListener, ActionListener, DragGestureL
 	@Override
 	public void dragGestureRecognized(DragGestureEvent dge) {
 
-		//Drag source Listener ?
 		dge.startDrag(DragSource.DefaultMoveDrop, new TransferableAudioClip(clip));
 
 	}
