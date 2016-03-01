@@ -13,4 +13,8 @@ public class GainEffect implements IEffect {
 	public void setGain(double gainValue){
 		this.gainValue=gainValue;
 	}
+	
+	public double getGain(){
+		return this.gainValue;
+	}
 }

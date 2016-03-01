@@ -94,7 +94,7 @@ public class AudioClipControler implements ChangeListener, ActionListener, ListS
 	public void setModel(AudioClip clip){
 		this.clip=clip;
 		audioView.fileBox.setText(clip.getPath());
-		updateView(clip.getStart(), clip.getEnd(), clip.getGain(), clip.getLoop(), clip.getPath());
+		updateView(clip.getStart(), clip.getEnd(), (int) clip.getGain()*100, clip.getLoop(), clip.getPath());
 		audioView.fileBox.setText(clip.getPath());
 		audioView.repaint();
 	}
