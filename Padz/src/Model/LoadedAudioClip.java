@@ -23,12 +23,15 @@ public class LoadedAudioClip extends AudioClip {
 
 	public LoadedAudioClip(String path){		
 		super.path = path;
-		super.start=0;
-		super.end=super.getDurationSeconds();
-		super.loop=0;
 		loadClip(path);
+
 		
-	
+		super.loop=0;
+		setStart(0);
+		setEnd(getDurationSeconds());
+
+
+
 	}
 
 	public LoadedAudioClip(Set set){
@@ -42,8 +45,8 @@ public class LoadedAudioClip extends AudioClip {
 
 		File audioFile = new File(path);
 		isPlaying = false;
-		
-		
+
+
 
 		if(audioFile.exists()){
 			try {
@@ -51,44 +54,44 @@ public class LoadedAudioClip extends AudioClip {
 				AudioInputStream audioStreamSeq = AudioSystem.getAudioInputStream(audioFile);
 
 				this.audioStream = new LoadedAudioInputStream(audioStreamSeq,audioStreamSeq.getFormat(),audioStreamSeq.getFrameLength());
-				
+
 				int fileSize=this.audioStream.getDataSize();
 				int fileFrameSize=this.audioStream.getFormat().getFrameSize();
 				float fileFrameRate=this.audioStream.getFormat().getSampleRate(); 
 				durationSeconds=(fileSize/(fileFrameSize*fileFrameRate));
 				gEffect=new GainEffect();
 				effectList.add(gEffect);
-				
-				
+
+
 				isLoaded = true;
 
 			} catch (UnsupportedAudioFileException e) {
-				
+
 				return false;
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				return false;
 			}
-			
+
 			return true;
 		}
 		else{
-			
+
 			isLoaded = false;
-			
+
 			return false;
 		}
 	}
 
 	public void playFromUserInput(){
 
-		
+
 		if(isLoaded){
 			play();
 			set.notifyClipPlay(this);
-			
+
 		}
-	
+
 	}
 
 	public void play(){
@@ -106,6 +109,64 @@ public class LoadedAudioClip extends AudioClip {
 		isPlaying = false;
 
 	}
+
+	public void setEnd(double end) {
+		this.end = end;
+
+
+		float frameRate = audioStream.getFormat().getFrameRate();
+		int frameSize = audioStream.getFormat().getFrameSize();
+
+		int endSample  = (int) (end * frameRate * frameSize);
+
+		System.out.println(endSample);
+		if(endSample % frameSize != 0 ){
+
+			//TODO : auto-correct
+			System.out.println("Error");
+		}
+		else{
+			audioStream.endSample = endSample;
+		}
+
+
+
+
+
+	}
+
+	public void setStart(double start) {
+		this.start = start;
+
+		float frameRate = audioStream.getFormat().getFrameRate();
+		int frameSize = audioStream.getFormat().getFrameSize();
+
+
+		int startSample = (int) (start * frameRate * frameSize);
+
+		if(startSample % frameSize != 0 ){
+
+			//TODO : auto-correct
+		}
+		else{
+			audioStream.startSample = startSample;
+		}
+
+	}
+	
+	public void setLoop(int loop){
+		
+		this.loop = loop;
+		
+		if(loop == 1){
+			audioStream.setLoop(true);
+		}
+		else{
+			audioStream.setLoop(false);
+		}
+	}
+
+
 
 	@Override
 	public AudioInputStream getAudioStream() {

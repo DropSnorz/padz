@@ -13,8 +13,13 @@ public class LoadedAudioInputStream extends AudioInputStream {
 	int readHead;
 	int dataSize;
 	
-	public int startTime;
-	public int endTime;
+	public int startSample;
+	public int uncheckedEndSample = - 1;
+	public int endSample;
+	
+	private boolean isLoop;
+	
+	
 
 	public LoadedAudioInputStream(InputStream stream, AudioFormat format, long arg2) {
 		super(stream, format, arg2);
@@ -36,7 +41,7 @@ public class LoadedAudioInputStream extends AudioInputStream {
 	public void resetReadHead(){
 		
 		
-		readHead = 0;
+		readHead = startSample;
 	}
 	
 	public int setHeadOnTimeMillis(long time){
@@ -56,15 +61,19 @@ public class LoadedAudioInputStream extends AudioInputStream {
 	
 	public int read(byte[] outputData,int offset, int length){
 		
-		if(readHead == 0){
-			System.out.println(System.currentTimeMillis());
-		}
+		
 		int dataRead = 0;
 		boolean continuePlaying = true;
 		
 		if(readHead > dataSize){
 			return - 1;
 		}
+		if(uncheckedEndSample != - 1 && uncheckedEndSample < readHead){
+			
+			endSample = uncheckedEndSample;
+			uncheckedEndSample = - 1;
+		}
+	
 		
 		while(continuePlaying && readHead < dataSize && dataRead < length){
 			
@@ -74,7 +83,12 @@ public class LoadedAudioInputStream extends AudioInputStream {
 			readHead = readHead + 1;
 			dataRead = dataRead + 1;
 			
+			if(isLoop && readHead >= endSample){
+				
+				readHead = startSample + (readHead - endSample);
+			}
 		}
+		
 		
 		return dataRead;
 		
@@ -89,6 +103,40 @@ public class LoadedAudioInputStream extends AudioInputStream {
 	public int getDataSize() {
 		return dataSize;
 	}
+
+
+	
+	public int getStartSample() {
+		return startSample;
+	}
+
+
+	public void setStartSample(int startSample) {
+		this.startSample = startSample;
+	}
+
+
+	public int getEndSample() {
+		
+		return endSample;
+	}
+
+
+	public void setEndSample(int endSample) {
+		
+		this.uncheckedEndSample = endSample;
+	}
+
+
+	public boolean isLoop() {
+		return isLoop;
+	}
+
+
+	public void setLoop(boolean isLoop) {
+		this.isLoop = isLoop;
+	}
+	
 	
 	
 	

@@ -2,6 +2,7 @@ package Controler;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -67,13 +68,18 @@ public class AudioClipControler implements ChangeListener, ActionListener, ListS
 	       }
        }else if(e.getSource()==audioView.start){
     	   JSpinner source = (JSpinner)e.getSource();
-	           this.start =  (double)source.getValue();
+	           this.start =  (double) source.getValue();
+	           start = Math.round(start * 100) / 100.0;
+	           
+	           System.out.println(start);
+
 	           clip.setStart(start);
 	           System.out.println(clip.getStart());
-	       //}
+	      
        }else if(e.getSource()==audioView.end){
     	   JSpinner source = (JSpinner)e.getSource();
 	           this.end =  (double)source.getValue();
+	           end = Math.round(end * 100) / 100.0;
 	           clip.setEnd(end);
 	           System.out.println(clip.getEnd());
        } 
