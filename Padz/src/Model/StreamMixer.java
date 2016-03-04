@@ -80,7 +80,7 @@ extends		AudioInputStream
 	private static final boolean	DEBUG = false;
 
 	protected ArrayList<IMixable>			mixableEntityList;
-	protected IMixable owner;
+	//protected IMixable owner;
 	protected AudioFeedbackDispatcher audioFeedBackDispatcher;
 
 
