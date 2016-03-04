@@ -11,11 +11,15 @@ public class LoadedAudioInputStream extends AudioInputStream {
 	
 	byte[] data;
 	int readHead;
-	public int dataSize;
-	public int dataSizeAltEnd;
-	public int startTime;
-	public int endTime;
-	public LoadedAudioClip clip;
+
+	int dataSize;
+	
+	public int startSample;
+	public int uncheckedEndSample = - 1;
+	public int endSample;
+	
+	private boolean isLoop;
+	
 
 	public LoadedAudioInputStream(InputStream stream, AudioFormat format, long arg2, LoadedAudioClip clip) {
 		super(stream, format, arg2);
@@ -39,7 +43,7 @@ public class LoadedAudioInputStream extends AudioInputStream {
 	public void resetReadHead(){
 		
 		
-		readHead = 0;
+		readHead = startSample;
 	}
 	
 	public int setHeadOnTimeMillis(long time){
@@ -60,15 +64,19 @@ public class LoadedAudioInputStream extends AudioInputStream {
 	
 	public int read(byte[] outputData,int offset, int length){
 		
-		if(readHead == 0){
-			System.out.println(System.currentTimeMillis());
-		}
+		
 		int dataRead = 0;
 		boolean continuePlaying = true;
 		
 		if(readHead > dataSize){
 			return - 1;
 		}
+		if(uncheckedEndSample != - 1 && uncheckedEndSample < readHead){
+			
+			endSample = uncheckedEndSample;
+			uncheckedEndSample = - 1;
+		}
+	
 		
 		while(continuePlaying && readHead < dataSizeAltEnd && dataRead < length){
 			
@@ -78,14 +86,13 @@ public class LoadedAudioInputStream extends AudioInputStream {
 			readHead = readHead + 1;
 			dataRead = dataRead + 1;
 			
-				if ((this.clip.getLoop()==1)&&(readHead==dataSizeAltEnd)){
-					dataSizeAltEnd=clip.configNewEnd();
-					readHead=clip.configNewStart();
-					dataRead=0;
-				}
-			
-			
+
+			if(isLoop && readHead >= endSample){
+				
+				readHead = startSample + (readHead - endSample);
+			}
 		}
+		
 		
 		return dataRead;
 		
@@ -101,15 +108,39 @@ public class LoadedAudioInputStream extends AudioInputStream {
 		return dataSize;
 	}
 
-
-	public int getDataSizeAltEnd() {
-		return dataSizeAltEnd;
+	
+	public int getStartSample() {
+		return startSample;
 	}
 
 
-	public void setDataSizeAltEnd(int dataSizeAltEnd) {
-		this.dataSizeAltEnd = dataSizeAltEnd;
+	public void setStartSample(int startSample) {
+		this.startSample = startSample;
 	}
+
+
+	public int getEndSample() {
+		
+		return endSample;
+	}
+
+
+	public void setEndSample(int endSample) {
+		
+		this.uncheckedEndSample = endSample;
+	}
+
+
+	public boolean isLoop() {
+		return isLoop;
+	}
+
+
+	public void setLoop(boolean isLoop) {
+		this.isLoop = isLoop;
+	}
+	
+	
 	
 
 }
