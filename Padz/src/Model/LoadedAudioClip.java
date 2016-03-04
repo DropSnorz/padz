@@ -25,12 +25,9 @@ public class LoadedAudioClip extends AudioClip {
 		super.path = path;
 		loadClip(path);
 
-		
 		super.loop=0;
 		setStart(0);
 		setEnd(getDurationSeconds());
-
-
 
 	}
 
@@ -97,46 +94,13 @@ public class LoadedAudioClip extends AudioClip {
 	public void play(){
 		int frameSize=audioStream.getFormat().getFrameSize();
 		if(isLoaded){
-			System.out.println(audioStream.dataSize);
-			if((this.start==0)){
-				configNewEnd();
-				audioStream.resetReadHead();
-				isPlaying = true;
-			}else{
-				configNewStart();
-				configNewEnd();
-				audioStream.readHead =(int)((audioStream.dataSize/this.getDurationSeconds())*(this.adjust));
-				System.out.println((int)(((audioStream.dataSize/this.getDurationSeconds())*this.adjust))%frameSize);
-				adjust=0;
-				isPlaying=true;
-				
-			}
+
+			audioStream.resetReadHead();
+			isPlaying = true;
+
 		}
 	}
 
-	public int configNewEnd(){
-		int newEnd;
-		if (this.end==(this.getDurationSeconds())){
-			audioStream.setDataSizeAltEnd(audioStream.getDataSize());
-			newEnd=audioStream.getDataSize();
-		}else {
-			audioStream.setDataSizeAltEnd((int)((audioStream.dataSize/this.getDurationSeconds())*(this.end)));
-			newEnd=(int)((audioStream.dataSize/this.getDurationSeconds()*(this.end)));
-		}
-		return newEnd;
-	}
-	
-	public int configNewStart(){
-		int frameSize=audioStream.getFormat().getFrameSize();
-		System.out.println(frameSize);
-		this.adjust=this.start;
-		while ((int)((audioStream.dataSize/this.getDurationSeconds())*this.adjust)%frameSize!=0){
-			System.out.println("Asjust init : "+this.adjust);
-			this.adjust=(Math.round(this.adjust*10d)/10d)-0.05;
-			System.out.println("Adjust :"+this.adjust);
-		}
-		return (int)((audioStream.dataSize/this.getDurationSeconds())*(this.adjust));
-	}
 	@Override
 	public void stop() {
 		isPlaying = false;
@@ -186,11 +150,11 @@ public class LoadedAudioClip extends AudioClip {
 		}
 
 	}
-	
+
 	public void setLoop(int loop){
-		
+
 		this.loop = loop;
-		
+
 		if(loop == 1){
 			audioStream.setLoop(true);
 		}
@@ -206,5 +170,5 @@ public class LoadedAudioClip extends AudioClip {
 		return audioStream;
 	}
 
-	
+
 }

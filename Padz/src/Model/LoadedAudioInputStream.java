@@ -21,13 +21,12 @@ public class LoadedAudioInputStream extends AudioInputStream {
 	private boolean isLoop;
 	
 
-	public LoadedAudioInputStream(InputStream stream, AudioFormat format, long arg2, LoadedAudioClip clip) {
+	public LoadedAudioInputStream(InputStream stream, AudioFormat format, long arg2) {
 		super(stream, format, arg2);
 		
 		DataInputStream dis = new DataInputStream(stream);
 		dataSize = (int) (this.getFrameLength() * format.getFrameSize());
-		dataSizeAltEnd = this.dataSize;
-		this.clip=clip;
+
 		    data = new byte[dataSize];
 		    try {
 				dis.readFully(data);
@@ -78,7 +77,7 @@ public class LoadedAudioInputStream extends AudioInputStream {
 		}
 	
 		
-		while(continuePlaying && readHead < dataSizeAltEnd && dataRead < length){
+		while(continuePlaying && readHead < dataSize && dataRead < length){
 			
 			outputData[dataRead + offset] = data[readHead];
 			
@@ -101,7 +100,7 @@ public class LoadedAudioInputStream extends AudioInputStream {
 	
 	public int available(){
 		
-		return dataSizeAltEnd - readHead;
+		return dataSize - readHead;
 	}
 	
 	public int getDataSize() {
