@@ -92,7 +92,7 @@ public class LoadedAudioClip extends AudioClip {
 	}
 
 	public void play(){
-		int frameSize=audioStream.getFormat().getFrameSize();
+		
 		if(isLoaded){
 
 			audioStream.resetReadHead();
