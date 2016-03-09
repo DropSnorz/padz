@@ -92,7 +92,9 @@ public class SamplerControler {
 		
 		audioClipControler=new AudioClipControler(padContainerControler.getSelectedPad().getClip());
 		vue.addToBottomPane(audioClipControler.getView());
-		
+
+		audioClipControler.setModel(padContainerControler.getSelectedPad().getClip());
+	
 		
 		masterControler = new MasterControler();
 		vue.addToBottomPaneRight(masterControler.getVue());
