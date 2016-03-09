@@ -177,11 +177,9 @@ public class PadControler implements MouseListener, ActionListener, DragGestureL
 
 
 			clip.playFromUserInput();
-			updateUI();
-
-			System.out.println("  Fire : " + e.getWhen());
-			System.out.println("Handled: " + System.currentTimeMillis());
-
+			
+			padContainerControler.updateUI();
+		
 		}
 
 

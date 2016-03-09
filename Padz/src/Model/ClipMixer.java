@@ -3,6 +3,7 @@ package Model;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.sound.sampled.AudioFormat;
@@ -87,8 +88,13 @@ public class ClipMixer extends StreamMixer {
 
 	public void updateStreams(){
 		
-		for(AudioClip clip : audioClipList){
+		
+		Iterator<AudioClip>	audioClipIterator = audioClipList.iterator();
 
+		while (audioClipIterator.hasNext())
+		{
+
+			AudioClip clip = audioClipIterator.next();
 			if(clip.isLoaded){
 				try {
 					if(clip.getAudioStream().available() <= 0 && clip.getIsPlaying()){

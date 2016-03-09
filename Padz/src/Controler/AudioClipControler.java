@@ -22,7 +22,7 @@ import Model.StreamedAudioClip;
 import View.AudioClipView;
 
 public class AudioClipControler implements ChangeListener, ActionListener, ListSelectionListener{
-    AudioClipView audioView;
+	AudioClipView audioView;
 	AudioClip clip;
 	double gain;
 	double start;
@@ -30,6 +30,8 @@ public class AudioClipControler implements ChangeListener, ActionListener, ListS
 	int onOff;
 	String path;
 	String newPath;
+
+	boolean handleEventFromView = false;
 
 	AudioClipControler(AudioClip clip){
 		audioView=new AudioClipView(clip.getDurationSeconds());
@@ -44,20 +46,20 @@ public class AudioClipControler implements ChangeListener, ActionListener, ListS
 		this.path=clip.getPath();
 		clip.setGain(1);
 	}
-	
+
 	public AudioClipView getView() {
 		return audioView;
 	}
-	
+
 	//public double getStartTime(){
-	
+
 	//}
 	@Override
 	public void actionPerformed(ActionEvent e){
 		JButton source = (JButton)e.getSource();
 		int returnVal = audioView.newFile.showOpenDialog(source);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
-	            newPath=audioView.newFile.getSelectedFile().getAbsolutePath();
+			newPath=audioView.newFile.getSelectedFile().getAbsolutePath();
 		}
 		//Set previousSet= clip.getSet();
 		LoadedAudioClip newClip = new LoadedAudioClip(newPath);
@@ -70,42 +72,45 @@ public class AudioClipControler implements ChangeListener, ActionListener, ListS
 	}
 
 	@Override
-	//TODO refacto : GainValue uniquement sur le controleur
-	 public void stateChanged(ChangeEvent e) {
-       if(e.getSource()==audioView.gainGauge){
-    	   JSlider source = (JSlider)e.getSource();
-	       if (source.getValueIsAdjusting()) {
-	           this.gain =  source.getValue()*0.01;
-	           clip.setGain(gain);
-	       }
-       }else if(e.getSource()==audioView.start){
-    	   JSpinner source = (JSpinner)e.getSource();
-	           this.start =  (double) source.getValue();
-	           start = Math.round(start * 100) / 100.0;
-	           
-	           System.out.println(start);
+	public void stateChanged(ChangeEvent e) {
+		if(handleEventFromView){
+			if(e.getSource()==audioView.gainGauge){
+				JSlider source = (JSlider)e.getSource();
+				if (source.getValueIsAdjusting()) {
+					this.gain =  source.getValue()*0.01;
+					clip.setGain(gain);
+				}
+			}else if(e.getSource()==audioView.start){
+				JSpinner source = (JSpinner)e.getSource();
+				this.start =  (double) source.getValue();
+				start = Math.round(start * 100) / 100.0;
 
-	           clip.setStart(start);
-	           System.out.println(clip.getStart());
-	      
-       }else if(e.getSource()==audioView.end){
-    	   JSpinner source = (JSpinner)e.getSource();
-	           this.end =  (double)source.getValue();
-	           end = Math.round(end * 100) / 100.0;
-	           clip.setEnd(end);
-	           System.out.println(clip.getEnd());
-       } 
-   }
+				System.out.println(start);
+
+				clip.setStart(start);
+				System.out.println(clip.getStart());
+
+			}else if(e.getSource()==audioView.end){
+				JSpinner source = (JSpinner)e.getSource();
+				this.end =  (double)source.getValue();
+				end = Math.round(end * 100) / 100.0;
+				clip.setEnd(end);
+				System.out.println(clip.getEnd());
+			} 
+		}
+	}
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
- 	   JList source =(JList)e.getSource();
- 	   this.onOff=source.getAnchorSelectionIndex();
- 	   clip.setLoop(this.onOff);
- 	   if(this.onOff==1){
- 		   System.out.println("On");
- 	   }else if(this.onOff==0){
- 		   System.out.println("Off");
- 	   }
+		if(handleEventFromView){
+			JList source =(JList)e.getSource();
+			this.onOff=source.getAnchorSelectionIndex();
+			clip.setLoop(this.onOff);
+			if(this.onOff==1){
+				System.out.println("On");
+			}else if(this.onOff==0){
+				System.out.println("Off");
+			}
+		}
 	}
 
 
@@ -124,12 +129,15 @@ public class AudioClipControler implements ChangeListener, ActionListener, ListS
 		audioView.repaint();
 	}
 	public void updateView(double start, double end, int gain, int loop, String path){
+
+		handleEventFromView = false;
 		audioView.start.setValue(start);
 		audioView.end.setValue(end);
 		audioView.gainGauge.setValue(gain);		
 		audioView.onOffSelect.setSelectedIndex(loop);
 		audioView.fileBox.setText(clip.getPath());
+		handleEventFromView = true;
 	}
 
-	
+
 }

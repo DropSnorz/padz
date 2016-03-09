@@ -20,8 +20,17 @@ import View.AudioClipView;
 public class LoadedAudioClip extends AudioClip {
 
 	private LoadedAudioInputStream audioStream;
-	private double adjust;
-	public LoadedAudioClip(String path){		
+
+
+	private LoadedAudioClip(){
+
+		gEffect=new GainEffect();
+		effectList.add(gEffect);
+
+
+	}
+	public LoadedAudioClip(String path){
+		this();
 		super.path = path;
 		loadClip(path);
 
@@ -33,6 +42,7 @@ public class LoadedAudioClip extends AudioClip {
 
 	public LoadedAudioClip(Set set){
 
+		this();
 		super.path = "";
 		this.setSet(set);
 		isLoaded = false;
@@ -56,8 +66,6 @@ public class LoadedAudioClip extends AudioClip {
 				int fileFrameSize=this.audioStream.getFormat().getFrameSize();
 				float fileFrameRate=this.audioStream.getFormat().getSampleRate(); 
 				durationSeconds=(fileSize/(fileFrameSize*fileFrameRate));
-				gEffect=new GainEffect();
-				effectList.add(gEffect);
 
 
 				isLoaded = true;
@@ -92,7 +100,7 @@ public class LoadedAudioClip extends AudioClip {
 	}
 
 	public void play(){
-		int frameSize=audioStream.getFormat().getFrameSize();
+
 		if(isLoaded){
 
 			audioStream.resetReadHead();
@@ -108,45 +116,46 @@ public class LoadedAudioClip extends AudioClip {
 	}
 
 	public void setEnd(double end) {
+
 		this.end = end;
 
+		if(isLoaded){
 
-		float frameRate = audioStream.getFormat().getFrameRate();
-		int frameSize = audioStream.getFormat().getFrameSize();
+			float frameRate = audioStream.getFormat().getFrameRate();
+			int frameSize = audioStream.getFormat().getFrameSize();
 
-		int endSample  = (int) (end * frameRate * frameSize);
+			int endSample  = (int) (end * frameRate * frameSize);
 
-		System.out.println(endSample);
-		if(endSample % frameSize != 0 ){
+			System.out.println(endSample);
+			if(endSample % frameSize != 0 ){
 
-			//TODO : auto-correct
-			System.out.println("Error");
+				//TODO : auto-correct
+				System.out.println("Error");
+			}
+			else{
+				audioStream.endSample = endSample;
+			}
 		}
-		else{
-			audioStream.endSample = endSample;
-		}
-
-
-
-
 
 	}
 
 	public void setStart(double start) {
 		this.start = start;
 
-		float frameRate = audioStream.getFormat().getFrameRate();
-		int frameSize = audioStream.getFormat().getFrameSize();
+		if(isLoaded){
+			float frameRate = audioStream.getFormat().getFrameRate();
+			int frameSize = audioStream.getFormat().getFrameSize();
 
 
-		int startSample = (int) (start * frameRate * frameSize);
+			int startSample = (int) (start * frameRate * frameSize);
 
-		if(startSample % frameSize != 0 ){
+			if(startSample % frameSize != 0 ){
 
-			//TODO : auto-correct
-		}
-		else{
-			audioStream.startSample = startSample;
+				//TODO : auto-correct
+			}
+			else{
+				audioStream.startSample = startSample;
+			}
 		}
 
 	}
@@ -155,11 +164,13 @@ public class LoadedAudioClip extends AudioClip {
 
 		this.loop = loop;
 
-		if(loop == 1){
-			audioStream.setLoop(true);
-		}
-		else{
-			audioStream.setLoop(false);
+		if(isLoaded){
+			if(loop == 1){
+				audioStream.setLoop(true);
+			}
+			else{
+				audioStream.setLoop(false);
+			}
 		}
 	}
 
