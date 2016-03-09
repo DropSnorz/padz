@@ -118,6 +118,7 @@ public class AudioClipControler implements ChangeListener, ActionListener, ListS
 		this.clip=clip;
 		audioView.fileBox.setText(clip.getPath());
 		if (clip.getEnd()==0){
+			
 			updateView(clip.getStart(),(Math.round(clip.getDurationSeconds()/0.1)*0.1)-0.1,(int)(clip.getGain()*100), clip.getLoop(), clip.getPath());
 		}else{
 			if(clip.getStart()>clip.getEnd()){
@@ -130,6 +131,8 @@ public class AudioClipControler implements ChangeListener, ActionListener, ListS
 	}
 	public void updateView(double start, double end, int gain, int loop, String path){
 
+		
+		//TODO setMax et setMin Values sur le JSILLDER.
 		handleEventFromView = false;
 		audioView.start.setValue(start);
 		audioView.end.setValue(end);

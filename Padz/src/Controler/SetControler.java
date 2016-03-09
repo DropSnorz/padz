@@ -109,10 +109,7 @@ public class SetControler implements ChangeListener, ActionListener {
 		        
 				double gain = vue.SL_Gain.getValue()*0.01;
 		       	set.setGain(gain);
-		       	
-		       	
-				
-				
+		
 			}
 		       	
 		}

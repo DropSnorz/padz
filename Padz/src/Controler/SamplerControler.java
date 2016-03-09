@@ -84,7 +84,6 @@ public class SamplerControler {
 
 		padContainerControler = new PadContainerControler(padGridModel,setList,this);
 		vue.addToContentPane(padContainerControler.getVue(), BorderLayout.SOUTH);
-		
 		padContainerControler.selectFirstPad();
 		
 		setContainerControler = new SetContainerControler(setList,this);
@@ -94,15 +93,11 @@ public class SamplerControler {
 		audioClipControler=new AudioClipControler(padContainerControler.getSelectedPad().getClip());
 		vue.addToBottomPane(audioClipControler.getView());
 		
-	
 		
 		masterControler = new MasterControler();
 		vue.addToBottomPaneRight(masterControler.getVue());
 		
-		
-		
-		
-		
+
 		audioFeedbackDispatcher = new AudioFeedbackDispatcher(format,masterControler,setContainerControler, padContainerControler);
 		
 		for(Set set : setList){
@@ -133,18 +128,8 @@ public class SamplerControler {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		
-		
-		
-	
-		
-		
-		
 
 		
-
-
 	}
 	
 	public void notifySelectedPadChanges(){

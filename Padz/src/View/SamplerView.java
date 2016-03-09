@@ -41,7 +41,7 @@ public class SamplerView extends JFrame {
 		
 		setLookAndFeel();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1043, 628);
+		setBounds(100, 100, 1022, 614);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));

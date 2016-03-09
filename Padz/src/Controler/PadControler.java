@@ -143,7 +143,6 @@ public class PadControler implements MouseListener, ActionListener, DragGestureL
 
 			if(handleSetChanges){
 
-				System.out.println("Updating Pad...");
 				clip.setSet(padContainerControler.getSelectedSet());
 
 				updateUI();
