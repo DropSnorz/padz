@@ -60,7 +60,7 @@ public class AudioClipControler implements ChangeListener, ActionListener, ListS
 	            newPath=audioView.newFile.getSelectedFile().getAbsolutePath();
 		}
 		//Set previousSet= clip.getSet();
-		StreamedAudioClip newClip = new StreamedAudioClip(newPath);
+		LoadedAudioClip newClip = new LoadedAudioClip(newPath);
 		System.out.println(newPath);
 		//newClip.setSet(previousSet);
 		this.clip=newClip;

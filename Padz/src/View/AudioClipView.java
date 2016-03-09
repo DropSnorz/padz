@@ -72,7 +72,7 @@ public class AudioClipView extends JPanel /*implements ChangeListener*/ {
 		gainGauge.setPaintTicks(true);
 		gainGauge.setPaintLabels(true);
 		onOffSelect.setSelectedIndex(1);
-		audioPanel.setBounds(238, 11, 503, 178);
+		audioPanel.setBounds(277, 11, 464, 178);
 		audioPanel.setBorder(new TitledBorder(null, "Audio", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		add(audioPanel);
 		audioPanel.setLayout(null);

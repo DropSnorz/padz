@@ -77,7 +77,7 @@ public class LoadedAudioInputStream extends AudioInputStream {
 		}
 	
 		
-		while(continuePlaying && readHead < dataSize && dataRead < length){
+		while(continuePlaying && readHead < endSample && dataRead < length){
 			
 			outputData[dataRead + offset] = data[readHead];
 			
@@ -100,7 +100,7 @@ public class LoadedAudioInputStream extends AudioInputStream {
 	
 	public int available(){
 		
-		return dataSize - readHead;
+		return endSample - readHead;
 	}
 	
 	public int getDataSize() {
