@@ -51,9 +51,7 @@ public class AudioClipControler implements ChangeListener, ActionListener, ListS
 		return audioView;
 	}
 
-	//public double getStartTime(){
 
-	//}
 	@Override
 	public void actionPerformed(ActionEvent e){
 		JButton source = (JButton)e.getSource();
@@ -132,7 +130,7 @@ public class AudioClipControler implements ChangeListener, ActionListener, ListS
 	public void updateView(double start, double end, int gain, int loop, String path){
 
 		
-		//TODO setMax et setMin Values sur le JSILLDER.
+		//TODO setMax et setMin Values sur le JSLIDER.
 		handleEventFromView = false;
 		audioView.start.setValue(start);
 		audioView.end.setValue(end);

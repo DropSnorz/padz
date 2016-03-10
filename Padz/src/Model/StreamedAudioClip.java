@@ -66,7 +66,7 @@ public class StreamedAudioClip extends AudioClip {
 				audioStream = new AudioInputStream(bufferedIn,audioStream.getFormat(),audioStream.getFrameLength());
 				DataLine.Info clipInfo = new DataLine.Info(Clip.class,audioStream.getFormat());         
 
-				//TODO remove mark by using LoadedAudioClip
+				//TODO refacto mark
 				audioStream.mark(10000000);     
 
 				isLoaded = true;

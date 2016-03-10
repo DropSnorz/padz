@@ -133,22 +133,20 @@ public class AudioFeedbackDispatcher {
 			int sample = 0;
 
 		
-			sample |= data[i++] << 8;   //  if the format is big endian)
-			sample |= data[i++] & 0xFF; // (reverse these two lines
+			//TODO use TConversionTool
+			sample |= data[i++] << 8;   
+			sample |= data[i++] & 0xFF;
 
 
-			// normalize to range of +/-1.0f
 			left[s++] = sample / 32768f;
 
 			//Copy to right
 			sample = 0;
 			
 			
-			sample |= data[i++] << 8;   //  if the format is big endian)
-			sample |= data[i++] & 0xFF; // (reverse these two lines
+			sample |= data[i++] << 8;  
+			sample |= data[i++] & 0xFF; 
 
-
-			// normalize to range of +/-1.0f
 			right[t++] = sample / 32768f;
 
 		}
@@ -166,14 +164,6 @@ public class AudioFeedbackDispatcher {
 			}
 		}
 
-		/*
-		if(lastPeakRight > peak) {
-			peak = lastPeakRight * 0.875f;
-		}
-
-		lastPeakRight = peak;
-		*/
-
 		return peak;
 	}
 
@@ -187,15 +177,6 @@ public class AudioFeedbackDispatcher {
 				peak = abs;
 			}
 		}
-
-		/*
-		if(lastPeakLeft > peak) {
-			peak = lastPeakLeft * 0.875f;
-		}
-
-		lastPeakLeft = peak;
-		*/
-
 		return peak;
 
 	}

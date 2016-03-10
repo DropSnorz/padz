@@ -129,7 +129,7 @@ public class LoadedAudioClip extends AudioClip {
 			System.out.println(endSample);
 			if(endSample % frameSize != 0 ){
 
-				//TODO : auto-correct
+				//TODO : correct error on sample offset
 				System.out.println("Error");
 			}
 			else{
@@ -151,7 +151,7 @@ public class LoadedAudioClip extends AudioClip {
 
 			if(startSample % frameSize != 0 ){
 
-				//TODO : auto-correct
+				//TODO : correct error on sample offset
 			}
 			else{
 				audioStream.startSample = startSample;

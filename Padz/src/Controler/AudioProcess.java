@@ -55,7 +55,6 @@ public class AudioProcess extends Thread {
 		try {
 			inputMixer.open(format);
 		} catch (LineUnavailableException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		inputMixer.start();
@@ -70,15 +69,10 @@ public class AudioProcess extends Thread {
 			try {
 				numBytesRead = setMixer.read(myData, 0, bufferSize);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
-			//numBytesRead = clip1.getAudioStream().read(myData, 0, 100);
 			if (numBytesRead == -1) break;
-			//total += numBytesRead; 
-			//System.out.println(System.currentTimeMillis());
-			
 			
 			inputMixer.write(myData, 0, numBytesRead);
 			audioFeedbackDispatcher.DispatchMasterStereoAudioSource(myData, numBytesRead);

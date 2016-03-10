@@ -45,7 +45,6 @@ public class SamplerControler {
 		vue = new SamplerView();
 		vue.setVisible(true);
 
-
 		Mixer.Info[] mixerInfo = AudioSystem.getMixerInfo();
 		
 		for (Mixer.Info info : mixerInfo){
@@ -56,29 +55,31 @@ public class SamplerControler {
 
 		clipList = new ArrayList<AudioClip>();
 		setList = new ArrayList<Set>();
-		
-		String username = System.getProperty("user.name");
-		LoadedAudioClip clip1 = new LoadedAudioClip("C:/Users/"+username+"/SoundSample/drum.wav");
-		LoadedAudioClip clip2 = new LoadedAudioClip("C:/Users/"+username+"/SoundSample/lead.wav");
 
 		
 		AudioFormat format = new AudioFormat(44100,16, 2,true,false);
 		System.out.println(format);
 
-		Set set1 = new Set("(default)",format);
+		Set defaultSet = new Set("(default)",format);
 		
-		PadGridModel padGridModel = new PadGridModel(8,5,set1);
-		clipList.add(clip1);
-		padGridModel.addAudioClip(clip1, 0, 0);
-		clipList.add(clip2);
-		padGridModel.addAudioClip(clip2, 1, 0);
+		PadGridModel padGridModel = new PadGridModel(8,5,defaultSet);
+		
+		//String username = System.getProperty("user.name");
+		
+		//LoadedAudioClip clip1 = new LoadedAudioClip("C:/Users/"+username+"/SoundSample/drum.wav");
+		//LoadedAudioClip clip2 = new LoadedAudioClip("C:/Users/"+username+"/SoundSample/lead.wav");
+		
+		//clipList.add(clip1);
+		//padGridModel.addAudioClip(clip1, 0, 0);
+		//clipList.add(clip2);
+		//padGridModel.addAudioClip(clip2, 1, 0);
 		
 		
-		clip1.setSet(set1);
-		clip2.setSet(set1);
+		//clip1.setSet(defaultSet);
+		//clip2.setSet(defaultSet);
 		
 
-		setList.add(set1);
+		setList.add(defaultSet);
 		setList.add(new Set("Set 1", format,231, 76, 60));
 		setList.add(new Set("Set 2", format,41, 128, 185));
 
@@ -109,12 +110,6 @@ public class SamplerControler {
 		
 		Line.Info[] mLineInfo = globalMixer.getSourceLineInfo();
 
-		//DataLine.Info info = new DataLine.Info(SourceDataLine.class, 
-		///		clip1.getAudioStream().getFormat());
-		
-		
-		
-
 		try {
 			SourceDataLine mInputMixer = (SourceDataLine) globalMixer.getLine(mLineInfo[0]);
 			AudioProcess audioProcess = new AudioProcess(mInputMixer,format,audioFeedbackDispatcher,setList);			
@@ -140,10 +135,7 @@ public class SamplerControler {
 		
 
 		if (audioClipControler!=null){
-		/*	if((audioClipControler.newPath!=null)&&(audioClipControler.clip.getPath()!=audioClipControler.newPath)){
-				LoadedAudioClip clip= new LoadedAudioClip(audioClipControler.newPath);
-				clipList.add(clip);
-			}*/
+
 			audioClipControler.setModel(padContainerControler.getSelectedPad().getClip());
 			
 		}

@@ -72,7 +72,7 @@ import Controler.AudioFeedbackDispatcher;
  * subclass of AudioInputStream itself, reading from instances of this class
  * behaves as if the mixdown result of the input streams is read.
  * 
- * @author Matthias Pfisterer, Arthur POIRET
+ * @author Matthias Pfisterer
  */
 public class StreamMixer
 extends		AudioInputStream
