@@ -13,7 +13,7 @@ public abstract class AudioClip implements IMixable {
 	protected String path;
 	protected double start;
 	protected double end;
-	protected int loop;
+	protected boolean loop;
 	protected GainEffect gEffect;
 	protected Set set;
 	
@@ -125,10 +125,10 @@ public abstract class AudioClip implements IMixable {
 	public void setEnd(double end) {
 		this.end = end;
 	}
-	public int getLoop() {
+	public boolean getLoop() {
 		return loop;
 	}
-	public void setLoop(int loop) {
+	public void setLoop(boolean loop) {
 		this.loop = loop;
 	}
 

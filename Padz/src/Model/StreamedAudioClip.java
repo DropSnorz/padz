@@ -17,7 +17,7 @@ public class StreamedAudioClip extends AudioClip {
 		super.path = path;
 		super.start=0;
 		super.end=super.getDurationSeconds();
-		super.loop=0;
+		super.loop=false;
 		loadClip(path);
 	}
 
@@ -26,7 +26,7 @@ public class StreamedAudioClip extends AudioClip {
 		play();
 		set.notifyClipPlay(this);
 		isPlaying = false;
-		while(this.loop==1){
+		while(this.loop==true){
 			if(isPlaying==false){
 					play();
 					set.notifyClipPlay(this);
@@ -60,7 +60,6 @@ public class StreamedAudioClip extends AudioClip {
 				InputStream audioSrc = getClass().getResourceAsStream(path);
 
 				audioStream = AudioSystem.getAudioInputStream(audioFile);
-
 
 				InputStream bufferedIn = new BufferedInputStream(audioStream);
 				audioStream = new AudioInputStream(bufferedIn,audioStream.getFormat(),audioStream.getFrameLength());

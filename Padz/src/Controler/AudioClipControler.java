@@ -21,124 +21,108 @@ import Model.Set;
 import Model.StreamedAudioClip;
 import View.AudioClipView;
 
-public class AudioClipControler implements ChangeListener, ActionListener, ListSelectionListener{
-	AudioClipView audioView;
+public class AudioClipControler implements ChangeListener, ActionListener{
+	AudioClipView vue;
+	PadControler padControler;
 	AudioClip clip;
-	double gain;
-	double start;
-	double end;
-	int onOff;
-	String path;
-	String newPath;
 
 	boolean handleEventFromView = false;
 
-	AudioClipControler(AudioClip clip){
-		audioView=new AudioClipView(clip.getDurationSeconds());
-		audioView.gainGauge.addChangeListener(this);
-		audioView.start.addChangeListener(this);
-		audioView.end.addChangeListener(this);
-		audioView.onOffSelect.addListSelectionListener(this);
-		audioView.fileChoice.addActionListener(this);
-		this.start=clip.getStart();
-		this.end=clip.getEnd();
-		this.clip=clip;
-		this.path=clip.getPath();
-		clip.setGain(1);
+	AudioClipControler(PadControler padControler){
+		
+		this.padControler = padControler;
+		this.clip = padControler.getClip();
+		vue=new AudioClipView(clip.getDurationSeconds());
+		vue.SL_Gain.addChangeListener(this);
+		vue.SP_Start.addChangeListener(this);
+		vue.SP_End.addChangeListener(this);
+		vue.BT_Loop.addActionListener(this);
+		vue.BT_FileChoice.addActionListener(this);
 	}
 
 	public AudioClipView getView() {
-		return audioView;
+		return vue;
 	}
 
 
 	@Override
 	public void actionPerformed(ActionEvent e){
-		JButton source = (JButton)e.getSource();
-		int returnVal = audioView.newFile.showOpenDialog(source);
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			newPath=audioView.newFile.getSelectedFile().getAbsolutePath();
+
+		if (e.getSource() == vue.BT_FileChoice){
+			JButton source = (JButton)e.getSource();
+			int returnVal = vue.newFile.showOpenDialog(source);
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				
+				String newPath=vue.newFile.getSelectedFile().getAbsolutePath();
+				Set previousSet= clip.getSet();
+				LoadedAudioClip newClip = new LoadedAudioClip(newPath);
+				newClip.setSet(previousSet);
+				clip.stop();
+				
+				padControler.setCip(newClip);
+				this.setModel(padControler);
+			}
 		}
-		//Set previousSet= clip.getSet();
-		LoadedAudioClip newClip = new LoadedAudioClip(newPath);
-		System.out.println(newPath);
-		//newClip.setSet(previousSet);
-		this.clip=newClip;
-		clip.setPath(newPath);
-		//sampler.clipList.add(newClip);
-		//updateView(0,clip.getDurationSeconds(),50,0,newPath);
+		else if (e.getSource() == vue.BT_Loop){
+				this.clip.setLoop(vue.BT_Loop.isSelected());
+		}
 	}
 
 	@Override
 	public void stateChanged(ChangeEvent e) {
 		if(handleEventFromView){
-			if(e.getSource()==audioView.gainGauge){
+			if(e.getSource()==vue.SL_Gain){
 				JSlider source = (JSlider)e.getSource();
 				if (source.getValueIsAdjusting()) {
-					this.gain =  source.getValue()*0.01;
+					double gain =  source.getValue()*0.01;
 					clip.setGain(gain);
 				}
-			}else if(e.getSource()==audioView.start){
+			}
+			else if(e.getSource()==vue.SP_Start){
 				JSpinner source = (JSpinner)e.getSource();
-				this.start =  (double) source.getValue();
+				double start =  (double) source.getValue();
 				start = Math.round(start * 100) / 100.0;
-
-				System.out.println(start);
-
 				clip.setStart(start);
-				System.out.println(clip.getStart());
 
-			}else if(e.getSource()==audioView.end){
+			}else if(e.getSource()==vue.SP_End){
 				JSpinner source = (JSpinner)e.getSource();
-				this.end =  (double)source.getValue();
+				double end =  (double)source.getValue();
 				end = Math.round(end * 100) / 100.0;
 				clip.setEnd(end);
-				System.out.println(clip.getEnd());
 			} 
 		}
 	}
-	@Override
-	public void valueChanged(ListSelectionEvent e) {
-		if(handleEventFromView){
-			JList source =(JList)e.getSource();
-			this.onOff=source.getAnchorSelectionIndex();
-			clip.setLoop(this.onOff);
-			if(this.onOff==1){
-				System.out.println("On");
-			}else if(this.onOff==0){
-				System.out.println("Off");
-			}
-		}
-	}
 
+	public void setModel(PadControler padControler){
+		this.padControler = padControler;
+		this.clip=padControler.getClip();
+		
+		vue.fileBox.setText(clip.getPath());
+		SpinnerNumberModel spinnerStartModel = new SpinnerNumberModel(0.0,0.0,clip.getDurationSeconds(),0.1);
+		vue.SP_Start.setModel(spinnerStartModel);
+		SpinnerNumberModel spinnerEndModel = new SpinnerNumberModel(0.0,0.0,clip.getDurationSeconds(),0.1);
+		vue.SP_End.setModel(spinnerEndModel);
 
-	public void setModel(AudioClip clip){
-		this.clip=clip;
-		audioView.fileBox.setText(clip.getPath());
 		if (clip.getEnd()==0){
-			
 			updateView(clip.getStart(),(Math.round(clip.getDurationSeconds()/0.1)*0.1)-0.1,(int)(clip.getGain()*100), clip.getLoop(), clip.getPath());
-		}else{
+		}
+		else{
 			if(clip.getStart()>clip.getEnd()){
 				clip.setStart(clip.getEnd());
 			}
 			updateView(clip.getStart(), clip.getEnd(), (int)(clip.getGain()*100), clip.getLoop(), clip.getPath());
 		}
-		audioView.fileBox.setText(clip.getPath());
-		audioView.repaint();
+		vue.fileBox.setText(clip.getPath());
+		vue.repaint();
 	}
-	public void updateView(double start, double end, int gain, int loop, String path){
+	public void updateView(double start, double end, int gain, boolean loop, String path){
 
-		
-		//TODO setMax et setMin Values sur le JSLIDER.
 		handleEventFromView = false;
-		audioView.start.setValue(start);
-		audioView.end.setValue(end);
-		audioView.gainGauge.setValue(gain);		
-		audioView.onOffSelect.setSelectedIndex(loop);
-		audioView.fileBox.setText(clip.getPath());
+		vue.SP_Start.setValue(start);
+		vue.SP_End.setValue(end);
+		vue.SL_Gain.setValue(gain);		
+		vue.BT_Loop.setSelected(loop);
+		vue.fileBox.setText(clip.getPath());
 		handleEventFromView = true;
 	}
-
-
 }

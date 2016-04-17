@@ -34,7 +34,7 @@ public class LoadedAudioClip extends AudioClip {
 		super.path = path;
 		loadClip(path);
 
-		super.loop=0;
+		super.loop=false;
 		setStart(0);
 		setEnd(getDurationSeconds());
 
@@ -160,17 +160,12 @@ public class LoadedAudioClip extends AudioClip {
 
 	}
 
-	public void setLoop(int loop){
+	public void setLoop(boolean loop){
 
 		this.loop = loop;
 
 		if(isLoaded){
-			if(loop == 1){
 				audioStream.setLoop(true);
-			}
-			else{
-				audioStream.setLoop(false);
-			}
 		}
 	}
 

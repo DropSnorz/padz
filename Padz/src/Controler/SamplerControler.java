@@ -91,12 +91,10 @@ public class SamplerControler {
 		vue.addToContentPaneEast(setContainerControler.getVue());
 		
 		
-		audioClipControler=new AudioClipControler(padContainerControler.getSelectedPad().getClip());
+		audioClipControler=new AudioClipControler(padContainerControler.getSelectedPad());
 		vue.addToBottomPane(audioClipControler.getView());
 
-		audioClipControler.setModel(padContainerControler.getSelectedPad().getClip());
-	
-		
+		audioClipControler.setModel(padContainerControler.getSelectedPad());
 		masterControler = new MasterControler();
 		vue.addToBottomPaneRight(masterControler.getVue());
 		
@@ -113,13 +111,9 @@ public class SamplerControler {
 		try {
 			SourceDataLine mInputMixer = (SourceDataLine) globalMixer.getLine(mLineInfo[0]);
 			AudioProcess audioProcess = new AudioProcess(mInputMixer,format,audioFeedbackDispatcher,setList);			
-			
 					
 			audioProcess.start();
-			
 			masterControler.setAudioProcess(audioProcess);
-
-			
 
 		} catch (LineUnavailableException e1) {
 			// TODO Auto-generated catch block
@@ -136,7 +130,7 @@ public class SamplerControler {
 
 		if (audioClipControler!=null){
 
-			audioClipControler.setModel(padContainerControler.getSelectedPad().getClip());
+			audioClipControler.setModel(padContainerControler.getSelectedPad());
 			
 		}
 	}

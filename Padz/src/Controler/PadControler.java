@@ -31,13 +31,9 @@ public class PadControler implements MouseListener, ActionListener, DragGestureL
 
 	private PadView vue;
 	private AudioClip clip;
-	
 	private PadDragSourceListener dragSourceListener;
 	private PadDropTargetListener dropTargetListener;
-	
-
 	private PadContainerControler padContainerControler;
-
 	public boolean handleSetChanges = false;
 
 	public PadControler(AudioClip clip, PadContainerControler padContainerControler){
@@ -57,7 +53,6 @@ public class PadControler implements MouseListener, ActionListener, DragGestureL
 		vue.setDragSourceListener(dragSourceListener);
 		vue.setDropTargetListener(dropTargetListener);
 		
-
 		updateUI();
 	}
 
@@ -83,7 +78,6 @@ public class PadControler implements MouseListener, ActionListener, DragGestureL
 	
 	public void loadFileFromDrop(File file){
 
-
 		Set previousSet = clip.getSet();
 		LoadedAudioClip audioClip = new LoadedAudioClip(file.getAbsolutePath());
 		System.out.println(file.getAbsolutePath());
@@ -91,15 +85,12 @@ public class PadControler implements MouseListener, ActionListener, DragGestureL
 		this.clip = audioClip;
 
 		updateUI();
-
-
 	}
 
 	public void loadClipFormDrop(AudioClip audioClip){
 
 		this.clip = audioClip;
 		updateUI();
-
 
 	}
 	
@@ -152,7 +143,6 @@ public class PadControler implements MouseListener, ActionListener, DragGestureL
 				padContainerControler.setSlectedPad(this);
 
 			}
-
 		}
 	}
 
@@ -174,14 +164,9 @@ public class PadControler implements MouseListener, ActionListener, DragGestureL
 
 		if(e.getSource() == vue.BT_Play){
 
-
 			clip.playFromUserInput();
-			
 			padContainerControler.updateUI();
-		
 		}
-
-
 
 	}
 
@@ -204,8 +189,11 @@ public class PadControler implements MouseListener, ActionListener, DragGestureL
 	public AudioClip getClip() {
 		return clip;
 	}
-
-
+	
+	public void setCip(AudioClip clip){
+		this.clip = clip;
+		updateUI();
+	}
 
 	@Override
 	public void dragGestureRecognized(DragGestureEvent dge) {
