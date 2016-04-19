@@ -3,7 +3,7 @@ package Controler;
 import java.util.ArrayList;
 import java.util.List;
 
-import Model.StreamedAudioClip;
+
 import Model.AudioClip;
 import Model.PadGridModel;
 import Model.Set;

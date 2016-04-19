@@ -5,7 +5,6 @@ import javax.sound.sampled.*;
 
 import Controler.AudioProcess;
 import Controler.SamplerControler;
-import Model.StreamedAudioClip;
 import Model.Set;
 import View.SamplerView;
 

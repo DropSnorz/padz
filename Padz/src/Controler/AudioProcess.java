@@ -21,8 +21,6 @@ public class AudioProcess extends Thread {
 	private SetMixer setMixer;
 	
 	int bufferSize = 128;
-	
-
 
 	public AudioProcess(SourceDataLine inputMixer,AudioFormat format, AudioFeedbackDispatcher afd,List<Set> setList){
 
@@ -31,7 +29,6 @@ public class AudioProcess extends Thread {
 		this.inputMixer = inputMixer;
 		this.format = format;
 		this.audioFeedbackDispatcher = afd;
-		
 		
 		this.setMixer = new SetMixer(format);
 		
@@ -62,7 +59,6 @@ public class AudioProcess extends Thread {
 		int numBytesRead = 0;
 
 		byte myData[] = new byte[bufferSize];
-
 
 		while (!stopped){
 		

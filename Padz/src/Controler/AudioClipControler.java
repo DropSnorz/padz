@@ -18,7 +18,6 @@ import javax.swing.event.ListSelectionListener;
 import Model.AudioClip;
 import Model.LoadedAudioClip;
 import Model.Set;
-import Model.StreamedAudioClip;
 import View.AudioClipView;
 
 public class AudioClipControler implements ChangeListener, ActionListener{

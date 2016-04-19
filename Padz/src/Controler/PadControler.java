@@ -20,7 +20,6 @@ import javax.swing.TransferHandler;
 import Model.AudioClip;
 import Model.LoadedAudioClip;
 import Model.Set;
-import Model.StreamedAudioClip;
 import View.PadDragSourceListener;
 import View.PadDropTargetListener;
 import View.PadView;

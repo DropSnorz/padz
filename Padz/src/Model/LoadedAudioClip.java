@@ -19,7 +19,7 @@ import View.AudioClipView;
 
 public class LoadedAudioClip extends AudioClip {
 
-	private LoadedAudioInputStream audioStream;
+	private LoadedAudioStream audioStream;
 
 
 	private LoadedAudioClip(){
@@ -53,21 +53,12 @@ public class LoadedAudioClip extends AudioClip {
 		File audioFile = new File(path);
 		isPlaying = false;
 
-
-
 		if(audioFile.exists()){
 			try {
 
 				AudioInputStream audioStreamSeq = AudioSystem.getAudioInputStream(audioFile);
-
-				this.audioStream = new LoadedAudioInputStream(audioStreamSeq,audioStreamSeq.getFormat(),audioStreamSeq.getFrameLength());
-
-				int fileSize=this.audioStream.getDataSize();
-				int fileFrameSize=this.audioStream.getFormat().getFrameSize();
-				float fileFrameRate=this.audioStream.getFormat().getSampleRate(); 
-				durationSeconds=(fileSize/(fileFrameSize*fileFrameRate));
-
-
+				this.audioStream = new LoadedAudioStream(audioStreamSeq);
+				durationSeconds= this.audioStream.getDataSize() / this.audioStream.getFormat().getSampleRate();
 				isLoaded = true;
 
 			} catch (UnsupportedAudioFileException e) {
@@ -121,20 +112,13 @@ public class LoadedAudioClip extends AudioClip {
 
 		if(isLoaded){
 
-			float frameRate = audioStream.getFormat().getFrameRate();
-			int frameSize = audioStream.getFormat().getFrameSize();
+			float sampleRate = audioStream.getFormat().getSampleRate();
 
-			int endSample  = (int) (end * frameRate * frameSize);
+			int endSample  = (int) (end * sampleRate);
 
 			System.out.println(endSample);
-			if(endSample % frameSize != 0 ){
+			audioStream.endSample = endSample;
 
-				//TODO : correct error on sample offset
-				System.out.println("Error");
-			}
-			else{
-				audioStream.endSample = endSample;
-			}
 		}
 
 	}
@@ -143,36 +127,24 @@ public class LoadedAudioClip extends AudioClip {
 		this.start = start;
 
 		if(isLoaded){
-			float frameRate = audioStream.getFormat().getFrameRate();
-			int frameSize = audioStream.getFormat().getFrameSize();
-
-
-			int startSample = (int) (start * frameRate * frameSize);
-
-			if(startSample % frameSize != 0 ){
-
-				//TODO : correct error on sample offset
-			}
-			else{
-				audioStream.startSample = startSample;
-			}
+			float sampleRate = audioStream.getFormat().getSampleRate();
+			int startSample = (int) (start * sampleRate);
+			audioStream.startSample = startSample;
 		}
-
 	}
+
 
 	public void setLoop(boolean loop){
 
 		this.loop = loop;
 
 		if(isLoaded){
-				audioStream.setLoop(true);
+			audioStream.setLoop(true);
 		}
 	}
 
-
-
 	@Override
-	public AudioInputStream getAudioStream() {
+	public LoadedAudioStream getAudioStream() {
 		return audioStream;
 	}
 

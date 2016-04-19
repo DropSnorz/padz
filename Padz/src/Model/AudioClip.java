@@ -22,7 +22,7 @@ public abstract class AudioClip implements IMixable {
 	public abstract void playFromUserInput();
 	public abstract void play();
 	public abstract void stop();
-	public abstract AudioInputStream getAudioStream();
+	public abstract AudioStream getAudioStream();
 	
 	public boolean getIsPlaying(){
 		

@@ -26,7 +26,6 @@ import javax.swing.JPanel;
 import Controler.PadContainerControler;
 import Controler.PadControler;
 import Model.AudioClip;
-import Model.StreamedAudioClip;
 import resources.AppResources;
 
 import javax.swing.BorderFactory;

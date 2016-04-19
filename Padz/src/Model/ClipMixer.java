@@ -27,7 +27,6 @@ public class ClipMixer extends StreamMixer {
 
 	}
 
-
 	public ClipMixer(AudioFormat audioFormat, List<AudioClip> audioClipList,Set set) {
 		super(audioFormat);
 		//ArrayList<AudioInputStream> audioInputStreamList = new ArrayList<AudioInputStream>();
@@ -42,10 +41,22 @@ public class ClipMixer extends StreamMixer {
 
 	}
 
+	public AudioData read(int length){
+		
+		AudioData data = super.read(length);
+		
+		if(audioFeedbackDispatcher != null){
+			//audioFeedbackDispatcher.DispatchSetStereoAudioSource(buffer, val, set);
+		}
+		
+		return data;
+	}
 
+	/*
 	public int read(byte[] buffer, int nOffset, int length){
 
-		//updateStreams();
+
+		updateStreams();
 
 		int val = 0;
 		try {
@@ -63,7 +74,9 @@ public class ClipMixer extends StreamMixer {
 		return val;
 
 	}
-
+*/
+	
+	
 	public void addAudioClip(AudioClip clip){
 
 
@@ -97,19 +110,16 @@ public class ClipMixer extends StreamMixer {
 
 			AudioClip clip = audioClipIterator.next();
 			if(clip.isLoaded){
-				try {
-					if(clip.getAudioStream().available() <= 0 && clip.getIsPlaying()){
 
-						//Si le clip est terminé (fin du stream)
-						clip.setPlaying(false); 
-						audioFeedbackDispatcher.notifyClipModelChanges(clip);						
+				if(clip.getAudioStream().available() <= 0 && clip.getIsPlaying()){
+
+					//Si le clip est terminé (fin du stream)
+					clip.setPlaying(false); 
+					audioFeedbackDispatcher.notifyClipModelChanges(clip);						
 
 
-					}
-				} catch (IOException e) {
-				
-					e.printStackTrace();
 				}
+
 
 				if(clip.getIsPlaying() == false){
 
@@ -129,8 +139,4 @@ public class ClipMixer extends StreamMixer {
 		}
 
 	}
-
-
-
-
 }

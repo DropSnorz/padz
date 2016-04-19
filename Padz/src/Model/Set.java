@@ -43,7 +43,6 @@ public class Set implements IMixable {
 		clipMixer = new ClipMixer(format,audioClipList,this);
 
 		updateClipSet();
-
 		color_r = AppResources.Default_Set_Color.getRed();
 		color_g = AppResources.Default_Set_Color.getGreen();
 		color_b = AppResources.Default_Set_Color.getBlue();
@@ -66,8 +65,6 @@ public class Set implements IMixable {
 
 		triggerType = TriggerType.DO_NOTHING_WHEN_CLIP_PLAYED;
 		effectList = new ArrayList<IEffect>();
-
-
 
 		color_r = AppResources.Default_Set_Color.getRed();
 		color_g = AppResources.Default_Set_Color.getGreen();
@@ -207,7 +204,7 @@ public class Set implements IMixable {
 		return audioClipList;
 	}
 
-	public AudioInputStream getAudioStream(){
+	public AudioStream getAudioStream(){
 
 		return clipMixer;
 	}

@@ -18,7 +18,6 @@ import javax.sound.sampled.Mixer;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import Model.StreamedAudioClip;
 import Model.AudioClip;
 import Model.LoadedAudioClip;
 import Model.PadGridModel;
