@@ -137,9 +137,8 @@ public class LoadedAudioClip extends AudioClip {
 	public void setLoop(boolean loop){
 
 		this.loop = loop;
-
 		if(isLoaded){
-			audioStream.setLoop(true);
+			audioStream.setLoop(loop);
 		}
 	}
 

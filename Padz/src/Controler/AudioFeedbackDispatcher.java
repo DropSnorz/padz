@@ -8,6 +8,7 @@ import javax.swing.SwingUtilities;
 import org.tritonus.share.sampled.TConversionTool;
 
 import Model.AudioClip;
+import Model.AudioData;
 import Model.IMixable;
 import Model.Set;
 
@@ -32,35 +33,26 @@ public class AudioFeedbackDispatcher {
 		this.padContainerControler = padContainerControler;
 	}
 
-	public void DispatchMasterStereoAudioSource(byte[] data,int size){
-
-		float[] samplesRight = new float[size/2];
-		float[] samplesLeft = new float[size/2];
-
-
-		splitChannels(data,size,samplesRight,samplesLeft);
-
-		float peakLeft = getPeakLeft(samplesLeft);
-		float peakRight = getPeakRight(samplesRight);
-		float rmsLeft = getRms(samplesLeft);
-		float rmsRight = getRms(samplesRight);
+	public void DispatchMasterStereoAudioSource(AudioData audioData,int size){
+		
+		float peakLeft = getPeak(audioData.getData(0));
+		float peakRight = getPeak(audioData.getData(1));
+		float rmsLeft = getRms(audioData.getData(0));
+		float rmsRight = getRms(audioData.getData(1));
 
 		setMasterDataOnEDT(rmsLeft,peakLeft,rmsRight,peakRight);
-
 	}
 	
 	
-	public void DispatchStereoAudioSource(byte[] data, int Size, IMixable target){
-		
+	public void DispatchStereoAudioSource(AudioData audioData, IMixable target){
 		
 		if(target.getClass().getName().equals("set")){
 			
-			DispatchSetStereoAudioSource(data,Size,(Set)target);
+			DispatchSetStereoAudioSource(audioData,(Set)target);
 		}
 		
 		else{
 			
-			//TODO: process clip 
 			
 		}
 		
@@ -78,82 +70,23 @@ public class AudioFeedbackDispatcher {
 		
 	}
 
-	public void DispatchSetStereoAudioSource(byte[] data, int size, Set set){
+	public void DispatchSetStereoAudioSource(AudioData audioData, Set set){
 
-		
-		
 		SetControler setControler = setContainerControler.getSelectedSetControler();
 
 		if(setControler.getSet().equals(set)){
 			
-			for(byte atom : data){
-				setAudioBuffer.put(atom);
-			}
-						
-			if(setAudioBuffer.position()<128){
-				
-			}
-			else{
-				
-			setAudioBuffer.flip();
-
-
-			byte finalData[] = new byte[setAudioBuffer.limit() + 1];
-			int finalSize = setAudioBuffer.limit();
-			int i = 0;
-			while (setAudioBuffer.hasRemaining()) {
-				finalData[i] += setAudioBuffer.get();
-				i = i + 1;
-				}
-			setAudioBuffer.clear();
+			float peakLeft = getPeak(audioData.getData(0));
+			float peakRight = getPeak(audioData.getData(1));
 			
-
-			float[] samplesRight = new float[finalSize/2];
-			float[] samplesLeft = new float[finalSize/2];
-
-			splitChannels(finalData,finalSize,samplesRight,samplesLeft);
-
-			float peakLeft = getPeakLeft(samplesLeft);
-			float peakRight = getPeakRight(samplesRight);
-			float rmsLeft = getRms(samplesLeft);
-			float rmsRight = getRms(samplesRight);
+			float rmsLeft = getRms(audioData.getData(0));
+			float rmsRight = getRms(audioData.getData(1));
 
 			setSetDataOnEDT(rmsLeft,peakLeft,rmsRight,peakRight,set);
 		}
-
-		}
 	}
-
-
-	public void splitChannels(byte[] data, int size, float[] left, float[] right){
-
-		for(int i = 0, s = 0,t=0; i < size;) {
-
-			//Copy to left
-			int sample = 0;
-
-		
-			//TODO use TConversionTool
-			sample |= data[i++] << 8;   
-			sample |= data[i++] & 0xFF;
-
-
-			left[s++] = sample / 32768f;
-
-			//Copy to right
-			sample = 0;
-			
-			
-			sample |= data[i++] << 8;  
-			sample |= data[i++] & 0xFF; 
-
-			right[t++] = sample / 32768f;
-
-		}
-
-
-	}
-	public float getPeakRight(float[] samples){
+	
+	public float getPeak(int[] samples){
 
 		float peak = 0f;
 		for(float sample : samples) {
@@ -163,7 +96,6 @@ public class AudioFeedbackDispatcher {
 				peak = abs;
 			}
 		}
-
 		return peak;
 	}
 
@@ -172,25 +104,27 @@ public class AudioFeedbackDispatcher {
 		float peak = 0f;
 		for(float sample : samples) {
 
-			float abs = Math.abs(sample);
+			float scaled_sample = sample/32768.0f;
+
+			float abs = Math.abs(scaled_sample);
 			if(abs > peak) {
 				peak = abs;
 			}
 		}
 		return peak;
-
 	}
+	
+	public float getRms(int[] samples){
 
-	public float getRms(float[] samples){
-
+		
 		float rms = 0f;
 		for(float sample : samples) {
 
-			rms += sample * sample;
+			float scaled_sample = sample/32768.0f;
+			rms += scaled_sample * scaled_sample;
 		}
 
 		rms = (float)Math.sqrt(rms / samples.length);
-		
 
 		return rms;
 	}

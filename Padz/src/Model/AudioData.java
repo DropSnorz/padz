@@ -28,6 +28,18 @@ public class AudioData {
 	public int[][] getData() {
 		return data;
 	}
+	
+	public int[] getData(int channel){
+		
+		int subData[] = new int[samples];
+		for(int i = 0; i < samples; i++){
+			
+			subData[i] = data[channel][i];
+		}
+		
+		return subData;
+	}
+	
 	public int getData(int channel, int offset){
 		return data[channel][offset];
 	}

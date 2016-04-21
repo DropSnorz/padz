@@ -23,7 +23,6 @@ public class ClipMixer extends StreamMixer {
 		super(audioFormat);
 
 		this.set = set;
-		//ClipMixer(audioFormat, new ArrayList<LoadedAudioClip>());
 
 	}
 
@@ -38,54 +37,27 @@ public class ClipMixer extends StreamMixer {
 				mixableEntityList.add(clip);
 			}
 		}
-
 	}
 
 	public AudioData read(int length){
 		
 		AudioData data = super.read(length);
 		
+		updateStreams();
 		if(audioFeedbackDispatcher != null){
-			//audioFeedbackDispatcher.DispatchSetStereoAudioSource(buffer, val, set);
+			audioFeedbackDispatcher.DispatchSetStereoAudioSource(data, set);
 		}
 		
 		return data;
 	}
 
-	/*
-	public int read(byte[] buffer, int nOffset, int length){
-
-
-		updateStreams();
-
-		int val = 0;
-		try {
-			val =  super.read(buffer, nOffset, length);
-
-			if(audioFeedbackDispatcher != null){
-				audioFeedbackDispatcher.DispatchSetStereoAudioSource(buffer, val, set);
-			}
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return val;
-
-	}
-*/
-	
 	
 	public void addAudioClip(AudioClip clip){
 
-
 		if(!mixableEntityList.contains(clip)){
-
 
 			mixableEntityList.add(clip);
 		}
-
 	}
 
 	public void removeAudioClip(AudioClip clip){
@@ -99,9 +71,7 @@ public class ClipMixer extends StreamMixer {
 
 	}
 
-
 	public void updateStreams(){
-
 
 		Iterator<AudioClip>	audioClipIterator = audioClipList.iterator();
 
@@ -110,29 +80,17 @@ public class ClipMixer extends StreamMixer {
 
 			AudioClip clip = audioClipIterator.next();
 			if(clip.isLoaded){
-
 				if(clip.getAudioStream().available() <= 0 && clip.getIsPlaying()){
 
-					//Si le clip est terminé (fin du stream)
 					clip.setPlaying(false); 
 					audioFeedbackDispatcher.notifyClipModelChanges(clip);						
-
-
 				}
-
-
 				if(clip.getIsPlaying() == false){
-
-
 					mixableEntityList.remove(clip);
-
 				}
 				else {
-
 					if(!mixableEntityList.contains(clip)){						
-
 						mixableEntityList.add(clip);
-
 					}
 				}
 			}

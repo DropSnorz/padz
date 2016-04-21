@@ -38,6 +38,7 @@ public class SamplerView extends JFrame {
 	 */
 	private JPanel bottomPane;
 	public SamplerView() {
+		setTitle("Padz");
 		
 		setLookAndFeel();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -80,9 +80,7 @@ extends		AudioStream
 	private static final boolean	DEBUG = false;
 
 	protected ArrayList<IMixable>			mixableEntityList;
-	//protected IMixable owner;
 	protected AudioFeedbackDispatcher audioFeedBackDispatcher;
-
 
 
 	public StreamMixer(AudioFormat audioFormat)
@@ -101,8 +99,6 @@ extends		AudioStream
 		}
 		if (DEBUG) { out("MixingAudioInputStream.<init>(): end"); }
 	}
-
-
 
 	/**
 	   The maximum of the frame length of the input stream is calculated and returned.
@@ -334,7 +330,13 @@ extends		AudioStream
 		int count = 0;
 		while (audioEntityIterator.hasNext())
 		{
-			audioDataBuffer[count] = audioEntityIterator.next().getAudioStream().read(length);
+			IMixable audioEntity = audioEntityIterator.next();
+			AudioData data = audioEntity.getAudioStream().read(length);
+			for(IEffect effect : audioEntity.getEffectRack()){
+				effect.ProcessAudioDataReplacing(data, length);
+			}
+			
+			audioDataBuffer[count] = data;
 			count = count + 1;
 		}
 		
@@ -361,48 +363,8 @@ extends		AudioStream
 		int nSamples =  byte_length / sampleSize / format.getChannels();
 		
 		AudioData audioData = read(nSamples);
-		int bufferOffset = 0;
-		for(int s = 0; s < audioData.getSamples(); s++){
-			for(int chan = 0; chan < format.getChannels(); chan++){
-				
-				//System.out.println(bufferOffset + ": sample" + s);
-
-				if (format.getEncoding().equals(AudioFormat.Encoding.PCM_SIGNED))
-				{
-					switch (sampleSize)
-					{
-					case 1:
-						data[bufferOffset] = (byte) audioData.getData(chan, s);
-						break;
-					case 2:
-						TConversionTool.intToBytes16(audioData.getData(chan, s), data, bufferOffset, format.isBigEndian());
-						break;
-					case 3:
-						TConversionTool.intToBytes24(audioData.getData(chan, s), data, bufferOffset,  format.isBigEndian());
-						break;
-					case 4:
-						TConversionTool.intToBytes32(audioData.getData(chan, s), data, bufferOffset,  format.isBigEndian());
-						break;
-						
-					}
-				}
-				
-				// TODO: pcm unsigned
-				else if (format.getEncoding().equals(AudioFormat.Encoding.ALAW))
-				{
-					data[bufferOffset] = TConversionTool.linear2alaw((short) audioData.getData(chan, s));
-				}
-				else if (format.getEncoding().equals(AudioFormat.Encoding.ULAW))
-				{
-					data[bufferOffset] = TConversionTool.linear2ulaw(audioData.getData(chan, s));
-				}
-				
-				bufferOffset += sampleSize;
-				
-			}
-		}
+		return AudioEncoder.encode(audioData, data);
 		
-		return bufferOffset;
 	}
 
 

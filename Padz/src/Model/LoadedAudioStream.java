@@ -18,63 +18,14 @@ public class LoadedAudioStream extends AudioStream {
 	public int startSample = 0;
 	public int uncheckedEndSample = - 1;
 	public int endSample;
-	
 	private boolean isLoop;
 	
 	public LoadedAudioStream(AudioInputStream stream) {
 		
 		this.format = stream.getFormat();
-		dataSize = (int) (stream.getFrameLength());
+		this.dataSize = (int) (stream.getFrameLength());
 		
-		int channels = format.getChannels();
-		int frameSize = format.getFrameSize();
-		int sampleSize = frameSize/channels;
-		boolean isBigEndian = format.isBigEndian();
-		
-		data = new int[channels][dataSize];
-		
-		for(int dataRead = 0 ; dataRead < dataSize; dataRead++){
-			
-			byte buffer[] = new byte [frameSize];
-			try {
-				stream.read(buffer, 0, frameSize);
-				for(int chan = 0; chan < channels; chan++){
-					int bufferOffset = chan * sampleSize;
-					
-					if(format.getEncoding() == AudioFormat.Encoding.PCM_SIGNED){
-						
-						switch (sampleSize)
-						{
-						case 1:
-							data[chan][dataRead] = buffer[bufferOffset];
-							break;
-						case 2:
-							data[chan][dataRead] = TConversionTool.bytesToInt16(buffer, bufferOffset, isBigEndian);							
-							break;
-						case 3:
-							data[chan][dataRead] = TConversionTool.bytesToInt24(buffer, bufferOffset, isBigEndian);
-							break;
-						case 4:
-							data[chan][dataRead] = TConversionTool.bytesToInt32(buffer, bufferOffset, isBigEndian);
-							break;
-						}
-					}
-					
-					else if (format.getEncoding() == (AudioFormat.Encoding.ALAW))
-					{
-						data[chan][dataRead] = TConversionTool.alaw2linear(buffer[bufferOffset]);
-					}
-					else if (format.getEncoding()==  AudioFormat.Encoding.ULAW)
-					{
-						data[chan][dataRead] = TConversionTool.ulaw2linear(buffer[bufferOffset]);
-					}		
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
+		data = AudioEncoder.decode(stream);
 	}
 	
 	public void resetReadHead(){

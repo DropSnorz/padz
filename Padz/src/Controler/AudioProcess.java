@@ -71,7 +71,7 @@ public class AudioProcess extends Thread {
 			if (numBytesRead == -1) break;
 			
 			inputMixer.write(myData, 0, numBytesRead);
-			audioFeedbackDispatcher.DispatchMasterStereoAudioSource(myData, numBytesRead);
+			//audioFeedbackDispatcher.DispatchMasterStereoAudioSource(myData, numBytesRead);
 
 
 		}
