@@ -13,17 +13,14 @@ import Controler.AudioFeedbackDispatcher;
 
 public class ClipMixer extends StreamMixer {
 
-	//StreamMixer streamMixer;
 	List<AudioClip> audioClipList;
 	private Set set;
 	private AudioFeedbackDispatcher audioFeedbackDispatcher;
 
-
 	public ClipMixer(AudioFormat audioFormat,Set set){
 		super(audioFormat);
-
+		
 		this.set = set;
-
 	}
 
 	public ClipMixer(AudioFormat audioFormat, List<AudioClip> audioClipList,Set set) {
@@ -45,9 +42,8 @@ public class ClipMixer extends StreamMixer {
 		
 		updateStreams();
 		if(audioFeedbackDispatcher != null){
-			audioFeedbackDispatcher.DispatchSetStereoAudioSource(data, set);
+			audioFeedbackDispatcher.dispatch(data, set);
 		}
-		
 		return data;
 	}
 
@@ -68,7 +64,9 @@ public class ClipMixer extends StreamMixer {
 
 	public void setAudioFeedbackDispatcher(AudioFeedbackDispatcher afd){
 		this.audioFeedbackDispatcher = afd;
-
+		
+		
+	
 	}
 
 	public void updateStreams(){

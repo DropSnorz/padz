@@ -79,10 +79,8 @@ public class PadControler implements MouseListener, ActionListener, DragGestureL
 
 		Set previousSet = clip.getSet();
 		LoadedAudioClip audioClip = new LoadedAudioClip(file.getAbsolutePath());
-		System.out.println(file.getAbsolutePath());
 		audioClip.setSet(previousSet);
 		this.clip = audioClip;
-
 		updateUI();
 	}
 
@@ -98,7 +96,6 @@ public class PadControler implements MouseListener, ActionListener, DragGestureL
 		Set currentClipSet = clip.getSet();
 		AudioClip newClip = new LoadedAudioClip(currentClipSet);
 		this.clip =  newClip;
-		
 		updateUI();
 		
 	}
@@ -162,9 +159,15 @@ public class PadControler implements MouseListener, ActionListener, DragGestureL
 		// TODO Auto-generated method stub
 
 		if(e.getSource() == vue.BT_Play){
-
+			
+			if(clip.getIsPlaying()){
+				clip.stop();
+			}
+			
 			clip.playFromUserInput();
+			
 			padContainerControler.updateUI();
+			
 		}
 
 	}
@@ -200,7 +203,5 @@ public class PadControler implements MouseListener, ActionListener, DragGestureL
 		dge.startDrag(DragSource.DefaultMoveDrop, new TransferableAudioClip(clip));
 
 	}
-
-
 
 }

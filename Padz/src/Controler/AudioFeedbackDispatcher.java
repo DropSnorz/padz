@@ -32,8 +32,9 @@ public class AudioFeedbackDispatcher {
 		this.setContainerControler = setContainerControler;
 		this.padContainerControler = padContainerControler;
 	}
+	
 
-	public void DispatchMasterStereoAudioSource(AudioData audioData,int size){
+	public void DispatchMasterStereoAudioSource(AudioData audioData){
 		
 		float peakLeft = getPeak(audioData.getData(0));
 		float peakRight = getPeak(audioData.getData(1));
@@ -41,21 +42,6 @@ public class AudioFeedbackDispatcher {
 		float rmsRight = getRms(audioData.getData(1));
 
 		setMasterDataOnEDT(rmsLeft,peakLeft,rmsRight,peakRight);
-	}
-	
-	
-	public void DispatchStereoAudioSource(AudioData audioData, IMixable target){
-		
-		if(target.getClass().getName().equals("set")){
-			
-			DispatchSetStereoAudioSource(audioData,(Set)target);
-		}
-		
-		else{
-			
-			
-		}
-		
 	}
 	
 	public void notifyClipModelChanges(AudioClip clip){
@@ -70,7 +56,7 @@ public class AudioFeedbackDispatcher {
 		
 	}
 
-	public void DispatchSetStereoAudioSource(AudioData audioData, Set set){
+	public void dispatch(AudioData audioData, Set set){
 
 		SetControler setControler = setContainerControler.getSelectedSetControler();
 
@@ -86,26 +72,16 @@ public class AudioFeedbackDispatcher {
 		}
 	}
 	
+	public void dispatch(AudioData audioData, AudioClip clip){
+		
+	}
+	
 	public float getPeak(int[] samples){
 
 		float peak = 0f;
 		for(float sample : samples) {
-
-			float abs = Math.abs(sample);
-			if(abs > peak) {
-				peak = abs;
-			}
-		}
-		return peak;
-	}
-
-	public float getPeakLeft(float[] samples){
-
-		float peak = 0f;
-		for(float sample : samples) {
-
+			
 			float scaled_sample = sample/32768.0f;
-
 			float abs = Math.abs(scaled_sample);
 			if(abs > peak) {
 				peak = abs;
@@ -113,7 +89,7 @@ public class AudioFeedbackDispatcher {
 		}
 		return peak;
 	}
-	
+
 	public float getRms(int[] samples){
 
 		
@@ -153,8 +129,6 @@ public class AudioFeedbackDispatcher {
 					setControler.setLeftMeterData(rmsLeft, peakLeft);
 					setControler.setRightMeterData(rmsRight, peakRight);
 				}	
-
-
 			}
 		});
 

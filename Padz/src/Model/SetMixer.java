@@ -9,11 +9,9 @@ import Controler.AudioFeedbackDispatcher;
 
 public class SetMixer extends StreamMixer {
 		
-	
-
-	
 	public SetMixer(AudioFormat format){
 		super(format);
+		
 		
 	}
 	
@@ -22,6 +20,12 @@ public class SetMixer extends StreamMixer {
 		
 		super.mixableEntityList.add(set);
 		
+	}
+	
+	public void setAudioFeedbackDispatcher(AudioFeedbackDispatcher afd){
+		
+		AudioFeedbackListener listener = new MasterFeedbackListener(afd);
+		setAudioFeedbackListener(listener);
 	}
 	
 	public void removeSet(Set set){

@@ -60,23 +60,7 @@ public class SamplerControler {
 		System.out.println(format);
 
 		Set defaultSet = new Set("(default)",format);
-		
 		PadGridModel padGridModel = new PadGridModel(8,5,defaultSet);
-		
-		//String username = System.getProperty("user.name");
-		
-		//LoadedAudioClip clip1 = new LoadedAudioClip("C:/Users/"+username+"/SoundSample/drum.wav");
-		//LoadedAudioClip clip2 = new LoadedAudioClip("C:/Users/"+username+"/SoundSample/lead.wav");
-		
-		//clipList.add(clip1);
-		//padGridModel.addAudioClip(clip1, 0, 0);
-		//clipList.add(clip2);
-		//padGridModel.addAudioClip(clip2, 1, 0);
-		
-		
-		//clip1.setSet(defaultSet);
-		//clip2.setSet(defaultSet);
-		
 
 		setList.add(defaultSet);
 		setList.add(new Set("Set 1", format,231, 76, 60));
@@ -118,14 +102,10 @@ public class SamplerControler {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-
 		
 	}
 	
-	public void notifySelectedPadChanges(){
-		
-		System.out.println("Called on Selected Pad changes");
-		
+	public void notifySelectedPadChanges(){		
 
 		if (audioClipControler!=null){
 
