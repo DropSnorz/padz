@@ -6,70 +6,48 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.datatransfer.Transferable;
 import java.awt.dnd.DnDConstants;
-import java.awt.dnd.DragGestureEvent;
 import java.awt.dnd.DragGestureListener;
 import java.awt.dnd.DragSource;
 import java.awt.dnd.DragSourceListener;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.geom.Line2D;
-import java.io.File;
-import java.util.List;
+
 import java.util.TooManyListenersException;
 
 import javax.swing.JPanel;
 
-import Controler.PadContainerControler;
 import Controler.PadControler;
-import Model.AudioClip;
 import resources.AppResources;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
 
 public class PadView extends JPanel {
 
-	/**
-	 * Create the panel.
-	 */
-
 	PadControler padControler;
 
-
 	public JButton BT_Play;
+	public JButton BT_Stop;
 	public JLabel LB_FileName;
 	private boolean tickEnabled = false;
 	ImageIcon playingIcon;
 	ImageIcon stopIcon;
-
-
+	
 	DragSource source;
 	DragSourceListener dragSourceListener;
-
 
 	DropTarget dropTarget;
 	DropTargetListener dropTargetListener;
 
-
-
 	Point dragPoint;
 	boolean dragOver;
-
-
 	private int padSize = 72;
 	private int padMargin = 10;
-
 
 	public PadView(PadControler padControler) {
 
@@ -87,28 +65,29 @@ public class PadView extends JPanel {
 
 		add(PadPanel);
 		PadPanel.setLayout(null);
-
-		LB_FileName = new JLabel("");
-		LB_FileName.setBounds(9, 11, 54, 16);
-		PadPanel.add(LB_FileName);
-		LB_FileName.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		playingIcon = new ImageIcon(getClass().getClassLoader().getResource("resources/img/icon-play-green.png"));
 		stopIcon = new ImageIcon(getClass().getClassLoader().getResource("resources/img/icon-play.png"));
 		
 		BT_Play = new JButton("");
-		BT_Play.setIcon(stopIcon);
-		BT_Play.setBounds(10, 38, 53, 23);
+		BT_Play.setBounds(8, 40, 27, 21);
 		PadPanel.add(BT_Play);
-
+		BT_Play.setIcon(stopIcon);
+		
+		BT_Stop = new JButton("");
+		BT_Stop.setIcon(new ImageIcon(PadView.class.getResource("/resources/img/icon-stop.png")));
+		BT_Stop.setBounds(37, 40, 27, 21);
+		PadPanel.add(BT_Stop);
+		
+				LB_FileName = new JLabel("");
+				LB_FileName.setBounds(5, 11, 63, 16);
+				PadPanel.add(LB_FileName);
+				LB_FileName.setHorizontalAlignment(SwingConstants.CENTER);
 
 		source= new DragSource();
 		
 		dropTarget = new DropTarget(this,DnDConstants.ACTION_COPY,null);
 		dragOver = false;
-		
-
-
 	}
 	
 	public void setPlayingIcon(){
@@ -121,6 +100,23 @@ public class PadView extends JPanel {
 		BT_Play.setIcon(stopIcon);
 
 	}
+	
+	public void hideStopButton(){
+		
+		BT_Stop.setVisible(false);
+		BT_Play.setBounds(5, 40, 62, 21);
+		repaint();
+
+	}
+	
+	public void showStopButton(){
+		
+		BT_Stop.setVisible(true);
+		BT_Play.setBounds(8, 40, 27, 21);
+		
+		this.repaint();
+
+	}
 
 	public void drawSelectedCursor(Graphics g){
 
@@ -130,23 +126,21 @@ public class PadView extends JPanel {
 
 		//Haut gauche
 		graph.setColor(AppResources.SelectionCursor_Color);
-		graph.drawLine(5 + padMargin,5+ padMargin,5+ padMargin,10+ padMargin);
-		graph.drawLine(5+ padMargin, 5+ padMargin, 10+ padMargin , 5+ padMargin);
+		graph.drawLine(5 + padMargin,5 + padMargin,5 + padMargin,10 + padMargin);
+		graph.drawLine(5 + padMargin, 5 + padMargin, 10 + padMargin , 5 + padMargin);
 
 		//Haut droit
-		graph.drawLine(padSize + padMargin - 5, 5+ padMargin, padSize + padMargin - 10, 5+ padMargin);
-		graph.drawLine(padSize + padMargin - 5, 5+ padMargin, padSize+ padMargin - 5,  10+ padMargin);
+		graph.drawLine(padSize + padMargin - 5, 5 + padMargin, padSize + padMargin - 10, 5 + padMargin);
+		graph.drawLine(padSize + padMargin - 5, 5 + padMargin, padSize+ padMargin - 5,  10 + padMargin);
 
 		//Bas droit
 		graph.drawLine(padSize+ padMargin - 5, padSize+ padMargin - 5, padSize+ padMargin - 5, padSize+ padMargin - 10 );
 		graph.drawLine(padSize+ padMargin - 5, padSize+ padMargin - 5, padSize+ padMargin - 10, padSize+ padMargin - 5);
 
-
 		//Bas Gauche
 		graph.drawLine(padMargin + 5, padSize+ padMargin - 5, padMargin + 10, padSize+ padMargin - 5);
 		graph.drawLine(padMargin + 5, padSize+ padMargin - 5, padMargin + 5, padSize+ padMargin - 10);
 		//graph.draw(new Line2D.Double(20,20,20,20));
-
 
 	}
 
@@ -188,7 +182,6 @@ public class PadView extends JPanel {
 
 		source.createDefaultDragGestureRecognizer(this, DnDConstants.ACTION_COPY, dgl);
 
-
 	}
 	
 	public void  setDragSourceListener(DragSourceListener dragSourceListener){
@@ -201,7 +194,6 @@ public class PadView extends JPanel {
 		
 		this.dropTargetListener = dropTargetListener;
 	}
-
 
 	// DRAG AND DROP
 
@@ -249,6 +241,4 @@ public class PadView extends JPanel {
 
 
 	}
-
-
 }

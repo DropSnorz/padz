@@ -13,7 +13,6 @@ public class SetContainerControler {
 	private ArrayList<SetControler> setControlerList;
 	
 	private SetControler selectedSetControler;
-	
 	private SamplerControler samplerControler;
 	
 	

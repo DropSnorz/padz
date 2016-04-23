@@ -43,6 +43,7 @@ public class PadControler implements MouseListener, ActionListener, DragGestureL
 		vue = new PadView(this);
 		vue.addMouseListener(this);
 		vue.BT_Play.addMouseListener(this);
+		vue.BT_Stop.addMouseListener(this);
 
 		vue.setDragGestureListener(this);
 		
@@ -106,9 +107,11 @@ public class PadControler implements MouseListener, ActionListener, DragGestureL
 		
 		if(clip.getIsPlaying()){
 			vue.setPlayingIcon();
+			vue.showStopButton();
 		}
 		else{
 			vue.setStopIcon();
+			vue.hideStopButton();
 		}
 
 		vue.repaint();
@@ -159,17 +162,17 @@ public class PadControler implements MouseListener, ActionListener, DragGestureL
 		// TODO Auto-generated method stub
 
 		if(e.getSource() == vue.BT_Play){
-			
-			if(clip.getIsPlaying()){
-				clip.stop();
-			}
-			
+		
 			clip.playFromUserInput();
 			
 			padContainerControler.updateUI();
 			
 		}
-
+		else if (e.getSource() == vue.BT_Stop){
+			
+			clip.stop();
+			updateUI();
+		}
 	}
 
 	@Override

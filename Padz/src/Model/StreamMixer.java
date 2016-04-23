@@ -8,8 +8,6 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 
 
-
-
 public class StreamMixer
 extends		AudioStream
 {

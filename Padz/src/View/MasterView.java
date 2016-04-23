@@ -70,8 +70,6 @@ public class MasterView extends JPanel {
         	rolloverTimeLine.play();
         }
         
-        
-        
 	}
 	public void setRightMeterData(float rms,float peak){
 		rightMeter.setAmplitude(rms);
