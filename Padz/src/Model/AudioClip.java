@@ -49,6 +49,19 @@ public abstract class AudioClip implements IMixable {
 		
 	}
 	
+	public void delete(){
+		
+		if (isPlaying){
+			
+			stop();
+		}
+		
+		if (set != null){
+			System.out.println("remove");
+			this.set.removeClip(this);
+		}
+	}
+	
 	public void addEffect(IEffect effect){
 		effectList.add(effect);
 	}

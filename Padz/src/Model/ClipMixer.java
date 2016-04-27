@@ -58,7 +58,6 @@ public class ClipMixer extends StreamMixer {
 
 	public void removeAudioClip(AudioClip clip){
 
-		audioClipList.remove(clip);
 		mixableEntityList.remove(clip);
 	}
 

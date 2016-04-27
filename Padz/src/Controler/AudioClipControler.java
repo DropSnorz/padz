@@ -53,13 +53,17 @@ public class AudioClipControler implements ChangeListener, ActionListener{
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				
 				String newPath=vue.newFile.getSelectedFile().getAbsolutePath();
+				AudioClip previousClip = clip;
 				Set previousSet= clip.getSet();
 				LoadedAudioClip newClip = new LoadedAudioClip(newPath);
 				newClip.setSet(previousSet);
-				clip.stop();
+				previousClip.stop();
 				
 				padControler.setCip(newClip);
 				this.setModel(padControler);
+				
+				previousClip.delete();
+
 			}
 		}
 		else if (e.getSource() == vue.BT_Loop){

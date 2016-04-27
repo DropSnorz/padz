@@ -78,16 +78,22 @@ public class PadControler implements MouseListener, ActionListener, DragGestureL
 	
 	public void loadFileFromDrop(File file){
 
+		AudioClip previousClip = this.clip;
 		Set previousSet = clip.getSet();
 		LoadedAudioClip audioClip = new LoadedAudioClip(file.getAbsolutePath());
 		audioClip.setSet(previousSet);
+		previousClip.stop();
 		this.clip = audioClip;
+		previousClip.delete();
 		updateUI();
 	}
 
 	public void loadClipFormDrop(AudioClip audioClip){
 
+		AudioClip previousClip = this.clip;
+		previousClip.stop();
 		this.clip = audioClip;
+		previousClip.delete();
 		updateUI();
 
 	}

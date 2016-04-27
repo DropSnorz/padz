@@ -105,7 +105,7 @@ public class Set implements IMixable {
 	public void removeClip(AudioClip clip){
 
 		audioClipList.remove(clip);
-		clipMixer.getAudioInputStreamList().remove(clip);
+		clipMixer.removeAudioClip(clip);
 
 	}
 
