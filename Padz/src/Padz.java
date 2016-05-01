@@ -3,10 +3,10 @@ import java.io.IOException;
 
 import javax.sound.sampled.*;
 
-import Controler.AudioProcess;
-import Controler.SamplerControler;
-import Model.Set;
-import View.SamplerView;
+import controler.AudioProcess;
+import controler.SamplerControler;
+import model.Set;
+import view.SamplerView;
 
 public class Padz {
 
