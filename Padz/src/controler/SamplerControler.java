@@ -26,7 +26,6 @@ import view.SamplerView;
 
 public class SamplerControler {
 
-
 	SamplerView vue;
 	ArrayList<Set> setList;
 	ArrayList<AudioClip> clipList;
@@ -124,7 +123,6 @@ public class SamplerControler {
 		
 		if(padSelectionMode==false){
 			
-			//Start pad selectionMode
 			padContainerControler.startPadSelectionMode(set);
 			padSelectionMode = true;
 			vue.setCursor(Cursor.CROSSHAIR_CURSOR);
@@ -133,7 +131,6 @@ public class SamplerControler {
 			
 			padContainerControler.stopPadSelectionMode();
 			padSelectionMode = false;
-			//disable pad selection mode
 			
 			vue.setCursor(Cursor.DEFAULT_CURSOR);
 		}

@@ -110,7 +110,6 @@ public class AudioEncoder {
 					}
 				}
 
-				// TODO: pcm unsigned
 				else if (format.getEncoding().equals(AudioFormat.Encoding.ALAW))
 				{
 					data[bufferOffset] = TConversionTool.linear2alaw((short) audioData.getData(chan, s));

@@ -30,11 +30,6 @@ public class SetContainerView extends JPanel {
 		
 		accordion = new JAccordion();
 		
-		
-		//accordion.addBar("(default)",accordion.getDummyPanel("Content..."));
-		//accordion.addBar("Set 1", accordion.getDummyPanel("Content..."));
-		//accordion.addBar("Set 2", accordion.getDummyPanel("Content..."));
-		
 		JPanel buttonsPanel = new JPanel();
 		this.add(buttonsPanel, BorderLayout.NORTH);
 		buttonsPanel.setLayout(new FlowLayout());

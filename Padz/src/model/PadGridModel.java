@@ -64,13 +64,7 @@ public class PadGridModel {
 	public void setSizeY(int sizeY) {
 		this.sizeY = sizeY;
 	}
-	
-	
-	
-	
-	
-	
-	
+
 }
 
 

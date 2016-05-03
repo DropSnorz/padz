@@ -12,13 +12,11 @@ import view.PadView;
 public class PadContainerControler {
 
 	private PadContainerView vue;
-	//private List<Set> setList;
 	private PadGridModel padGridModel;
 	private ArrayList<PadControler> padControlerList;
 	private SamplerControler samplerControler;
 	private PadControler selectedPad;
 	private  Set selectedSet;
-	
 
 
 
@@ -32,11 +30,9 @@ public class PadContainerControler {
 		selectedPad = null;
 		createContainer();		
 		
-
 	}
 
 	public void createContainer(){
-
 
 		for(int i = 0; i < padGridModel.getSizeX(); i++){
 
@@ -48,28 +44,6 @@ public class PadContainerControler {
 
 			}
 		}
-		
-		/*
-		for(Set set : setList){
-
-			int i = 0;
-			int j = 0;
-			for(AudioClip clip : set.getAudioClipList() ){
-
-				PadControler controler = new PadControler(clip,this);
-				padControlerList.add(controler);
-				vue.addPadView(controler.getVue(), i, j);
-				i = i + 1;
-				if(i == 10){
-					i = 0;
-					j = j + 1;
-				}
-			}
-		}
-
-		 */
-		
-		
 	}
 	
 	public void updateUI()
@@ -114,7 +88,7 @@ public class PadContainerControler {
 	}
 	
 	public void stopPadSelectionMode(){
-		// TODO selected set to null ?
+		
 		for(PadControler controler : padControlerList){
 
 			controler.setHandleSetChanges(false);
@@ -129,9 +103,7 @@ public class PadContainerControler {
 				
 				controler.updateUI();
 			}
-			
 		}
-		
 	}
 
 

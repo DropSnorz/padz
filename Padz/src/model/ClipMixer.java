@@ -27,7 +27,6 @@ public class ClipMixer extends StreamMixer {
 
 	public ClipMixer(AudioFormat audioFormat, List<AudioClip> audioClipList,Set set) {
 		super(audioFormat);
-		//ArrayList<AudioInputStream> audioInputStreamList = new ArrayList<AudioInputStream>();
 		this.set = set;
 		this.audioClipList = audioClipList;
 		for (AudioClip clip : audioClipList){
@@ -65,8 +64,6 @@ public class ClipMixer extends StreamMixer {
 
 	public void setAudioFeedbackDispatcher(AudioFeedbackDispatcher afd){
 		this.audioFeedbackDispatcher = afd;
-		
-		
 	
 	}
 
@@ -94,6 +91,5 @@ public class ClipMixer extends StreamMixer {
 				}
 			}
 		}
-
 	}
 }

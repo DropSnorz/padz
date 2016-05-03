@@ -2,7 +2,6 @@ package model.event;
 
 public enum TriggerType {
 
-	//Objets directement construits
 
 	PLAY_ALL_WHEN_CLIP_PLAYED ("Play all clips on clip play"),
 

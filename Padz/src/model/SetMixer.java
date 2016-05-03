@@ -13,16 +13,12 @@ import model.event.MasterFeedbackListener;
 public class SetMixer extends StreamMixer {
 		
 	public SetMixer(AudioFormat format){
-		super(format);
-		
-		
+		super(format);	
 	}
-	
 	
 	public void addSet(Set set){
 		
 		super.mixableEntityList.add(set);
-		
 	}
 	
 	public void setAudioFeedbackDispatcher(AudioFeedbackDispatcher afd){

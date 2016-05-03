@@ -44,7 +44,6 @@ public class SetPropertiesControler implements ActionListener {
 		
 		set.setName(vue.TXT_Name.getText());
 		set.setTriggerType((TriggerType)vue.CB_Trigger_Type.getSelectedItem());
-		
 		vue.dispose();
 	}
 	public SetPropertiesView getVue(){

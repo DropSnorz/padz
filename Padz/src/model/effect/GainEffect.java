@@ -5,6 +5,7 @@ import model.audio.IEffect;
 
 public class GainEffect implements IEffect {
 	double gainValue=1;
+	
 	@Override
 	public void ProcessAudioDataReplacing(AudioData inputData, int nSamples) {
 

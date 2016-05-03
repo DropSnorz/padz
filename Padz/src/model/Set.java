@@ -25,19 +25,17 @@ public class Set implements IMixable {
 	int color_r;
 	int color_g;
 	int color_b;
-
 	TriggerType triggerType;
 
 	List<AudioClip> audioClipList;
 	Mixer globalMixer;
 	ClipMixer clipMixer;
-	
+
 	GainEffect gainEffect;
 
 	ArrayList<IEffect> effectList;
 
 	public Set(String name, AudioFormat format){
-
 
 		this.audioClipList = new ArrayList<AudioClip>();
 		this.name = name;
@@ -51,7 +49,7 @@ public class Set implements IMixable {
 		color_r = AppResources.Default_Set_Color.getRed();
 		color_g = AppResources.Default_Set_Color.getGreen();
 		color_b = AppResources.Default_Set_Color.getBlue();
-		
+
 		gainEffect = new GainEffect();
 		effectList.add(gainEffect);
 	}
@@ -75,9 +73,6 @@ public class Set implements IMixable {
 		color_g = AppResources.Default_Set_Color.getGreen();
 		color_b = AppResources.Default_Set_Color.getBlue();
 
-
-		//TODO set clipMixer and AudioFormat
-		//clipMixer = new ClipMixer(null);
 	}
 
 	public Set(String name, int r, int g, int b){
@@ -99,7 +94,6 @@ public class Set implements IMixable {
 
 	public void addClip(AudioClip clip){
 
-		//TODO fix concurrent access : Thread safe List
 		audioClipList.add(clip);
 
 		if(clip.set != this){
@@ -134,7 +128,6 @@ public class Set implements IMixable {
 		else{
 			//Nothing to do
 		}
-
 	}
 
 	private void playAllClip(){
@@ -144,8 +137,6 @@ public class Set implements IMixable {
 			clipToPlay.play();
 
 		}
-
-
 	}
 	private void stopAllClipExcept(AudioClip clip){
 
@@ -154,13 +145,15 @@ public class Set implements IMixable {
 			if(!clipToStop.equals(clip)){
 				clipToStop.stop();
 			}
-
 		}
 	}
 
 	private void stopAllClip(){
 
-		//TODO: implement
+		for(AudioClip clipToStop : audioClipList){
+
+			clipToStop.stop();
+		}
 	}
 
 	public String getName() {
@@ -227,13 +220,13 @@ public class Set implements IMixable {
 			throw new Exception("Impossible d'ajouter l'effet è l'index spécifié");
 		}
 	}
-	
+
 	public void setGain(double gain){
-		
+
 		gainEffect.setGain(gain);
-		
+
 	}
-	
+
 	public void setAudioFeedbackDispatcher(AudioFeedbackDispatcher afd){
 		clipMixer.setAudioFeedbackDispatcher(afd);
 	}
@@ -243,8 +236,5 @@ public class Set implements IMixable {
 		// TODO Auto-generated method stub
 		return effectList;
 	}
-
-
-
 
 }

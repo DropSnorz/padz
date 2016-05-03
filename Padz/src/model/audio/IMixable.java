@@ -10,6 +10,5 @@ public interface IMixable {
 	public void addEffect(IEffect effect);
 	public void addEffect(IEffect effect,int i) throws Exception;
 	public ArrayList<IEffect> getEffectRack();
-	//TODO implement effect rack for parameter/effect control;
 	
 }

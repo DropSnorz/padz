@@ -170,7 +170,6 @@ public class PadControler implements MouseListener, ActionListener, DragGestureL
 		if(e.getSource() == vue.BT_Play){
 		
 			clip.playFromUserInput();
-			
 			padContainerControler.updateUI();
 			
 		}

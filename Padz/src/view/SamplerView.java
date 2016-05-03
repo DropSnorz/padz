@@ -52,10 +52,7 @@ public class SamplerView extends JFrame {
 		contentPane.add(bottomPane, BorderLayout.SOUTH);
 		bottomPane.setLayout(new BorderLayout(0, 0));
 		
-		scrollPane = new JScrollPane();
-		
-		//scrollPane.setLayout(new BorderLayout());
-		
+		scrollPane = new JScrollPane();		
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 		
 		JPanel panel = new JPanel();
@@ -108,7 +105,6 @@ public class SamplerView extends JFrame {
 		JMenuItem mntmAbout = new JMenuItem("About Padz...");
 		mnHelp.add(mntmAbout);
 		
-		//bottomPane.add(new PadView(), BorderLayout.EAST);
 	}
 	
 	
@@ -147,7 +143,6 @@ public class SamplerView extends JFrame {
 				}
 	            JFrame.setDefaultLookAndFeelDecorated(true);
 		        UIManager.put(SubstanceLookAndFeel.SHOW_EXTRA_WIDGETS, Boolean.TRUE);
-		           
-	 
+
 	}
 }

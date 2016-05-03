@@ -51,8 +51,6 @@ public class AudioData {
 	public AudioFormat getFormat() {
 		return format;
 	}
-	
-	
-	
+		
 	
 }

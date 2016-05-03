@@ -25,9 +25,6 @@ public class PadContainerView extends JPanel {
 		this.setLayout(new GridLayout(x,y,0,0));
 		panelHolder = new JPanel[x][y];
 		
-		
-		
-		
 		for(int m = 0; m < x; m++) {
 			for(int n = 0; n < y; n++) {
 				

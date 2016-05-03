@@ -41,8 +41,6 @@ public class SetControler implements ChangeListener, ActionListener {
 			set.setColor_b(newColor.getBlue());
 		}
 
-		//TODO update color (model and ui)
-
 		setContainerControler.setModelChanged();
 	}
 	
@@ -61,7 +59,6 @@ public class SetControler implements ChangeListener, ActionListener {
 
 		SetPropertiesControler controler = new SetPropertiesControler(set);
 		setContainerControler.setModelChanged();
-
 
 	}
 
@@ -96,14 +93,12 @@ public class SetControler implements ChangeListener, ActionListener {
 
 			openSetProperties();
 		}
-
 	}
 
 	@Override
 	public void stateChanged(ChangeEvent e) {
 		
 		if(e.getSource() == vue.SL_Gain){
-			
 			
 			if (vue.SL_Gain.getValueIsAdjusting()) {
 		        
@@ -113,6 +108,5 @@ public class SetControler implements ChangeListener, ActionListener {
 			}
 		       	
 		}
-		
 	}
 }

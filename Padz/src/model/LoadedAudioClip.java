@@ -29,7 +29,6 @@ public class LoadedAudioClip extends AudioClip {
 		gEffect=new GainEffect();
 		effectList.add(gEffect);
 
-
 	}
 	public LoadedAudioClip(String path){
 		this();
@@ -67,7 +66,7 @@ public class LoadedAudioClip extends AudioClip {
 
 				return false;
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 				return false;
 			}
 
@@ -87,8 +86,6 @@ public class LoadedAudioClip extends AudioClip {
 		if(isLoaded){
 			play();
 			set.notifyClipPlay(this);
-
-
 		}
 	}
 
@@ -98,7 +95,6 @@ public class LoadedAudioClip extends AudioClip {
 
 			audioStream.resetReadHead();
 			isPlaying = true;
-
 		}
 	}
 
@@ -115,14 +111,12 @@ public class LoadedAudioClip extends AudioClip {
 		if(isLoaded){
 
 			float sampleRate = audioStream.getFormat().getSampleRate();
-
 			int endSample  = (int) (end * sampleRate);
 
 			System.out.println(endSample);
 			audioStream.endSample = endSample;
 
 		}
-
 	}
 
 	public void setStart(double start) {
@@ -148,6 +142,4 @@ public class LoadedAudioClip extends AudioClip {
 	public LoadedAudioStream getAudioStream() {
 		return audioStream;
 	}
-
-
 }

@@ -115,7 +115,6 @@ public class AudioFeedbackDispatcher {
 				masterControler.setRightMeterData(rmsRight, peakRight);
 			}
 		});
-
 	}
 
 	public void setSetDataOnEDT(float rmsLeft, float peakLeft, float rmsRight, float peakRight,Set set){
@@ -133,5 +132,4 @@ public class AudioFeedbackDispatcher {
 		});
 
 	}
-
 }

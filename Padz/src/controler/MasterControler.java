@@ -11,7 +11,6 @@ public class MasterControler implements ChangeListener{
 	AudioProcess audioProcess;
 	
 	
-	
 	public MasterControler(){
 		
 		vue = new MasterView();

@@ -57,8 +57,6 @@ public class SetView extends JPanel {
 		leftMeter.setBounds(216, 43, 9, 133);
 		add(leftMeter);
 		
-		
-
 	}
 	
 	public void setLeftMeterData(float rms,float peak){

@@ -99,12 +99,6 @@ public class PadDropTargetListener implements DropTargetListener{
 					
 					
 				}
-				else{
-					
-					//dtde.rejectDrop();
-				}
-
-
 
 			} catch (UnsupportedFlavorException | IOException e) {
 				// TODO Auto-generated catch block
@@ -112,7 +106,6 @@ public class PadDropTargetListener implements DropTargetListener{
 			}
 
 		}
-
 	}
 
 	@Override
@@ -137,8 +130,5 @@ public class PadDropTargetListener implements DropTargetListener{
 			dtde.rejectDrag();
 		}
 	}
-
-
-
 
 }

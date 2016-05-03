@@ -34,7 +34,6 @@ public class TransferableAudioClip implements Transferable {
 
 			throw new UnsupportedFlavorException(flavor);
 		}
-		// TODO Auto-generated method stub
 	}
 
 
@@ -51,13 +50,8 @@ public class TransferableAudioClip implements Transferable {
 			return true;
 		}
 		else{
-
-
 			return false;
 		}
 	}
-
-
-
 
 }

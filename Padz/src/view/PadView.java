@@ -122,8 +122,6 @@ public class PadView extends JPanel {
 
 	public void drawSelectedCursor(Graphics g){
 
-
-
 		Graphics2D graph = (Graphics2D) g;
 
 		//Haut gauche
@@ -149,12 +147,8 @@ public class PadView extends JPanel {
 	public void drawDragAndDropArea(Graphics g){
 
 		Graphics2D graph = (Graphics2D) g;
-
 		graph.setColor(new Color (0,255,0,30));
-
 		graph.fill(new Rectangle(this.getWidth(),this.getHeight()));
-
-
 	}
 
 	public void setSetColor(int r, int g, int b){
@@ -197,8 +191,6 @@ public class PadView extends JPanel {
 		this.dropTargetListener = dropTargetListener;
 	}
 
-	// DRAG AND DROP
-
 
 	@Override
 	public void addNotify(){
@@ -225,8 +217,6 @@ public class PadView extends JPanel {
 	public DropTarget getDropTarget(){
 
 		return dropTarget;
-
-
 	}
 
 	public DragSource getDragSource(){
@@ -238,9 +228,7 @@ public class PadView extends JPanel {
 
 		this.dragOver = isDragOver;
 		this.dragPoint = dragPoint;
-
 		repaint();
-
 
 	}
 }
